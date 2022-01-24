@@ -1,4 +1,4 @@
-GET /api/@datarequest_delete HTTP/1.1
+DELETE /api/@datarequest_delete HTTP/1.1
 Accept: application/json
 Content-type: application/json
 Authorization: Bearer <REDACTED>
