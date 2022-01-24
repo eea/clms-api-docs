@@ -75,7 +75,8 @@ If you want to crop the DataSet to a given NUTS region, you need to know that th
 
 ### Restriction by bounding box
 
-In addition to the NUTS way, you can also restrict the download to a given bounding box. This is done by passing an array of 4 values in the signaling the 4 points that parameter. The values are ** UNKNOWN**.
+In addition to the NUTS way, you can also restrict the download to a given bounding box. This is done by passing an array of 4 values in the signaling the 4 points that parameter. The values of the bounding box are the coordinates of a rectangle in EPSG:4326 projection.
+
 
 ## Request the download
 
