@@ -1,3 +1,3 @@
 # CLMS API Documentation
 
-This repo contains the CLMS Portal API documentations.
+This repository contains the CLMS Portal API documentations.
