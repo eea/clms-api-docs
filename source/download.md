@@ -150,3 +150,19 @@ The result will be similar to the previous ones but will contain only the inform
 ```{literalinclude} ./http-examples/download-request-download-status.resp
    :language: http
 ```
+
+
+## Cancelling a download
+
+A download can also be cancelled by using the `@datarequest_delete` endpoint as follows:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-delete.req
+
+```
+
+The result will have no content if the request is deleted correctly
+
+```{literalinclude} ./http-examples/download-request-delete.resp
+   :language: http
+```
