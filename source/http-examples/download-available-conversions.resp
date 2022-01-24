@@ -1,0 +1,75 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "GDB": {
+        "GDB": true,
+        "GML": true,
+        "GPKG": true,
+        "Geojson": true,
+        "Geotiff": false,
+        "Netcdf": false,
+        "Shapefile": true,
+        "WFS": false
+    },
+    "GPKG": {
+        "GDB": true,
+        "GML": true,
+        "GPKG": true,
+        "Geojson": true,
+        "Geotiff": false,
+        "Netcdf": false,
+        "Shapefile": true,
+        "WFS": false
+    },
+    "Geojson": {
+        "GDB": true,
+        "GML": true,
+        "GPKG": true,
+        "Geojson": true,
+        "Geotiff": false,
+        "Netcdf": false,
+        "Shapefile": true,
+        "WFS": false
+    },
+    "Geotiff": {
+        "GDB": false,
+        "GML": false,
+        "GPKG": false,
+        "Geojson": false,
+        "Geotiff": true,
+        "Netcdf": false,
+        "Shapefile": false,
+        "WFS": false
+    },
+    "Netcdf": {
+        "GDB": false,
+        "GML": false,
+        "GPKG": false,
+        "Geojson": false,
+        "Geotiff": true,
+        "Netcdf": true,
+        "Shapefile": false,
+        "WFS": false
+    },
+    "Shapefile": {
+        "GDB": true,
+        "GML": true,
+        "GPKG": true,
+        "Geojson": true,
+        "Geotiff": false,
+        "Netcdf": false,
+        "Shapefile": true,
+        "WFS": false
+    },
+    "WFS": {
+        "GDB": true,
+        "GML": true,
+        "GPKG": true,
+        "Geojson": true,
+        "Geotiff": false,
+        "Netcdf": false,
+        "Shapefile": true,
+        "WFS": true
+    }
+}

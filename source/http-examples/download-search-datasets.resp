@@ -1,0 +1,265 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?portal_type=DataSet&metadata_fields=UID&metadata_fields=dataset_full_format",
+    "batching": {
+        "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?portal_type=DataSet&metadata_fields=UID&metadata_fields=dataset_full_format",
+        "first": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?b_start=0&portal_type=DataSet&metadata_fields=UID&metadata_fields=dataset_full_format",
+        "last": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?b_start=175&portal_type=DataSet&metadata_fields=UID&metadata_fields=dataset_full_format",
+        "next": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?b_start=25&portal_type=DataSet&metadata_fields=UID&metadata_fields=dataset_full_format"
+    },
+    "items": [
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/urban-atlas/building-height-2012",
+            "@type": "DataSet",
+            "UID": "9b64a56b49f74f458aa401ad7809af16",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Building Height 2012"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/local/copernicus-hotspot-land-cover-change-africa",
+            "@type": "DataSet",
+            "UID": "e27dbc8330084b58bb5e282231fca74d",
+            "dataset_full_format": null,
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Land Cover and Land Change"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2015-globe",
+            "@type": "DataSet",
+            "UID": "59846f949047465f9670b0c9ef490a52",
+            "dataset_full_format": "Geotiff",
+            "description": "Land cover maps represent spatial information on different types (classes) of physical coverage of the Earth's surface, e.g. forests, grasslands, croplands, lakes, wetlands. Dynamic land cover maps include transitions of land cover classes over time and hence captures land cover changes.",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Land Cover 100m: collection 3: epoch 2015: Globe"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2016-globe",
+            "@type": "DataSet",
+            "UID": "55e6e9c97459484a9c4d258da7376560",
+            "dataset_full_format": "Geotiff",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Land Cover 100m: collection 3: epoch 2016: Globe"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2017-globe",
+            "@type": "DataSet",
+            "UID": "884325e8871049848a423de02d3cac4d",
+            "dataset_full_format": "Geotiff",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Land Cover 100m: collection 3: epoch 2017: Globe"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2018-globe",
+            "@type": "DataSet",
+            "UID": "a08da3f50c8d4b38bec35b831382162b",
+            "dataset_full_format": "Geotiff",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Land Cover 100m: collection 3: epoch 2018: Globe"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2019-globe",
+            "@type": "DataSet",
+            "UID": "a8d945f0edd143a0a5240c28bafa23da",
+            "dataset_full_format": "Geotiff",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Land Cover 100m: collection 3: epoch 2019: Globe"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/vegetation-and-soil-moisture/10-daily-soil-water-index-global-v3-0-12-5-km",
+            "@type": "DataSet",
+            "UID": "209ce378d1734da881bdd43aed63c0ed",
+            "dataset_full_format": null,
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "10-daily Soil Water Index - Global, V3.0 (12.5 km)"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/european-image-mosaics/very-high-resolution-image-mosaic-2018-true-colour-2m",
+            "@type": "DataSet",
+            "UID": "56a2f5abff6440ca87864896f1a9348c",
+            "dataset_full_format": null,
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Very High Resolution Image Mosaic 2018 - True Colour (2m)"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global-image-mosaics/the-sentinel-2-global-mosaic-service",
+            "@type": "DataSet",
+            "UID": "aa13c4a66c5a4ec792439af2ce9d402b",
+            "dataset_full_format": null,
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Global  Image Mosaic"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/urban-atlas/urban-atlas-2018",
+            "@type": "DataSet",
+            "UID": "70903c20fc2a4a90ad200bc95a7557d4",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Urban Atlas 2018"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/urban-atlas/urban-atlas-change-2012-2018",
+            "@type": "DataSet",
+            "UID": "b256b19833e0413986caa7d5e8ce4adf",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Urban Atlas Change 2012-2018"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/urban-atlas/street-tree-layer-stl-2018",
+            "@type": "DataSet",
+            "UID": "c784cdbe0e5c41fa8051449ced377921",
+            "dataset_full_format": "GDB",
+            "description": "The Street Tree Layer (STL) is a separate layer from the Urban Atlas LCLU Layer produced within the level 1 urban mask for each FUA. It includes contiguous rows or a patches of trees covering 500 square meters or more and with a minimum width(MMW) of 10 meter over \"Artificial surfaces\" (nomenclature class 1) inside FUA (i.e. rows of trees along the road network outside urban areas or forest adjacent to urban areas should not be included)",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Street Tree Layer (STL) 2018"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc2018",
+            "@type": "DataSet",
+            "UID": "0407d497d3c44bcd93ce8fd5bf78596a",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "CLC 2018"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc-2012",
+            "@type": "DataSet",
+            "UID": "a5ee71470be04d66bcff498f94ceb5dc",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "CLC 2012"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/lcc-2012-2018",
+            "@type": "DataSet",
+            "UID": "008e882e9759409fa93157ae4687bef8",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "CHA 2012-2018"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/high-resolution-snow-and-ice-monitoring/fractional-snow-cover",
+            "@type": "DataSet",
+            "UID": "10ee0f23fcb146ea89dcdacc40b0900d",
+            "dataset_full_format": "Geotiff",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Fractional Snow Cover"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/high-resolution-snow-and-ice-monitoring/persistent-snow-area",
+            "@type": "DataSet",
+            "UID": "adba54cf1bc7452bbb67826f111b4b83",
+            "dataset_full_format": "Geotiff",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Persistent Snow Area"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/high-resolution-snow-and-ice-monitoring/aggregated-river-and-lake-ice-extent",
+            "@type": "DataSet",
+            "UID": "6875e4c2fe464dfdb26c5eeea758d1ac",
+            "dataset_full_format": "Shapefile",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "Aggregated River and Lake Ice Extent"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/high-resolution-snow-and-ice-monitoring/river-and-lake-ice-extent-s2",
+            "@type": "DataSet",
+            "UID": "b11ec040b2714fbfa9a8fc26a17dcf6f",
+            "dataset_full_format": "Geotiff",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "River and Lake Ice Extent (raster 20m), Jul. 2020"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc-1990",
+            "@type": "DataSet",
+            "UID": "8b393c8e474642d5acb4ed70fc2dc024",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "CLC 1990"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc-2000",
+            "@type": "DataSet",
+            "UID": "6704f90ca82e4f228a46111519f8978e",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "CLC 2000"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc-2006",
+            "@type": "DataSet",
+            "UID": "d443c86fec2f49e08ff12c7decdbf2af",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "CLC 2006"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/cha-1990-2000",
+            "@type": "DataSet",
+            "UID": "4d33bf4e1a8f487eaccc829864fed3f1",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "CHA 1990-2000"
+        },
+        {
+            "@id": "https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/cha-2000-2006",
+            "@type": "DataSet",
+            "UID": "abce2c32a4314b77b8763c68f1a228bd",
+            "dataset_full_format": "GDB",
+            "description": "",
+            "image_field": null,
+            "review_state": "published",
+            "title": "CHA 2000-2006"
+        }
+    ],
+    "items_total": 196
+}

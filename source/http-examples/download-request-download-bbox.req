@@ -1,0 +1,21 @@
+POST /api/@datarequest_post HTTP/1.1
+Accept: application/json
+Content-type: application/json
+Authorization: Bearer <REDACTED>
+
+{
+  "Datasets":[
+      {
+        "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+        "OutputFormat": "Shapefile",
+        "OutputGCS": "EPSG:4326",
+        "BoundingBox": [741,163.36666870117188,851,234.36666870117188]
+    },
+    {
+        "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+        "OutputFormat": "Shapefile",
+        "OutputGCS": "EPSG:4326",
+        "BoundingBox": [741,163.36666870117188,851,234.36666870117188]
+    }
+  ]
+}

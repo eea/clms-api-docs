@@ -1,0 +1,63 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "20901119535": {
+        "Datasets": [
+            {
+                "DatasetFormat": "GDB",
+                "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+                "DatasetPath": "SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==",
+                "DatasetSource": "EEA",
+                "DatasetTitle": "CLC 2012",
+                "Metadata": [],
+                "NUTSID": "ITC11",
+                "OutputFormat": "Shapefile",
+                "OutputGCS": "EPSG:4326"
+            },
+            {
+                "DatasetFormat": "GDB",
+                "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+                "DatasetPath": "SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==",
+                "DatasetSource": "EEA",
+                "DatasetTitle": "CLC 2012",
+                "Metadata": [],
+                "NUTSID": "ITC1",
+                "OutputFormat": "Shapefile",
+                "OutputGCS": "EPSG:4326"
+            }
+        ],
+        "RegistrationDateTime": "2022-01-24T14:47:11.025313",
+        "Status": "In_progress",
+        "UserID": "admin"
+    },
+    "759481825": {
+        "Datasets": [
+            {
+                "DatasetFormat": "GDB",
+                "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+                "DatasetPath": "SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==",
+                "DatasetSource": "EEA",
+                "DatasetTitle": "CLC 2012",
+                "Metadata": [],
+                "NUTSID": "ITC11",
+                "OutputFormat": "Shapefile",
+                "OutputGCS": "EPSG:4326"
+            },
+            {
+                "DatasetFormat": "GDB",
+                "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+                "DatasetPath": "SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==",
+                "DatasetSource": "EEA",
+                "DatasetTitle": "CLC 2012",
+                "Metadata": [],
+                "NUTSID": "ITC1",
+                "OutputFormat": "Shapefile",
+                "OutputGCS": "EPSG:4326"
+            }
+        ],
+        "RegistrationDateTime": "2022-01-24T14:43:57.188985",
+        "Status": "In_progress",
+        "UserID": "admin"
+    }
+}

@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'CLMS API'
-copyright = '2022, Mikel Larreategi'
-author = 'Mikel Larreategi'
+copyright = '2022, EEA, Copernicus Team'
+author = 'Bilbomática & CodeSyntax Consortium'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0'

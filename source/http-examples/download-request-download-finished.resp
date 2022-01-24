@@ -1,0 +1,31 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "68814328927": {
+        "Datasets": [
+            {
+                "BoundingBox": [
+                    636,
+                    218.36666870117188,
+                    834,
+                    389.3666687011719
+                ],
+                "DatasetFormat": "GDB",
+                "DatasetID": "008e882e9759409fa93157ae4687bef8",
+                "DatasetPath": "SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJfQ2hhbmdlKENIQSlfMjAxMi0yMDE4XENMQ19DSEFfMjAxMi0yMDE4X1ZlcnNpb25fMjBcRGF0YVxkYXRhLW1hc3RlclxVMjAxOF9DSEExMjE4X1YyMDIwXzIwdTFfdmVjdG9yXFUyMDE4X0NIQTEyMThfVjIwMjBfMjB1MS5nZGI=",
+                "DatasetSource": "EEA",
+                "DatasetTitle": "CHA 2012-2018",
+                "Metadata": [],
+                "OutputFormat": "GDB",
+                "OutputGCS": "EPSG:4326"
+            }
+        ],
+        "DownloadURL": "https://copernicus-fme.eea.europa.eu/clmsdatadownload/results/933.zip",
+        "FileSize": 103380245,
+        "FinalizationDateTime": "2022-01-20T10:28:22.179435",
+        "RegistrationDateTime": "2022-01-20T10:08:18.145053",
+        "Status": "Finished_ok",
+        "UserID": "n00015mf"
+    }
+}

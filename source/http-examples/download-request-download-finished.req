@@ -1,0 +1,3 @@
+GET /api/@datarequest_search?status=Finished_ok HTTP/1.1
+Accept: application/json
+Authorization: Bearer <REDACTED>
