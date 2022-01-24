@@ -1,12 +1,12 @@
 # Authentication
 
-``` {note} This documentation is heavily based on [ftw.tokenauth](https://pypi.org/project/ftw.tokenauth/) product's documentation because 
+```{note} This documentation is heavily based on [ftw.tokenauth](https://pypi.org/project/ftw.tokenauth/) product's documentation because
 we are using this product under-the-hood to provide authentication services for API users.
 
-``` 
+```
 
-CLMS Portal Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user 
-authentication service. This means that no user password is stored in the CLMS Portal, but the portal uses [Openid-connect](https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)) to handle the user authorization with EU Login. Using EU Login the user only has to create one europe-wide account and will be able to access all European services that use EU Login without needing to create a new account for each service.
+CLMS Portal Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user
+authentication service. This means that no user password is stored in the CLMS Portal, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login. Using EU Login the user only has to create one europe-wide account and will be able to access all European services that use EU Login without needing to create a new account for each service.
 
 That's why all users wanting to use the API, need to create specific API tokens to communicate with the API.
 
@@ -25,15 +25,13 @@ Assuming the client is in possession of a service key, the flow looks like this:
     :alt: Register/Login link
 ```
 
-
 ## Login in the CLMS portal
 
-Using the `Register/Login` button in the top green bar of the portal, the user will be redirected to EU Login where he can login or register a new account. 
+Using the `Register/Login` button in the top green bar of the portal, the user will be redirected to EU Login where he can login or register a new account.
 
 ```{image} ./images/authentication-register-login-link.png
     :alt: Register/Login link
 ```
-
 
 When the user authorization is finished and the user is redirected back to the CLMS Portal, the name of the user will be shown in the top
 green bar and the user will be able to go his profile page and create the needed API tokens.
@@ -41,7 +39,6 @@ green bar and the user will be able to go his profile page and create the needed
 ```{image} ./images/authentication-register-login-user-name.png
     :alt: Register/Login with user name
 ```
-
 
 ## Create API Tokens
 
@@ -74,6 +71,12 @@ After filling the form the token will be created inmediately and the token detai
 It is very important to note that token details will be shown just once and just in this moment. The user will need to follow the details
 and copy the token details to a file, in order to use the token in the future.
 
+A service key looks like this (this specific token is revoked and no actions can be performed with it):
+
+```{literalinclude} ./others/token.json
+   :language: json
+```
+
 After creating one or more tokens, the user will be able to delete them using the buttons in the token list view.
 
 ```{image} ./images/authentication-token-token-list.png
@@ -86,21 +89,20 @@ In order to request an access token, the client application will use the private
 
 The JWT needs to contain the following claims:
 
+| Name | Description                                                              |
+| ---- | ------------------------------------------------------------------------ |
+| iss  | Issuer - must be `client_id` from service key                            |
+| aud  | Audience - must be `token_uri` from service key                          |
+| sub  | Subject - must be `user_id` from service key or an arbitrary userid of   |
+|      | an existing user if the service key user is allowed to impersonate other |
+|      | users.                                                                   |
+| iat  | The time the assertion was issued, specified as seconds since            |
+|      | 00:00:00 UTC, January 1, 1970.                                           |
+| exp  | The expiration time of the assertion, specified as seconds since         |
+|      | 00:00:00 UTC, January 1, 1970. This value has a maximum of 1 hour after  |
+|      | the issued time.                                                         |
 
-|Name| Description                                                              |
------|--------------------------------------------------------------------------
-|iss | Issuer - must be ``client_id`` from service key                          |
-|aud | Audience - must be ``token_uri`` from service key                        |
-|sub | Subject - must be ``user_id`` from service key or an arbitrary userid of |
-|    | an existing user if the service key user is allowed to impersonate other |
-|    | users.                                                                   |
-|iat | The time the assertion was issued, specified as seconds since            |
-|    | 00:00:00 UTC, January 1, 1970.                                           |
-|exp | The expiration time of the assertion, specified as seconds since         |
-|    | 00:00:00 UTC, January 1, 1970. This value has a maximum of 1 hour after  |
-|    | the issued time.                                                         |
-
-The following is an example of how to build such a JWT token using python provided the service key 
+The following is an example of how to build such a JWT token using python provided the service key
 is stored in a file called `my_saved_key.json`:
 
 ```python
@@ -132,21 +134,20 @@ This request needs to be a `POST` request with `Content-Type: application/x-www-
 
 Two parameters are required:
 
-|Name 	    | Description                                                    |
-|-----------| ---------------------------------------------------------------|
-|grant_type | Must always be **urn:ietf:params:oauth:grant-type:jwt-bearer** |
-|assertion  | The JWT authorization grant                                    |
-
+| Name       | Description                                                    |
+| ---------- | -------------------------------------------------------------- |
+| grant_type | Must always be **urn:ietf:params:oauth:grant-type:jwt-bearer** |
+| assertion  | The JWT authorization grant                                    |
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/authentication-access-token-request.req
-```    
+```
 
 The response will be in `application/json` format and will contain the access token needed to interact with the API.
 
 ```{literalinclude} ./http-examples/authentication-access-token-request.resp
    :language: http
-```   
+```
 
 ## Use the access token to authentication requests.
 
@@ -154,8 +155,7 @@ The client can then use the access token to authenticate requests. The token nee
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/authentication-use-access-token.req
-```  
-
+```
 
 ## Token expiration and renewal
 

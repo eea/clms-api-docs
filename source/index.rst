@@ -13,6 +13,7 @@ Welcome to CLMS API's documentation!
    introduction
    basic
    authentication
+   download
 
 
 
