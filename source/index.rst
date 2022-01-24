@@ -11,6 +11,8 @@ Welcome to CLMS API's documentation!
    :caption: Contents:
 
    introduction
+   basic
+   authentication
 
 
 
