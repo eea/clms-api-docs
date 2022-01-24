@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download API &mdash; CLMS API 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sphinxcontrib-httpexample.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinxcontrib-httpexample.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Authentication" href="authentication.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> CLMS API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Basics about the CLMS API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authentication.html">Authentication</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Download API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#find-the-items-to-be-downloaded">Find the items to be downloaded</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#decide-in-which-format-the-items-should-be-downloaded">Decide in which format the items should be downloaded</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#restrict-the-spatial-extent-of-the-files">Restrict the spatial extent of the files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#restriction-by-nuts">Restriction by NUTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restriction-by-bounding-box">Restriction by bounding box</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#request-the-download">Request the download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wait-for-the-download-to-be-ready">Wait for the download to be ready</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cancelling-a-download">Cancelling a download</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CLMS API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Download API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/download.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="download-api">
+<h1>Download API<a class="headerlink" href="#download-api" title="Permalink to this headline"></a></h1>
+<p>The CLMS portal provides several endpoints to handle the downloads of the files provided by the portal.</p>
+<p>Due to the nature of the files present in the portal, the download is handled by a background process which informs
+the user by email when the download is ready. Moreover it also signals the API with the download URL so that the
+application using the API can handle by itself the download.</p>
+<p>The download process takes the following steps:</p>
+<ol class="arabic simple">
+<li><p>Find the items to be downloaded</p></li>
+<li><p>Decide in which format the items should be downloaded</p></li>
+<li><p>Restrict the spatial extent of the files</p></li>
+<li><p>Request the download</p></li>
+<li><p>Wait for the download to be ready</p></li>
+</ol>
+<p>In the following sections we will explain all of them.</p>
+<section id="find-the-items-to-be-downloaded">
+<h2>Find the items to be downloaded<a class="headerlink" href="#find-the-items-to-be-downloaded" title="Permalink to this headline"></a></h2>
+<p>As explained in the introduction, the CLMS portal API is based on Plone, so the user needs to use the <code class="docutils literal notranslate"><span class="pre">&#64;search</span></code> endpoint to look for the items he wants to download.</p>
+<p>A simple search off all datasets available in the portal would be as follows:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id1">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/api/@search?portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id2">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X GET <span class="s1">&#39;http://nohost/api/@search?portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format&#39;</span> -H <span class="s2">&quot;Accept: application/json&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id3">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- <span class="s1">&#39;http://nohost/api/@search?portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format&#39;</span> --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id4">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@search?portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The important bits here are in the parameters passed to the <code class="docutils literal notranslate"><span class="pre">&#64;search</span></code> endpoint where we are requesting to include the <code class="docutils literal notranslate"><span class="pre">UID</span></code> and the <code class="docutils literal notranslate"><span class="pre">dataset_full_format</span></code> of each DataSet. If we don’t request the <code class="docutils literal notranslate"><span class="pre">UID</span></code> we will only obtain the <code class="docutils literal notranslate"><span class="pre">&#64;id</span></code> of each datasets which corresponds to its URL, and then we would have to do an additional request to that URL to get the <code class="docutils literal notranslate"><span class="pre">UID</span></code> of the DataSet.</p>
+<p>And the results will be similar to the following:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;batching&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;first&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?b_start=0&amp;portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;last&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?b_start=175&amp;portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;next&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/@search?b_start=25&amp;portal_type=DataSet&amp;metadata_fields=UID&amp;metadata_fields=dataset_full_format&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/urban-atlas/building-height-2012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9b64a56b49f74f458aa401ad7809af16&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Building Height 2012&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/local/copernicus-hotspot-land-cover-change-africa&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e27dbc8330084b58bb5e282231fca74d&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Land Cover and Land Change&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2015-globe&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;59846f949047465f9670b0c9ef490a52&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geotiff&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Land cover maps represent spatial information on different types (classes) of physical coverage of the Earth&#39;s surface, e.g. forests, grasslands, croplands, lakes, wetlands. Dynamic land cover maps include transitions of land cover classes over time and hence captures land cover changes.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Land Cover 100m: collection 3: epoch 2015: Globe&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2016-globe&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;55e6e9c97459484a9c4d258da7376560&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geotiff&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Land Cover 100m: collection 3: epoch 2016: Globe&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2017-globe&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;884325e8871049848a423de02d3cac4d&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geotiff&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Land Cover 100m: collection 3: epoch 2017: Globe&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2018-globe&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a08da3f50c8d4b38bec35b831382162b&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geotiff&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Land Cover 100m: collection 3: epoch 2018: Globe&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global/copernicus-global-land-service-land-cover-100m-collection-3-epoch-2019-globe&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a8d945f0edd143a0a5240c28bafa23da&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geotiff&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Land Cover 100m: collection 3: epoch 2019: Globe&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/vegetation-and-soil-moisture/10-daily-soil-water-index-global-v3-0-12-5-km&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;209ce378d1734da881bdd43aed63c0ed&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10-daily Soil Water Index - Global, V3.0 (12.5 km)&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/european-image-mosaics/very-high-resolution-image-mosaic-2018-true-colour-2m&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;56a2f5abff6440ca87864896f1a9348c&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Very High Resolution Image Mosaic 2018 - True Colour (2m)&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/global-image-mosaics/the-sentinel-2-global-mosaic-service&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aa13c4a66c5a4ec792439af2ce9d402b&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Global  Image Mosaic&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/urban-atlas/urban-atlas-2018&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;70903c20fc2a4a90ad200bc95a7557d4&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Urban Atlas 2018&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/urban-atlas/urban-atlas-change-2012-2018&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b256b19833e0413986caa7d5e8ce4adf&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Urban Atlas Change 2012-2018&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/urban-atlas/street-tree-layer-stl-2018&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c784cdbe0e5c41fa8051449ced377921&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Street Tree Layer (STL) is a separate layer from the Urban Atlas LCLU Layer produced within the level 1 urban mask for each FUA. It includes contiguous rows or a patches of trees covering 500 square meters or more and with a minimum width(MMW) of 10 meter over \&quot;Artificial surfaces\&quot; (nomenclature class 1) inside FUA (i.e. rows of trees along the road network outside urban areas or forest adjacent to urban areas should not be included)&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Street Tree Layer (STL) 2018&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc2018&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0407d497d3c44bcd93ce8fd5bf78596a&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2018&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc-2012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2012&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/lcc-2012-2018&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;008e882e9759409fa93157ae4687bef8&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CHA 2012-2018&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/high-resolution-snow-and-ice-monitoring/fractional-snow-cover&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10ee0f23fcb146ea89dcdacc40b0900d&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geotiff&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fractional Snow Cover&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/high-resolution-snow-and-ice-monitoring/persistent-snow-area&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;adba54cf1bc7452bbb67826f111b4b83&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geotiff&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Persistent Snow Area&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/high-resolution-snow-and-ice-monitoring/aggregated-river-and-lake-ice-extent&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6875e4c2fe464dfdb26c5eeea758d1ac&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Aggregated River and Lake Ice Extent&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/high-resolution-snow-and-ice-monitoring/river-and-lake-ice-extent-s2&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b11ec040b2714fbfa9a8fc26a17dcf6f&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geotiff&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;River and Lake Ice Extent (raster 20m), Jul. 2020&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc-1990&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;8b393c8e474642d5acb4ed70fc2dc024&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 1990&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc-2000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;6704f90ca82e4f228a46111519f8978e&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2000&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/clc-2006&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d443c86fec2f49e08ff12c7decdbf2af&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2006&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/cha-1990-2000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d33bf4e1a8f487eaccc829864fed3f1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CHA 1990-2000&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://clmsdemo.devel6cph.eea.europa.eu/api/en/products/corine-land-cover/cha-2000-2006&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DataSet&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;UID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abce2c32a4314b77b8763c68f1a228bd&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;dataset_full_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;image_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;review_state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;published&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CHA 2000-2006&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;items_total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">196</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>When we find the DataSet that we want to download we will have to take note of its <code class="docutils literal notranslate"><span class="pre">UID</span></code> (in order to know what to download) and its <code class="docutils literal notranslate"><span class="pre">dataset_full_format</span></code> (in order to know which format conversions can we request).</p>
+</section>
+<section id="decide-in-which-format-the-items-should-be-downloaded">
+<h2>Decide in which format the items should be downloaded<a class="headerlink" href="#decide-in-which-format-the-items-should-be-downloaded" title="Permalink to this headline"></a></h2>
+<p>The CLMS API provides an endpoint where we can check which coversions are available for the available formats. To get the list of available conversions we need to do the following request:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id5">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/api/@format_conversion_table</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;REDACTED&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id6">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X GET http://nohost/api/@format_conversion_table -H <span class="s2">&quot;Accept: application/json&quot;</span> -H <span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id7">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- http://nohost/api/@format_conversion_table --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id8">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@format_conversion_table&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;REDACTED&gt;&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The response will be a JSON object where each of the format has a <code class="docutils literal notranslate"><span class="pre">true/false</span></code> value indicating if the conversion is available or not.</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;GDB&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GDB&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GML&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GPKG&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geotiff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Netcdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Shapefile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;WFS&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;GPKG&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GDB&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GML&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GPKG&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geotiff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Netcdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Shapefile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;WFS&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;Geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GDB&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GML&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GPKG&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geotiff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Netcdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Shapefile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;WFS&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;Geotiff&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GDB&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GML&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GPKG&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geotiff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Netcdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Shapefile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;WFS&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;Netcdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GDB&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GML&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GPKG&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geotiff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Netcdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Shapefile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;WFS&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;Shapefile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GDB&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GML&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GPKG&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geotiff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Netcdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Shapefile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;WFS&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;WFS&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GDB&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GML&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;GPKG&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geojson&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Geotiff&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Netcdf&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Shapefile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;WFS&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In the same way the output projection of the downloaded file can be selected. This selection is open on all available projections. To get the list of the available ones, one needs to do the followint request:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id9">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/api/@projections</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;REDACTED&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id10">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X GET http://nohost/api/@projections -H <span class="s2">&quot;Accept: application/json&quot;</span> -H <span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id11">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- http://nohost/api/@projections --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id12">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@projections&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;REDACTED&gt;&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The response will be the list of available projections:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;EPSG:3035&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;EPSG:3857&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;EPSG:4258&quot;</span><span class="w"></span>
+<span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="restrict-the-spatial-extent-of-the-files">
+<h2>Restrict the spatial extent of the files<a class="headerlink" href="#restrict-the-spatial-extent-of-the-files" title="Permalink to this headline"></a></h2>
+<section id="restriction-by-nuts">
+<h3>Restriction by NUTS<a class="headerlink" href="#restriction-by-nuts" title="Permalink to this headline"></a></h3>
+<p>NUTS is the <em>Nomenclature of Territorial Units for Statistics</em> which is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.</p>
+<p>If you want to crop the DataSet to a given NUTS region, you need to know that the CLMS Portal allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.</p>
+</section>
+<section id="restriction-by-bounding-box">
+<h3>Restriction by bounding box<a class="headerlink" href="#restriction-by-bounding-box" title="Permalink to this headline"></a></h3>
+<p>In addition to the NUTS way, you can also restrict the download to a given bounding box. This is done by passing an array of 4 values in the signaling the 4 points that parameter. The values are ** UNKNOWN**.</p>
+</section>
+</section>
+<section id="request-the-download">
+<h2>Request the download<a class="headerlink" href="#request-the-download" title="Permalink to this headline"></a></h2>
+<p>When the user has all the data he needs to download the DataSet, he can request the download by doing the following request. This is an example using a NUTS code:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id13">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/api/@datarequest_post</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Content-type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;REDACTED&gt;</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;Datasets&quot;</span><span class="p">:[</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;NUTS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ITC11&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;NUTS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ITC1&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id14">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X POST http://nohost/api/@datarequest_post -H <span class="s2">&quot;Accept: application/json&quot;</span> -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -H <span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span> --data-raw <span class="s1">&#39;{&quot;Datasets&quot;: [{&quot;DatasetID&quot;: &quot;a5ee71470be04d66bcff498f94ceb5dc&quot;, &quot;OutputFormat&quot;: &quot;Shapefile&quot;, &quot;OutputGCS&quot;: &quot;EPSG:4326&quot;, &quot;NUTS&quot;: &quot;ITC11&quot;}, {&quot;DatasetID&quot;: &quot;a5ee71470be04d66bcff498f94ceb5dc&quot;, &quot;OutputFormat&quot;: &quot;Shapefile&quot;, &quot;OutputGCS&quot;: &quot;EPSG:4326&quot;, &quot;NUTS&quot;: &quot;ITC1&quot;}]}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id15">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- http://nohost/api/@datarequest_post --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Content-Type: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span> --post-data<span class="o">=</span><span class="s1">&#39;{&quot;Datasets&quot;: [{&quot;DatasetID&quot;: &quot;a5ee71470be04d66bcff498f94ceb5dc&quot;, &quot;OutputFormat&quot;: &quot;Shapefile&quot;, &quot;OutputGCS&quot;: &quot;EPSG:4326&quot;, &quot;NUTS&quot;: &quot;ITC11&quot;}, {&quot;DatasetID&quot;: &quot;a5ee71470be04d66bcff498f94ceb5dc&quot;, &quot;OutputFormat&quot;: &quot;Shapefile&quot;, &quot;OutputGCS&quot;: &quot;EPSG:4326&quot;, &quot;NUTS&quot;: &quot;ITC1&quot;}]}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id16">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@datarequest_post&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;REDACTED&gt;&#39;</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Datasets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;DatasetID&#39;</span><span class="p">:</span> <span class="s1">&#39;a5ee71470be04d66bcff498f94ceb5dc&#39;</span><span class="p">,</span> <span class="s1">&#39;OutputFormat&#39;</span><span class="p">:</span> <span class="s1">&#39;Shapefile&#39;</span><span class="p">,</span> <span class="s1">&#39;OutputGCS&#39;</span><span class="p">:</span> <span class="s1">&#39;EPSG:4326&#39;</span><span class="p">,</span> <span class="s1">&#39;NUTS&#39;</span><span class="p">:</span> <span class="s1">&#39;ITC11&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;DatasetID&#39;</span><span class="p">:</span> <span class="s1">&#39;a5ee71470be04d66bcff498f94ceb5dc&#39;</span><span class="p">,</span> <span class="s1">&#39;OutputFormat&#39;</span><span class="p">:</span> <span class="s1">&#39;Shapefile&#39;</span><span class="p">,</span> <span class="s1">&#39;OutputGCS&#39;</span><span class="p">:</span> <span class="s1">&#39;EPSG:4326&#39;</span><span class="p">,</span> <span class="s1">&#39;NUTS&#39;</span><span class="p">:</span> <span class="s1">&#39;ITC1&#39;</span><span class="p">}]})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The response will include the task id assigned to the download process:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;TaskID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20901119535</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Similarly a bounding-box based download request can be made as follows:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id17">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/api/@datarequest_post</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Content-type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;REDACTED&gt;</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;Datasets&quot;</span><span class="p">:[</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;BoundingBox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">741</span><span class="p">,</span><span class="mf">163.36666870117188</span><span class="p">,</span><span class="mi">851</span><span class="p">,</span><span class="mf">234.36666870117188</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;BoundingBox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">741</span><span class="p">,</span><span class="mf">163.36666870117188</span><span class="p">,</span><span class="mi">851</span><span class="p">,</span><span class="mf">234.36666870117188</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id18">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X POST http://nohost/api/@datarequest_post -H <span class="s2">&quot;Accept: application/json&quot;</span> -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -H <span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span> --data-raw <span class="s1">&#39;{&quot;Datasets&quot;: [{&quot;DatasetID&quot;: &quot;a5ee71470be04d66bcff498f94ceb5dc&quot;, &quot;OutputFormat&quot;: &quot;Shapefile&quot;, &quot;OutputGCS&quot;: &quot;EPSG:4326&quot;, &quot;BoundingBox&quot;: [741, 163.36666870117188, 851, 234.36666870117188]}, {&quot;DatasetID&quot;: &quot;a5ee71470be04d66bcff498f94ceb5dc&quot;, &quot;OutputFormat&quot;: &quot;Shapefile&quot;, &quot;OutputGCS&quot;: &quot;EPSG:4326&quot;, &quot;BoundingBox&quot;: [741, 163.36666870117188, 851, 234.36666870117188]}]}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id19">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- http://nohost/api/@datarequest_post --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Content-Type: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span> --post-data<span class="o">=</span><span class="s1">&#39;{&quot;Datasets&quot;: [{&quot;DatasetID&quot;: &quot;a5ee71470be04d66bcff498f94ceb5dc&quot;, &quot;OutputFormat&quot;: &quot;Shapefile&quot;, &quot;OutputGCS&quot;: &quot;EPSG:4326&quot;, &quot;BoundingBox&quot;: [741, 163.36666870117188, 851, 234.36666870117188]}, {&quot;DatasetID&quot;: &quot;a5ee71470be04d66bcff498f94ceb5dc&quot;, &quot;OutputFormat&quot;: &quot;Shapefile&quot;, &quot;OutputGCS&quot;: &quot;EPSG:4326&quot;, &quot;BoundingBox&quot;: [741, 163.36666870117188, 851, 234.36666870117188]}]}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id20">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@datarequest_post&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;REDACTED&gt;&#39;</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Datasets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;DatasetID&#39;</span><span class="p">:</span> <span class="s1">&#39;a5ee71470be04d66bcff498f94ceb5dc&#39;</span><span class="p">,</span> <span class="s1">&#39;OutputFormat&#39;</span><span class="p">:</span> <span class="s1">&#39;Shapefile&#39;</span><span class="p">,</span> <span class="s1">&#39;OutputGCS&#39;</span><span class="p">:</span> <span class="s1">&#39;EPSG:4326&#39;</span><span class="p">,</span> <span class="s1">&#39;BoundingBox&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">741</span><span class="p">,</span> <span class="mf">163.36666870117188</span><span class="p">,</span> <span class="mi">851</span><span class="p">,</span> <span class="mf">234.36666870117188</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;DatasetID&#39;</span><span class="p">:</span> <span class="s1">&#39;a5ee71470be04d66bcff498f94ceb5dc&#39;</span><span class="p">,</span> <span class="s1">&#39;OutputFormat&#39;</span><span class="p">:</span> <span class="s1">&#39;Shapefile&#39;</span><span class="p">,</span> <span class="s1">&#39;OutputGCS&#39;</span><span class="p">:</span> <span class="s1">&#39;EPSG:4326&#39;</span><span class="p">,</span> <span class="s1">&#39;BoundingBox&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">741</span><span class="p">,</span> <span class="mf">163.36666870117188</span><span class="p">,</span> <span class="mi">851</span><span class="p">,</span> <span class="mf">234.36666870117188</span><span class="p">]}]})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The response will include the task id assigned to the download process:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;TaskID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20901119538</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="wait-for-the-download-to-be-ready">
+<h2>Wait for the download to be ready<a class="headerlink" href="#wait-for-the-download-to-be-ready" title="Permalink to this headline"></a></h2>
+<p>As said, the download tool will inform the user by email when the download is ready. But the user can always request the status of all of his requests using the <code class="docutils literal notranslate"><span class="pre">&#64;datarequest_search</span></code> endpoint as follows:</p>
+<p>Request all in progress downloads:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id21">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/api/@datarequest_search?status=In_progress</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;REDACTED&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id22">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X GET <span class="s1">&#39;http://nohost/api/@datarequest_search?status=In_progress&#39;</span> -H <span class="s2">&quot;Accept: application/json&quot;</span> -H <span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id23">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- <span class="s1">&#39;http://nohost/api/@datarequest_search?status=In_progress&#39;</span> --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id24">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@datarequest_search?status=In_progress&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;REDACTED&gt;&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The response contains a JSON object where each of the keys represent a download task. It also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.), and also the date and time of the request.</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;20901119535&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Datasets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EEA&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;NUTSID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ITC11&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EEA&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;NUTSID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ITC1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;RegistrationDateTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-24T14:47:11.025313&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;In_progress&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;UserID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;759481825&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Datasets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EEA&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;NUTSID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ITC11&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EEA&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;NUTSID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ITC1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;RegistrationDateTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-24T14:43:57.188985&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;In_progress&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;UserID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Similarly a user can request all the finished downloads:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id25">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/api/@datarequest_search?status=Finished_ok</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;REDACTED&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id26">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X GET <span class="s1">&#39;http://nohost/api/@datarequest_search?status=Finished_ok&#39;</span> -H <span class="s2">&quot;Accept: application/json&quot;</span> -H <span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id27">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- <span class="s1">&#39;http://nohost/api/@datarequest_search?status=Finished_ok&#39;</span> --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id28">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@datarequest_search?status=Finished_ok&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;REDACTED&gt;&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.), and also the date and time of the request.</p>
+<p>But in this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the URL where the download will be available for the next <em>10 days</em>.</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;68814328927&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Datasets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">            </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;BoundingBox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">                    </span><span class="mi">636</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="mf">218.36666870117188</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="mi">834</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="mf">389.3666687011719</span><span class="w"></span>
+<span class="w">                </span><span class="p">],</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;008e882e9759409fa93157ae4687bef8&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJfQ2hhbmdlKENIQSlfMjAxMi0yMDE4XENMQ19DSEFfMjAxMi0yMDE4X1ZlcnNpb25fMjBcRGF0YVxkYXRhLW1hc3RlclxVMjAxOF9DSEExMjE4X1YyMDIwXzIwdTFfdmVjdG9yXFUyMDE4X0NIQTEyMThfVjIwMjBfMjB1MS5nZGI=&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EEA&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;DatasetTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CHA 2012-2018&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">],</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;DownloadURL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://copernicus-fme.eea.europa.eu/clmsdatadownload/results/933.zip&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;FileSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">103380245</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;FinalizationDateTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-20T10:28:22.179435&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;RegistrationDateTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-20T10:08:18.145053&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;Status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Finished_ok&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;UserID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n00015mf&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Similarly, instead of using the search, the user can request the status of a specific download by using the <code class="docutils literal notranslate"><span class="pre">&#64;datarequest_status_get</span></code> endpoint as follows:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id29">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/api/@datarequest_status_get?TaskID=20901119535</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;REDACTED&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id30">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X GET <span class="s1">&#39;http://nohost/api/@datarequest_status_get?TaskID=20901119535&#39;</span> -H <span class="s2">&quot;Accept: application/json&quot;</span> -H <span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id31">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- <span class="s1">&#39;http://nohost/api/@datarequest_status_get?TaskID=20901119535&#39;</span> --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id32">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@datarequest_status_get?TaskID=20901119535&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;REDACTED&gt;&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result will be similar to the previous ones but will contain only the information of the requested dataset.</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;Datasets&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EEA&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;NUTSID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ITC11&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GDB&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a5ee71470be04d66bcff498f94ceb5dc&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EEA&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;DatasetTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLC 2012&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;NUTSID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ITC1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;OutputFormat&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Shapefile&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;OutputGCS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPSG:4326&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;RegistrationDateTime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2022-01-24T14:47:11.025313&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;Status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;In_progress&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;UserID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="cancelling-a-download">
+<h2>Cancelling a download<a class="headerlink" href="#cancelling-a-download" title="Permalink to this headline"></a></h2>
+<p>A download can also be cancelled by using the <code class="docutils literal notranslate"><span class="pre">&#64;datarequest_delete</span></code> endpoint as follows:</p>
+<div class="http-example docutils container">
+<div class="http-example-http docutils container" id="id33">
+<p><span class="caption-text">http</span></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/api/@datarequest_delete</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Content-type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Authorization</span><span class="o">:</span> <span class="l">Bearer &lt;REDACTED&gt;</span>
+
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;TaskID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20901119538</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-curl docutils container" id="id34">
+<p><span class="caption-text">curl</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -i -X GET http://nohost/api/@datarequest_delete -H <span class="s2">&quot;Accept: application/json&quot;</span> -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -H <span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span> --data-raw <span class="s1">&#39;{&quot;TaskID&quot;: 20901119538}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-wget docutils container" id="id35">
+<p><span class="caption-text">wget</span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget -S -O- http://nohost/api/@datarequest_delete --header<span class="o">=</span><span class="s2">&quot;Accept: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Content-Type: application/json&quot;</span> --header<span class="o">=</span><span class="s2">&quot;Authorization: Bearer &lt;REDACTED&gt;&quot;</span> --body-data<span class="o">=</span><span class="s1">&#39;{&quot;TaskID&quot;: 20901119538}&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="http-example-python-requests docutils container" id="id36">
+<p><span class="caption-text">python-requests</span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://nohost/api/@datarequest_delete&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &lt;REDACTED&gt;&#39;</span><span class="p">},</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;TaskID&#39;</span><span class="p">:</span> <span class="mi">20901119538</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result will have no content if the request is deleted correctly</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="authentication.html" class="btn btn-neutral float-left" title="Authentication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, EEA, Copernicus Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
