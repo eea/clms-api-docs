@@ -10,7 +10,7 @@ Authorization: Bearer <REDACTED>
         "OutputFormat": "Shapefile",
         "OutputGCS": "EPSG:4326",
         "TemporalFilter": {
-          "StartDate": 1546333200000
+          "StartDate": 1546333200000,
           "EndDate": 1559289600000
         }
     },
@@ -19,7 +19,7 @@ Authorization: Bearer <REDACTED>
         "OutputFormat": "Shapefile",
         "OutputGCS": "EPSG:4326",
         "TemporalFilter": {
-          "StartDate": 1546333200000
+          "StartDate": 1546333200000,
           "EndDate": 1559289600000
         }
 
