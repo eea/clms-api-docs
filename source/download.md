@@ -69,7 +69,7 @@ The response will be the list of available projections:
 
 ### Restriction by NUTS
 
-NUTS is the *Nomenclature of Territorial Units for Statistics* which is a standard used to define the boundaries of the countries and sub-country divisions in the European Union. 
+NUTS is the _Nomenclature of Territorial Units for Statistics_ which is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
 
 If you want to crop the DataSet to a given NUTS region, you need to know that the CLMS Portal allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.
 
@@ -77,10 +77,15 @@ If you want to crop the DataSet to a given NUTS region, you need to know that th
 
 In addition to the NUTS way, you can also restrict the download to a given bounding box. This is done by passing an array of 4 values in the signaling the 4 points that parameter. The values of the bounding box are the coordinates of a rectangle in EPSG:4326 projection.
 
+## Restrict the temporal extent of the files
+
+Some of the available datasets provide time series information and the user can choose to download only a subset of the available time serie.
 
 ## Request the download
 
-When the user has all the data he needs to download the DataSet, he can request the download by doing the following request. This is an example using a NUTS code:
+When the user has all the data he needs to download the DataSet, he can request the download by doing the following request.
+
+### Restrict using a NUTS code
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-nuts.req
@@ -93,6 +98,8 @@ The response will include the task id assigned to the download process:
    :language: http
 ```
 
+### Restrict using a bounding box
+
 Similarly a bounding-box based download request can be made as follows:
 
 ```{http:example} curl wget python-requests
@@ -103,6 +110,24 @@ Similarly a bounding-box based download request can be made as follows:
 The response will include the task id assigned to the download process:
 
 ```{literalinclude} ./http-examples/download-request-download-bbox.resp
+   :language: http
+```
+
+### Restrict using a temporal range
+
+The temporal range must be specified with the Start and End dates of the range.
+The format is in milliseconds since the epoch (1970-01-01 00:00:00).
+
+The endpoint will do several validations, such as providing both values, the start date is before the end date and the dates are valid.
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-timeseries.req
+
+```
+
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-timeseries.resp
    :language: http
 ```
 
@@ -132,14 +157,13 @@ Similarly a user can request all the finished downloads:
 
 The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.), and also the date and time of the request.
 
-But in this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the URL where the download will be available for the next *10 days*.
+In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the URL where the download will be available for the next _10 days_.
 
 ```{literalinclude} ./http-examples/download-request-download-finished.resp
    :language: http
 ```
 
 Similarly, instead of using the search, the user can request the status of a specific download by using the `@datarequest_status_get` endpoint as follows:
-
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-status.req
@@ -151,7 +175,6 @@ The result will be similar to the previous ones but will contain only the inform
 ```{literalinclude} ./http-examples/download-request-download-status.resp
    :language: http
 ```
-
 
 ## Cancelling a download
 

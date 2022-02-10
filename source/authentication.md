@@ -12,7 +12,7 @@ That's why all users wanting to use the API, need to create specific API tokens 
 
 Here we will explain all the steps needed to create and use such tokens.
 
-The use of API authentiation flow involves four steps:
+The use of API authentication flow involves four steps:
 
 1. A logged in service user issues a service key in Plone, and stores the private key in a safe location accessible to the client application.
 2. The client application uses the private key to create and sign a JWT authorization grant.
@@ -62,7 +62,7 @@ When clicking the `Create new Token` button, a new form will be shown where the 
     :alt: Access API Tokens section.
 ```
 
-After filling the form the token will be created inmediately and the token details will be presented in the form.
+After filling the form the token will be created immediately and the token details will be presented in the form.
 
 ```{image} ./images/authentication-tokens-create-new-token-created.png
     :alt: Access API Tokens section.
