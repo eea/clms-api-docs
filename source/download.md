@@ -100,7 +100,8 @@ The response will include the task id assigned to the download process:
 
 ### Restrict using a bounding box
 
-Similarly a bounding-box based download request can be made as follows:
+The bounding box must be specified passing four coordinates that represent
+the 4 points of the rectangle to be downloaded:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-bbox.req
