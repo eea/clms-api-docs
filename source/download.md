@@ -2,19 +2,16 @@
 
 The CLMS portal provides several endpoints to handle the downloads of the files provided by the portal.
 
-Due to the nature of the files present in the portal, the download is handled by a background process which informs
-the user by email when the download is ready. Moreover it also signals the API with the download URL so that the
-application using the API can handle by itself the download.
+Due to the nature of the files present in the portal, the download is handled by a background process which informs the user by email when the download is ready. Moreover it also signals the API with the download address so that the application using the API can handle by itself the download.
 
 The download process takes the following steps:
 
 1. Find the items to be downloaded
 2. Decide in which format the items should be downloaded
-3. Restrict the spatial extent of the files
-4. Request the download
-5. Wait for the download to be ready
-
-In the following sections we will explain all of them.
+   3.a. Restrict the spatial extent of the files (optional)
+   3.b. Restrict the temporal range of the files (optional)
+3. Request the download
+4. Wait for the download to be ready
 
 ## Find the items to be downloaded
 
@@ -27,7 +24,7 @@ A simple search off all datasets available in the portal would be as follows:
 
 ```
 
-The important bits here are in the parameters passed to the `@search` endpoint where we are requesting to include the `UID` and the `dataset_full_format` of each DataSet. If we don't request the `UID` we will only obtain the `@id` of each datasets which corresponds to its URL, and then we would have to do an additional request to that URL to get the `UID` of the DataSet.
+The important bits here are in the parameters passed to the `@search` endpoint where the user is requesting to include the `UID` and the `dataset_full_format` of each DataSet. If the user doesn't request the `UID` he will only obtain the `@id` of each datasets which corresponds to its address, and then he would have to do an additional request to that address to get the `UID` of the DataSet.
 
 And the results will be similar to the following:
 
@@ -35,11 +32,11 @@ And the results will be similar to the following:
    :language: http
 ```
 
-When we find the DataSet that we want to download we will have to take note of its `UID` (in order to know what to download) and its `dataset_full_format` (in order to know which format conversions can we request).
+When the user find the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download) and its `dataset_full_format` (to know which format conversions the user can request).
 
 ## File formats
 
-The CLMS API provides an endpoint where we can check which coversions are available for the available formats. To get the list of available conversions we need to do the following request:
+The CLMS API provides an endpoint where the user can check which coversions are available for the available formats. To get the list of available conversions the user needs to do the following request:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-conversions.req
@@ -69,9 +66,9 @@ The response will be the list of available projections:
 
 ## Restrict the spatial extent of the files
 
-### Restriction by NUTS
+### Restriction by Nomenclature of Territorial Units for Statistics
 
-NUTS is the _Nomenclature of Territorial Units for Statistics_ which is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
+The _Nomenclature of Territorial Units for Statistics_ (NUTS) is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
 
 If you want to crop the DataSet to a given NUTS region, you need to know that the CLMS Portal allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.
 
@@ -81,13 +78,15 @@ In addition to the NUTS way, you can also restrict the download to a given bound
 
 ## Restrict the temporal extent of the files
 
-Some of the available datasets provide time series information and the user can choose to download only a subset of the available time serie.
+Some available datasets provide time series information and the user can choose to download only a subset of the available time serie.
 
 ## Request the download
 
 When the user has all the data he needs to download the DataSet, he can request the download by doing the following request.
 
-### Restrict using a NUTS code
+### Restrict using a Nomenclature of Territorial Units for Statistics code
+
+The request must include a correct NUTS code in the request:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-nuts.req
@@ -136,7 +135,7 @@ The response will include the task id assigned to the download process:
 
 ### Combining restrictions
 
-Those temporal and spatial restrictions can be combined to produce an output file that is restricted to a given NUTS code and a given temporal range or to a given bounding box and a given temporal range.
+Those temporal and spatial restrictions can be combined to produce an output file that's restricted to a given NUTS code and a given temporal range or to a given bounding box and a given temporal range.
 
 To do so, the user need to add the required restrictions in the request.
 
@@ -168,7 +167,7 @@ The response will include the task id assigned to the download process:
 
 ## Wait for the download to be ready
 
-As said, the download tool will inform the user by email when the download is ready. But the user can always request the status of all of his requests using the `@datarequest_search` endpoint as follows:
+As said, the download tool will inform the user by email when the download is ready. But the user can always request the status of all his requests using the `@datarequest_search` endpoint as follows:
 
 Request all in progress downloads:
 
@@ -192,7 +191,7 @@ Similarly a user can request all the finished downloads:
 
 The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.), and also the date and time of the request.
 
-In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the URL where the download will be available for the next _10 days_.
+In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the address where the download will be available for the next _10 days_.
 
 ```{literalinclude} ./http-examples/download-request-download-finished.resp
    :language: http

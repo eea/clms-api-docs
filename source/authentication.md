@@ -10,7 +10,7 @@ authentication service. This means that no user password is stored in the CLMS P
 
 That's why all users wanting to use the API, need to create specific API tokens to communicate with the API.
 
-Here we will explain all the steps needed to create and use such tokens.
+Here you will find all the steps needed to create and use such tokens.
 
 The use of API authentication flow involves four steps:
 
@@ -25,7 +25,7 @@ Assuming the client is in possession of a service key, the flow looks like this:
     :alt: Register/Login link
 ```
 
-## Login in the CLMS portal
+## Login in the Copernicus Land Monitoring Service portal
 
 Using the `Register/Login` button in the top green bar of the portal, the user will be redirected to EU Login where he can login or register a new account.
 
@@ -40,7 +40,7 @@ green bar and the user will be able to go his profile page and create the needed
     :alt: Register/Login with user name
 ```
 
-## Create API Tokens
+## Create authentication tokens
 
 Clicking on this name in the top green bar, the user will be redirected to his profile page where he can fill the profile form and also can access to some other options reserved for logged-in users.
 
@@ -68,8 +68,7 @@ After filling the form the token will be created immediately and the token detai
     :alt: Access API Tokens section.
 ```
 
-It is very important to note that token details will be shown just once and just in this moment. The user will need to follow the details
-and copy the token details to a file, in order to use the token in the future.
+It's important to note that token details will be shown just once and just in this moment. The user will need to follow the details and copy the token details to a file to use the token in the future.
 
 A service key looks like this (this specific token is revoked and no actions can be performed with it):
 
@@ -83,9 +82,9 @@ After creating one or more tokens, the user will be able to delete them using th
     :alt: Access API Tokens section.
 ```
 
-## Use the service token to sign the JWT authorization grant
+## Use the service token to sign the JSON Web Token (JWT) authorization grant
 
-In order to request an access token, the client application will use the private service key created in the previous step to create and sign a JWT.
+To request an access token, the client application will use the private service key created in the previous step to create and sign a JWT.
 
 The JWT needs to contain the following claims:
 
@@ -149,7 +148,7 @@ The response will be in `application/json` format and will contain the access to
    :language: http
 ```
 
-## Use the access token to authentication requests.
+## Use the access token to authentication requests
 
 The client can then use the access token to authenticate requests. The token needs to be sent in the HTTP `Authorization` header as a `Bearer` token, as follows:
 
@@ -163,6 +162,6 @@ Once the token expires, the client must create a JWT authorization grant again, 
 
 The client should, instead of trying to predict access token expiration, just anticipate the case that authentication using an existing token will fail (because the token expired), and then perform the necessary steps to obtain a new token.
 
-To accomplish this, it is recommended to delegate all the requests a client application wants to make to a class that expects an `Access token expired` response as described above, and obtains a new token if necessary. The failed request that lead to the error response then needs to be re-dispatched with its original parameters, but the new token in the `Authorization` header.
+To accomplish this, it's recommended to delegate all the requests a client application wants to make to a class that expects an `Access token expired` response as described above, and obtains a new token if necessary. The failed request that lead to the error response then needs to be re-dispatched with its original parameters, but the new token in the `Authorization` header.
 
 Care needs to be taken to not include an expired token (or any `Authorization` header for that matter) with the requests to the token endpoint when obtaining a new token.
