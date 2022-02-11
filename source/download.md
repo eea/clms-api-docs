@@ -37,7 +37,7 @@ And the results will be similar to the following:
 
 When we find the DataSet that we want to download we will have to take note of its `UID` (in order to know what to download) and its `dataset_full_format` (in order to know which format conversions can we request).
 
-## Decide in which format the items should be downloaded
+## File formats
 
 The CLMS API provides an endpoint where we can check which coversions are available for the available formats. To get the list of available conversions we need to do the following request:
 
@@ -51,6 +51,8 @@ The response will be a JSON object where each of the format has a `true/false` v
 ```{literalinclude} ./http-examples/download-available-conversions.resp
    :language: http
 ```
+
+## Projections
 
 In the same way the output projection of the downloaded file can be selected. This selection is open on all available projections. To get the list of the available ones, one needs to do the followint request:
 
