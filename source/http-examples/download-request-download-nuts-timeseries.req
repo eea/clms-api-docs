@@ -1,0 +1,30 @@
+POST /api/@datarequest_post HTTP/1.1
+Accept: application/json
+Content-type: application/json
+Authorization: Bearer <REDACTED>
+
+{
+  "Datasets":[
+      {
+        "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+        "OutputFormat": "Shapefile",
+        "OutputGCS": "EPSG:4326",
+        "NUTS": "ITC11"
+        "TemporalFilter": {
+          "StartDate": 1546333200000,
+          "EndDate": 1559289600000
+        }
+    },
+    {
+        "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+        "OutputFormat": "Shapefile",
+        "OutputGCS": "EPSG:4326",
+        "NUTS": "ITC11"
+        "TemporalFilter": {
+          "StartDate": 1546333200000,
+          "EndDate": 1559289600000
+        }
+
+    }
+  ]
+}

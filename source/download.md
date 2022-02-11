@@ -134,6 +134,38 @@ The response will include the task id assigned to the download process:
    :language: http
 ```
 
+### Combining restrictions
+
+Those temporal and spatial restrictions can be combined to produce an output file that is restricted to a given NUTS code and a given temporal range or to a given bounding box and a given temporal range.
+
+To do so, the user need to add the required restrictions in the request.
+
+This is the example with a bounding-box and a temporal range:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-bbox-timeseries.req
+
+```
+
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-bbox-timeseries.resp
+   :language: http
+```
+
+This is the example with a NUTS code and a temporal range:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-nuts-timeseries.req
+
+```
+
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-nuts-timeseries.resp
+   :language: http
+```
+
 ## Wait for the download to be ready
 
 As said, the download tool will inform the user by email when the download is ready. But the user can always request the status of all of his requests using the `@datarequest_search` endpoint as follows:
