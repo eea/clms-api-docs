@@ -9,7 +9,7 @@ Authorization: Bearer <REDACTED>
         "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
         "OutputFormat": "Shapefile",
         "OutputGCS": "EPSG:4326",
-        "NUTS": "ITC11"
+        "NUTS": "ITC11",
         "TemporalFilter": {
           "StartDate": 1546333200000,
           "EndDate": 1559289600000
@@ -19,7 +19,7 @@ Authorization: Bearer <REDACTED>
         "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
         "OutputFormat": "Shapefile",
         "OutputGCS": "EPSG:4326",
-        "NUTS": "ITC11"
+        "NUTS": "ITC11",
         "TemporalFilter": {
           "StartDate": 1546333200000,
           "EndDate": 1559289600000
