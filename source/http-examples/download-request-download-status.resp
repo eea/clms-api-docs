@@ -4,29 +4,42 @@ Content-Type: application/json
 {
     "Datasets": [
         {
-            "DatasetFormat": "GDB",
-            "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
-            "DatasetPath": "SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==",
-            "DatasetSource": "EEA",
-            "DatasetTitle": "CLC 2012",
-            "Metadata": [],
+            "DatasetFormat": "Geotiff",
+            "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
+            "DatasetPath": "djMuMC4xLzIwMTk=",
+            "DatasetSource": "LANDCOVER",
+            "DatasetTitle": "Land Cover 100m: collection 3: epoch 2019: Globe",
+            "Metadata": [
+                "https://land.copernicus.vgt.vito.be/geonetwork/srv/api/records/urn:cgls:global:lcc100_v3_100m/formatters/xml?approved=true"
+            ],
             "NUTSID": "ITC11",
-            "OutputFormat": "Shapefile",
-            "OutputGCS": "EPSG:4326"
+            "NUTSName": "Torino",
+            "OutputFormat": "Geotiff",
+            "OutputGCS": "EPSG:4326",
+            "WekeoChoices": ""
         },
         {
-            "DatasetFormat": "GDB",
-            "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
-            "DatasetPath": "SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXIoQ0xDKV8yMDEyXENMQzIwMTJfVmVyc2lvbl8yMFxEYXRhXGRhdGEtbWFzdGVyXFUyMDE4X0NMQzIwMTJfVjIwMjBfMjB1MV92ZWN0b3JcVTIwMThfQ0xDMjAxMl9WMjAyMF8yMHUxLmdkYg==",
-            "DatasetSource": "EEA",
-            "DatasetTitle": "CLC 2012",
-            "Metadata": [],
+            "DatasetFormat": "Geotiff",
+            "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
+            "DatasetPath": "djMuMC4xLzIwMTk=",
+            "DatasetSource": "LANDCOVER",
+            "DatasetTitle": "Land Cover 100m: collection 3: epoch 2019: Globe",
+            "Metadata": [
+                "https://land.copernicus.vgt.vito.be/geonetwork/srv/api/records/urn:cgls:global:lcc100_v3_100m/formatters/xml?approved=true"
+            ],
             "NUTSID": "ITC1",
-            "OutputFormat": "Shapefile",
-            "OutputGCS": "EPSG:4326"
+            "NUTSName": "Piemonte",
+            "OutputFormat": "Geotiff",
+            "OutputGCS": "EPSG:4326",
+            "WekeoChoices": ""
         }
     ],
-    "RegistrationDateTime": "2022-01-24T14:47:11.025313",
-    "Status": "In_progress",
+    "DownloadURL": "https://copernicus-fme.eea.europa.eu/clmsdatadownload/results/4050.zip",
+    "FMETaskId": 4050,
+    "FileSize": 12874380,
+    "FinalizationDateTime": "2022-09-29T13:11:39.986121",
+    "Message": "Download process finished successfully",
+    "RegistrationDateTime": "2022-09-29T13:10:17.080461",
+    "Status": "Finished_ok",
     "UserID": "admin"
 }

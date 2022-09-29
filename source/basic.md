@@ -13,15 +13,14 @@ If the base address of the portal is `https://clms.copernicus.eu/` then the API 
 
 ## Basic concepts
 
-Plone provides the information about the objects under the object's itself's address. When having an object at the following address `https://clms.copernicus.eu/en/datasets/dataset-1/` then its content will be available through the API at `https://clms.copernicus.eu/api/en/datasets/dataset-1/`
+Plone provides the information about the objects under the object's itself's address. When having an object at the following address `https://clms.copernicus.eu/en/datasets/dataset-1/` then its content will be available through the API at either `https://clms.copernicus.eu/api/en/datasets/dataset-1/` or `https://clms.copernicus.eu/++api++/en/datasets/dataset-1/`
 
 To search all those datasets, the API provides a full-featured `@search` endpoint that can be used to search not only DataSets but also
 any other content type that's available in the portal. The full documentation about the `@search` endpoint can be found on the [official documentation](https://plonerestapi.readthedocs.io/en/latest/searching.html) .
 
 ## Content-type of the requests
 
-Due the dual nature of the Plone objects (remember, they share the address for both the public face and the API), all API queries must be made
-using an specific `Accept` http-header so that Plone can return the contents in the correct format.
+Due the dual nature of the Plone objects (remember, they share the address for both the public face and the API), all API queries must be made using an specific `Accept` http-header so that Plone can return the contents in the correct format.
 
 All API results will be returned in `application/json` format. This isn't a selectable format by the user, it's the only format supported by the API.
 

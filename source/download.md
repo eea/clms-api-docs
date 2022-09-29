@@ -24,7 +24,7 @@ A simple search off all datasets available in the portal would be as follows:
 
 ```
 
-The important bits here are in the parameters passed to the `@search` endpoint where the user is requesting to include the `UID` and the `dataset_full_format` of each DataSet. If the user doesn't request the `UID` he will only obtain the `@id` of each datasets which corresponds to its address, and then he would have to do an additional request to that address to get the `UID` of the DataSet.
+The important bits here are in the parameters passed to the `@search` endpoint where the user is requesting to include the `UID`, the `dataset_full_format` and the `dataset_download_information` of each DataSet. If the user doesn't request the `UID` he will only obtain the `@id` of each datasets which corresponds to its address, and then he would have to do an additional request to that address to get the `UID` of the DataSet.
 
 And the results will be similar to the following:
 
@@ -32,11 +32,11 @@ And the results will be similar to the following:
    :language: http
 ```
 
-When the user find the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download) and its `dataset_full_format` (to know which format conversions the user can request).
+When the user find the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download), its `dataset_full_format` (to know which format conversions the user can request) and the desired `@id` inside the `dataset_download_information` (to know which file should be processed for download).
 
 ## File formats
 
-The CLMS API provides an endpoint where the user can check which coversions are available for the available formats. To get the list of available conversions the user needs to do the following request:
+The CLMS API provides an endpoint where the user can check which conversions are available for the available formats. To get the list of available conversions the user needs to do the following request:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-conversions.req
@@ -74,7 +74,7 @@ If you want to crop the DataSet to a given NUTS region, you need to know that th
 
 ### Restriction by bounding box
 
-In addition to the NUTS way, you can also restrict the download to a given bounding box. This is done by passing an array of 4 values in the signaling the 4 points that parameter. The values of the bounding box are the coordinates of a rectangle in EPSG:4326 projection.
+In addition to the NUTS way, you can also restrict the download to a given bounding box. This is done by passing an array of 4 values in the signaling the 4 points that parameter. The values of the bounding box must be the coordinates of a rectangle in the `EPSG:4326` projection.
 
 ## Restrict the temporal extent of the files
 
@@ -191,7 +191,7 @@ Similarly a user can request all the finished downloads:
 
 The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.), and also the date and time of the request.
 
-In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the address where the download will be available for the next _10 days_.
+In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the address where the download will be available for the next _72 hours_.
 
 ```{literalinclude} ./http-examples/download-request-download-finished.resp
    :language: http

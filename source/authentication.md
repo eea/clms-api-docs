@@ -6,11 +6,11 @@ we are using this product under-the-hood to provide authentication services for 
 ```
 
 CLMS Portal Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user
-authentication service. This means that no user password is stored in the CLMS Portal, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login. Using EU Login the user only has to create one europe-wide account and will be able to access all European services that use EU Login without needing to create a new account for each service.
+authentication service. This means that no user password is stored in the CLMS Portal, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login.
 
-That's why all users wanting to use the API, need to create specific API tokens to communicate with the API.
+Using EU Login the user only has to create one europe-wide account and will be able to access all European services that use it without needing to create a new account for each service.
 
-Here you will find all the steps needed to create and use such tokens.
+That's why all users wanting to use the API, need to create specific API tokens to communicate with the API. Here you will find all the steps needed to create and use such tokens.
 
 The use of API authentication flow involves four steps:
 

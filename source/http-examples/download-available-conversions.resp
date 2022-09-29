@@ -12,6 +12,16 @@ Content-Type: application/json
         "Shapefile": true,
         "WFS": false
     },
+    "GML": {
+        "GDB": false,
+        "GML": true,
+        "GPKG": false,
+        "Geojson": false,
+        "Geotiff": false,
+        "Netcdf": false,
+        "Shapefile": false,
+        "WFS": false
+    },
     "GPKG": {
         "GDB": true,
         "GML": true,
