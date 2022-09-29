@@ -224,3 +224,50 @@ The result will have no content if the request is deleted correctly
 ```{literalinclude} ./http-examples/download-request-delete.resp
    :language: http
 ```
+
+## Download prepackaged files
+
+CLMS portal also provides a way to download some prepackaged files. Those prepackaged files offer a way to easily download already processed and redacted data.
+
+To inspect which prepackaged files are available for download, one can request that information to the dataset search endpoint:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-search-dataset-prepackaged.req
+
+```
+
+The result will include all the information regarding the prepackaged files in the `downloadable_files` attribute:
+
+```{literalinclude} ./http-examples/download-search-dataset-prepackaged.resp
+   :language: http
+```
+
+To request the download of one or several files, one has to note their `@id` and request their download as follows:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-prepackaged.req
+
+```
+
+The response will contain the task id of the download request, like in earlier options:
+
+```{literalinclude} ./http-examples/download-request-download-prepackaged.resp
+   :language: http
+```
+
+## Combined download of datasets and prepackaged files
+
+One can also request in a single request to download a prepackaged file and a full dataset. To do so, one only has to include the required information in the request:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-combined.req
+
+```
+
+In this case the request will be splitted in two download packages, one will contain all the prepackaged files and the other one the rest of the downloads.
+
+This is done this way to speed up the preparing of the packages, because all the prepackaged files are already available and their download process is much faster.
+
+```{literalinclude} ./http-examples/download-request-combined.resp
+   :language: http
+```
