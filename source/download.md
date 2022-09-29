@@ -242,7 +242,8 @@ The result will include all the information regarding the prepackaged files in t
    :language: http
 ```
 
-To request the download of one or several files, one has to note their `@id` and request their download as follows:
+To request the download of one or several files, one has to note their `@id` and request their download as follows. In this case trying to request a format and/or projection change will fail because all prepackaged files
+are process as they are. CLMS portal can't handle their transformation:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-prepackaged.req
