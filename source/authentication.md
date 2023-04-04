@@ -148,12 +148,48 @@ The response will be in `application/json` format and will contain the access to
    :language: http
 ```
 
+The python code to do such a call is the following:
+
+```python
+result = requests.post(
+    service_key["token_uri"],
+    headers={
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data={
+        "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+        "assertion": grant,
+    },
+)
+
+results_json = result.json()
+access_token = results.json.get('access_token')
+```
+
 ## Use the access token to authentication requests
 
 The client can then use the access token to authenticate requests. The token needs to be sent in the HTTP `Authorization` header as a `Bearer` token, as follows:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/authentication-use-access-token.req
+```
+
+Following the example above, the python code required is the following:
+
+```python
+service_url = 'https://clms-prod.eea.europa.eu/api'
+search_results = requests.get(
+    service_url + '/@search?portal_type=DataSet'
+    headers={
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ': access_token
+    }
+)
+
+if search_results.ok:
+    for item in search_results.json().get('items', [])
+        ...
 ```
 
 ## Token expiration and renewal

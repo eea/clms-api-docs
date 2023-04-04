@@ -34,6 +34,13 @@ And the results will be similar to the following:
 
 When the user find the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download), its `dataset_full_format` (to know which format conversions the user can request) and the desired `@id` inside the `dataset_download_information` (to know which file should be processed for download).
 
+```{warning}
+Be aware that the `@search` endpoint returns the results in batches of 25 items. You need to check the `batching` key of the resulting JSON in order to go to the `next` batch of items.
+
+An alternative way to this is to do the HTTP request with an additional parameter `b_size` saying the number of items you want to have in the batch. This may make the API process slower though.
+
+```
+
 ## File formats
 
 The CLMS API provides an endpoint where the user can check which conversions are available for the available formats. To get the list of available conversions the user needs to do the following request:
