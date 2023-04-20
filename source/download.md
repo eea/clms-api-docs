@@ -56,9 +56,14 @@ The response will be a JSON object where each of the format has a `true/false` v
    :language: http
 ```
 
+```{warning}
+When requesting the download you are required to inform in which format you want to download it. We suggest to download the files in the original format (the one set in the `full_format` parameter in the `dataset_download_information`), otherwise the file organisation (naming convention and band number/organisation) may differ considerably from the Product user manual.
+```
+
+
 ## Projections
 
-In the same way the output projection of the downloaded file can be selected. This selection is open on all available projections. To get the list of the available ones, one needs to do the followint request:
+In the same way the output projection of the downloaded file can be selected. This selection is open on all available projections. To get the list of the available ones, one needs to do the following request:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-projections.req
