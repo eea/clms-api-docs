@@ -1,0 +1,3 @@
+GET /api/@get-download-file-urls?dataset_uid=a08da3f50c8d4b38bec35b831382162b&dataset_collection=100m HTTP/1.1
+Accept: application/json
+Authorization: Bearer <REDACTED>

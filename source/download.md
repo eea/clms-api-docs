@@ -90,7 +90,64 @@ In addition to the NUTS way, you can also restrict the download to a given bound
 
 ## Restrict the temporal extent of the files
 
-Some available datasets provide time series information and the user can choose to download only a subset of the available time serie.
+Some available datasets offer time-series information and the user can choose to download only a subset of the available time-series.
+
+
+## Full dataset downloads
+
+The standard download API allows downloading the full dataset without any spatial or temporal restrictions. To do so, the user needs to do a request like this one:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-full_dataset_ok.req
+```
+
+The response will include the task id like in the responses of other requests
+
+```{literalinclude} ./http-examples/download-request-download-full_dataset_ok.resp
+   :language: http
+```
+
+These downloads will only work for datasets coming from EEA sources.
+
+Due to the way those dataset files are stored in the servers, sometimes the CLMS portal needs to go to the original source (such as Wekeo) to download the files and provide them to the end-user.
+
+This process is OK when the user requests to download the dataset with a time or spatial restriction because the CLMS portal needs to transform and process the files.
+
+But when requesting the full dataset of a non-EEA dataset, it makes little sense to download first the whole dataset to the CLMS portal and offer it later to the user.
+
+That's why, in such a case, the download API will issue an error informing the user to use some other API endpoint.
+
+In such endpoint the user will be offered direct download links for the datasets he is requesting.
+
+This is an example request requesting a full download of an external dataset:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-full_dataset_nok.req
+```
+
+And the response obtained from the server:
+
+```{literalinclude} ./http-examples/download-request-download-full_dataset_nok.resp
+   :language: http
+```
+
+### Auxiliary API to get direct download links for non-EEA datasets
+
+To request the direct download links of full datasets for non-EEA datasets, the CLMS portal offers an auxiliary API.
+
+In the request to this auxiliary API the user needs to pass the dataset id and the collection name he wants to download, and the API will return the direct download links for the requested dataset:
+
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-auxiliary_api.req
+```
+
+And the response obtained from the server:
+
+```{literalinclude} ./http-examples/download-auxiliary_api.resp
+   :language: http
+```
+
 
 ## Request the download
 
