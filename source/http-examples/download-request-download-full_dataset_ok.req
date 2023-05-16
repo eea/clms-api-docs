@@ -9,7 +9,7 @@ Authorization: Bearer <REDACTED>
         "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
         "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
         "OutputFormat": "Geotiff",
-        "OutputGCS": "EPSG:4326",
+        "OutputGCS": "EPSG:4326"
     }
   ]
 }
