@@ -60,7 +60,6 @@ The response will be a JSON object where each of the format has a `true/false` v
 When requesting the download you are required to inform in which format you want to download it. We suggest to download the files in the original format (the one set in the `full_format` parameter in the `dataset_download_information`), otherwise the file organisation (naming convention and band number/organisation) may differ considerably from the Product user manual.
 ```
 
-
 ## Projections
 
 In the same way the output projection of the downloaded file can be selected. This selection is open on all available projections. To get the list of the available ones, one needs to do the following request:
@@ -91,7 +90,6 @@ In addition to the NUTS way, you can also restrict the download to a given bound
 ## Restrict the temporal extent of the files
 
 Some available datasets offer time-series information and the user can choose to download only a subset of the available time-series.
-
 
 ## Full dataset downloads
 
@@ -135,19 +133,43 @@ And the response obtained from the server:
 
 To request the direct download links of full datasets for non-EEA datasets, the CLMS portal offers an auxiliary API.
 
-In the request to this auxiliary API the user needs to pass the dataset id and the collection name he wants to download, and the API will return the direct download links for the requested dataset:
+In the request to this auxiliary API the user needs to pass the dataset id and the collection name he wants to download, and the API will return the direct download links for the requested dataset.
 
+This is an example with a Wekeo dataset:
 
 ```{http:example} curl wget python-requests
-    :request: ./http-examples/download-auxiliary_api.req
+    :request: ./http-examples/download-auxiliary_api_wekeo.req
 ```
 
 And the response obtained from the server:
 
-```{literalinclude} ./http-examples/download-auxiliary_api.resp
+```{literalinclude} ./http-examples/download-auxiliary_api_wekeo.resp
    :language: http
 ```
 
+This is an example with a LEGACY dataset:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-auxiliary_api_legacy.req
+```
+
+And the response obtained from the server:
+
+```{literalinclude} ./http-examples/download-auxiliary_api_legacy.resp
+   :language: http
+```
+
+This is an example with a LandCover dataset:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-auxiliary_api_landcover.req
+```
+
+And the response obtained from the server:
+
+```{literalinclude} ./http-examples/download-auxiliary_api_landcover.resp
+   :language: http
+```
 
 ## Request the download
 
