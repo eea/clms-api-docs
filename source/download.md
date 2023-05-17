@@ -26,6 +26,8 @@ A simple search off all datasets available in the portal would be as follows:
 
 The important bits here are in the parameters passed to the `@search` endpoint where the user is requesting to include the `UID`, the `dataset_full_format` and the `dataset_download_information` of each DataSet. If the user doesn't request the `UID` he will only obtain the `@id` of each datasets which corresponds to its address, and then he would have to do an additional request to that address to get the `UID` of the DataSet.
 
+Some dataset offer the option to download several bands or layers. To do so, the user can check the value of the `layers` property of the `dataset_download_information`, and if that property exists, the user can request to download one of the available bands or layers.
+
 And the results will be similar to the following:
 
 ```{literalinclude} ./http-examples/download-search-datasets.resp
@@ -246,13 +248,28 @@ The response will include the task id assigned to the download process:
 This is the example with a NUTS code and a temporal range:
 
 ```{http:example} curl wget python-requests
-    :request: ./http-examples/download-request-download-nuts-timeseries.req
+    :request: ./http-examples/download-request-download-layers.req
 
 ```
 
 The response will include the task id assigned to the download process:
 
 ```{literalinclude} ./http-examples/download-request-download-nuts-timeseries.resp
+   :language: http
+```
+
+## Layer/band selection
+
+When a dataset has multiple bands/layers, the user can request to download one given layer as follows:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-layers.req
+
+```
+
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-layers.resp
    :language: http
 ```
 

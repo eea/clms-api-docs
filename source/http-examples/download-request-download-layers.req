@@ -1,0 +1,26 @@
+POST /api/@datarequest_post HTTP/1.1
+Accept: application/json
+Content-type: application/json
+Authorization: Bearer <REDACTED>
+
+{
+  "Datasets":[
+      {
+        "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
+        "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
+        "OutputFormat": "Geotiff",
+        "OutputGCS": "EPSG:4326",
+        "NUTS": "ITC11",
+        "Layer": "layer1"
+    },
+    {
+        "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
+        "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
+        "OutputFormat": "Geotiff",
+        "OutputGCS": "EPSG:4326",
+        "NUTS": "ITC1",
+        "Layer": "layer1"
+    }
+  ]
+}
+
