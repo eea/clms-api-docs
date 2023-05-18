@@ -95,6 +95,10 @@ Some available datasets offer time-series information and the user can choose to
 
 ## Full dataset downloads
 
+```{warning}
+These downloads will only work for datasets coming from EEA sources.
+```
+
 The standard download API allows downloading the full dataset without any spatial or temporal restrictions. To do so, the user needs to do a request like this one:
 
 ```{http:example} curl wget python-requests
@@ -107,11 +111,9 @@ The response will include the task id like in the responses of other requests
    :language: http
 ```
 
-These downloads will only work for datasets coming from EEA sources.
+Due to the way those dataset files are stored in the servers, sometimes the CLMS portal needs to go to the original source (such as Wekeo and Global Datasets) to download the files and provide them to the end-user.
 
-Due to the way those dataset files are stored in the servers, sometimes the CLMS portal needs to go to the original source (such as Wekeo) to download the files and provide them to the end-user.
-
-This process is OK when the user requests to download the dataset with a time or spatial restriction because the CLMS portal needs to transform and process the files.
+This process is OK when the user requests to download the dataset with a time or spatial restriction (not mandatory) because the CLMS portal needs to transform and process the files.
 
 But when requesting the full dataset of a non-EEA dataset, it makes little sense to download first the whole dataset to the CLMS portal and offer it later to the user.
 
@@ -135,7 +137,41 @@ And the response obtained from the server:
 
 To request the direct download links of full datasets for non-EEA datasets, the CLMS portal offers an auxiliary API.
 
-In the request to this auxiliary API the user needs to pass the dataset id and the collection name he wants to download, and the API will return the direct download links for the requested dataset.
+In the request to this auxiliary API the user needs to pass the dataset id and the collection name he wants to download, also a time period to download (in case of time-series datasets) and the API will return the direct download links for the requested dataset.
+
+The available parameters when requesting this downloads are the following:
+
+- Wekeo datasets:
+
+  - date_from: start date of the requested download in ISO format: YYYY-MM-DD
+  - date_to: end date of the requested download in ISO format: YYYY-MM-DD
+  - x_max: requested bounding-box coordinates
+  - y_max: requested bounding-box coordinates
+  - x_min: requested bounding-box coordinates
+  - y_min: requested bounding-box coordinates
+
+- Landcover datasets:
+
+  - x_max: requested bounding-box coordinates
+  - y_max: requested bounding-box coordinates
+  - x_min: requested bounding-box coordinates
+  - y_min: requested bounding-box coordinates
+
+- Legacy datasets:
+  - date_from: start date of the requested download in ISO format: YYYY-MM-DD
+  - date_to: end date of the requested download in ISO format: YYYY-MM-DD
+
+If no coordinates are entered for Wekeo or Landcover datasets, the used bounding box will be the following:
+
+      x_max = 32.871094
+      y_max = 70.289117
+      x_min = -12.480469
+      y_min = 35.603719
+
+If not start and and date are entered for Wekeo and Legacy datasets, the used ones will be the following:
+
+      start_date: request date
+      end_date: request date - 30 days
 
 This is an example with a Wekeo dataset:
 
