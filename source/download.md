@@ -77,6 +77,23 @@ The response will be the list of available projections:
    :language: http
 ```
 
+## Time series
+
+When requesting a specific time range download, the user needs to know in advance the available time range and the period to request the proper download.
+
+This endpoints provides the required information passing the dataset uid as a parameter:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-available-time-series.req
+
+```
+
+The response will be the information about the start, end and the period of the time serie
+
+```{literalinclude} ./http-examples/download-available-time-series.resp
+   :language: http
+```
+
 ## Restrict the spatial extent of the files
 
 ### Restriction by Nomenclature of Territorial Units for Statistics
