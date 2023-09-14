@@ -185,7 +185,7 @@ If no coordinates are entered for Wekeo or Landcover datasets, the used bounding
       x_min = -12.480469
       y_min = 35.603719
 
-If not start and and date are entered for Wekeo and Legacy datasets, the used ones will be the following:
+If no start and and date are entered for Wekeo and Legacy datasets, the used ones will be the following:
 
       start_date: request date
       end_date: request date - 30 days
