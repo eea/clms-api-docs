@@ -1,6 +1,6 @@
 # Download API
 
-The CLMS portal provides several endpoints to handle the downloads of the files provided by the portal.
+The CLMS Website provides several endpoints to handle the downloads of the files provided by the portal.
 
 Due to the nature of the files present in the portal, the download is handled by a background process which informs the user by email when the download is ready. Moreover it also signals the API with the download address so that the application using the API can handle by itself the download.
 
@@ -15,7 +15,7 @@ The download process takes the following steps:
 
 ## Find the items to be downloaded
 
-As explained in the introduction, the CLMS portal API is based on Plone, so the user needs to use the `@search` endpoint to look for the items he wants to download.
+As explained in the introduction, the CLMS Website API is based on Plone, so the user needs to use the `@search` endpoint to look for the items he wants to download.
 
 A simple search off all datasets available in the portal would be as follows:
 
@@ -100,7 +100,7 @@ The response will be the information about the start, end and the period of the 
 
 The _Nomenclature of Territorial Units for Statistics_ (NUTS) is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
 
-If you want to crop the DataSet to a given NUTS region, you need to know that the CLMS Portal allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.
+If you want to crop the DataSet to a given NUTS region, you need to know that the CLMS Website allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.
 
 ### Restriction by bounding box
 
@@ -128,11 +128,11 @@ The response will include the task id like in the responses of other requests
    :language: http
 ```
 
-Due to the way those dataset files are stored in the servers, sometimes the CLMS portal needs to go to the original source (such as Wekeo and Global Datasets) to download the files and provide them to the end-user.
+Due to the way those dataset files are stored in the servers, sometimes the CLMS Website needs to go to the original source (such as Wekeo and Global Datasets) to download the files and provide them to the end-user.
 
-This process is OK when the user requests to download the dataset with a time or spatial restriction (not mandatory) because the CLMS portal needs to transform and process the files.
+This process is OK when the user requests to download the dataset with a time or spatial restriction (not mandatory) because the CLMS Website needs to transform and process the files.
 
-But when requesting the full dataset of a non-EEA dataset, it makes little sense to download first the whole dataset to the CLMS portal and offer it later to the user.
+But when requesting the full dataset of a non-EEA dataset, it makes little sense to download first the whole dataset to the CLMS Website and offer it later to the user.
 
 That's why, in such a case, the download API will issue an error informing the user to use some other API endpoint.
 
@@ -152,7 +152,7 @@ And the response obtained from the server:
 
 ### Auxiliary API to get direct download links for non-EEA datasets
 
-To request the direct download links of full datasets for non-EEA datasets, the CLMS portal offers an auxiliary API.
+To request the direct download links of full datasets for non-EEA datasets, the CLMS Website offers an auxiliary API.
 
 In the request to this auxiliary API the user needs to pass the dataset id and the collection name he wants to download, also a time period to download (in case of time-series datasets) and the API will return the direct download links for the requested dataset.
 
@@ -388,7 +388,7 @@ The result will have no content if the request is deleted correctly
 
 ## Download prepackaged files
 
-CLMS portal also provides a way to download some prepackaged files. Those prepackaged files offer a way to easily download already processed and redacted data.
+CLMS Website also provides a way to download some prepackaged files. Those prepackaged files offer a way to easily download already processed and redacted data.
 
 To inspect which prepackaged files are available for download, one can request that information to the dataset search endpoint:
 
@@ -404,7 +404,7 @@ The result will include all the information regarding the prepackaged files in t
 ```
 
 To request the download of one or several files, one has to note their `@id` and request their download as follows. In this case trying to request a format and/or projection change will fail because all prepackaged files
-are process as they are. CLMS portal can't handle their transformation:
+are process as they are. CLMS Website can't handle their transformation:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-prepackaged.req

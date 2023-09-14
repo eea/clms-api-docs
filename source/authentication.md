@@ -5,8 +5,8 @@ we are using this product under-the-hood to provide authentication services for 
 
 ```
 
-CLMS Portal Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user
-authentication service. This means that no user password is stored in the CLMS Portal, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login.
+CLMS Website Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user
+authentication service. This means that no user password is stored in the CLMS Website, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login.
 
 Using EU Login the user only has to create one europe-wide account and will be able to access all European services that use it without needing to create a new account for each service.
 
@@ -33,7 +33,7 @@ Using the `Register/Login` button in the top green bar of the portal, the user w
     :alt: Register/Login link
 ```
 
-When the user authorization is finished and the user is redirected back to the CLMS Portal, the name of the user will be shown in the top
+When the user authorization is finished and the user is redirected back to the CLMS Website, the name of the user will be shown in the top
 green bar and the user will be able to go his profile page and create the needed API tokens.
 
 ```{image} ./images/authentication-register-login-user-name.png
