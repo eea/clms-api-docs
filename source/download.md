@@ -2,7 +2,7 @@
 
 The CLMS Website provides several endpoints to handle the downloads of the files provided by the portal.
 
-Due to the nature of the files present in the portal, the download is handled by a background process which informs the user by email when the download is ready. Moreover it also signals the API with the download address so that the application using the API can handle by itself the download.
+Due to the nature of the files present in the portal, the download is handled by a background process which informs the user by email when the download is ready. Moreover, it also signals the API with the download address so that the application using the API can handle the download by itself.
 
 The download process takes the following steps:
 
@@ -15,7 +15,7 @@ The download process takes the following steps:
 
 ## Find the items to be downloaded
 
-As explained in the introduction, the CLMS Website API is based on Plone, so the user needs to use the `@search` endpoint to look for the items he wants to download.
+As explained in the introduction, the CLMS Website API is based on Plone so the user needs to use the `@search` endpoint to look for the items he wants to download.
 
 A simple search off all datasets available in the portal would be as follows:
 
@@ -24,22 +24,22 @@ A simple search off all datasets available in the portal would be as follows:
 
 ```
 
-The important bits here are in the parameters passed to the `@search` endpoint where the user is requesting to include the `UID`, the `dataset_full_format` and the `dataset_download_information` of each DataSet. If the user doesn't request the `UID` he will only obtain the `@id` of each datasets which corresponds to its address, and then he would have to do an additional request to that address to get the `UID` of the DataSet.
+The important bits here are in the parameters passed to the `@search` endpoint where the user is requesting to include the `UID`, the `dataset_full_format` and the `dataset_download_information` of each DataSet. If the user doesn't request the `UID` he will only obtain the `@id` of each datasets, which corresponds to its address, and then he will have to do an additional request to that address to get the `UID` of the DataSet.
 
-Some dataset offer the option to download several bands or layers. To do so, the user can check the value of the `layers` property of the `dataset_download_information`, and if that property exists, the user can request to download one of the available bands or layers.
+Some dataset offer the option to download several bands or layers. To do so, the user can check the value of the `layers` property of the `dataset_download_information` and if that property exists, the user can request to download one of the available bands or layers.
 
-And the results will be similar to the following:
+The results will be similar to the following:
 
 ```{literalinclude} ./http-examples/download-search-datasets.resp
    :language: http
 ```
 
-When the user find the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download), its `dataset_full_format` (to know which format conversions the user can request) and the desired `@id` inside the `dataset_download_information` (to know which file should be processed for download).
+When the user finds the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download), its `dataset_full_format` (to know which format conversions the user can request) and the desired `@id` inside the `dataset_download_information` (to know which file should be processed for download).
 
 ```{warning}
 Be aware that the `@search` endpoint returns the results in batches of 25 items. You need to check the `batching` key of the resulting JSON in order to go to the `next` batch of items.
 
-An alternative way to this is to do the HTTP request with an additional parameter `b_size` saying the number of items you want to have in the batch. This may make the API process slower though.
+An alternative way to this is to do the HTTP request with an additional parameter `b_size` indicating the number of items you want to have in the batch. This may make the API process slower though.
 
 ```
 
@@ -59,12 +59,12 @@ The response will be a JSON object where each of the format has a `true/false` v
 ```
 
 ```{warning}
-When requesting the download you are required to inform in which format you want to download it. We suggest to download the files in the original format (the one set in the `full_format` parameter in the `dataset_download_information`), otherwise the file organisation (naming convention and band number/organisation) may differ considerably from the Product user manual.
+When requesting the download you are required to inform which format you want to download it. We suggest you download the files in the original format (the one set in the `full_format` parameter in the `dataset_download_information`), otherwise, the file organisation (naming convention and band number/organisation) may differ considerably from the Product user manual.
 ```
 
 ## Projections
 
-In the same way the output projection of the downloaded file can be selected. This selection is open on all available projections. To get the list of the available ones, one needs to do the following request:
+The output projection of the downloaded file can be selected the same way. This selection is open on all available projections. To get the list of the available ones, one needs to do the following request:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-projections.req
@@ -79,7 +79,7 @@ The response will be the list of available projections:
 
 ## Time series
 
-When requesting a specific time range download, the user needs to know in advance the available time range and the period to request the proper download.
+When requesting a specific time range download the user needs to know the available time range and the period to request the proper download in advance.
 
 This endpoints provides the required information passing the dataset uid as a parameter:
 
@@ -132,7 +132,7 @@ Due to the way those dataset files are stored in the servers, sometimes the CLMS
 
 This process is OK when the user requests to download the dataset with a time or spatial restriction (not mandatory) because the CLMS Website needs to transform and process the files.
 
-But when requesting the full dataset of a non-EEA dataset, it makes little sense to download first the whole dataset to the CLMS Website and offer it later to the user.
+However, when requesting the full dataset of a non-EEA dataset, it makes little sense to first download the whole dataset to the CLMS Website and offer it later to the user.
 
 That's why, in such a case, the download API will issue an error informing the user to use some other API endpoint.
 
