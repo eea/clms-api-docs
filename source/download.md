@@ -228,11 +228,11 @@ And the response obtained from the server:
 
 ## Request the download
 
-When the user has all the data he needs to download the DataSet, he can request the download by doing the following request.
+When the user has all the data he needs to download the DataSet, he can request the download by making the following request.
 
 ### Restrict using a Nomenclature of Territorial Units for Statistics code
 
-The request must include a correct NUTS code in the request:
+The request must include a correct NUTS code in it:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-nuts.req
@@ -266,7 +266,7 @@ The response will include the task id assigned to the download process:
 The temporal range must be specified with the Start and End dates of the range.
 The format is in milliseconds since the epoch (1970-01-01 00:00:00).
 
-The endpoint will do several validations, such as providing both values, the start date is before the end date and the dates are valid.
+The endpoint will do several validations, such as checking that both values are provided, that the start date is before the end date and the dates are valid.
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-timeseries.req
@@ -281,9 +281,9 @@ The response will include the task id assigned to the download process:
 
 ### Combining restrictions
 
-Those temporal and spatial restrictions can be combined to produce an output file that's restricted to a given NUTS code and a given temporal range or to a given bounding box and a given temporal range.
+Those temporal and spatial restrictions can be combined to produce an output file that is restricted to a given NUTS code and a given temporal range or to a given bounding box and a given temporal range.
 
-To do so, the user need to add the required restrictions in the request.
+To do so, the user needs to add the required restrictions in the request.
 
 This is the example with a bounding-box and a temporal range:
 
@@ -328,7 +328,7 @@ The response will include the task id assigned to the download process:
 
 ## Wait for the download to be ready
 
-As said, the download tool will inform the user by email when the download is ready. But the user can always request the status of all his requests using the `@datarequest_search` endpoint as follows:
+As said, the download tool will inform the user by email when the download is ready. Tthe user can always request the status of all his requests using the `@datarequest_search` endpoint as follows:
 
 Request all in progress downloads:
 
@@ -337,20 +337,20 @@ Request all in progress downloads:
 
 ```
 
-The response contains a JSON object where each of the keys represent a download task. It also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.), and also the date and time of the request.
+The response contains a JSON object where each of the keys represents a download task. It also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.) and also the date and time of the request.
 
 ```{literalinclude} ./http-examples/download-request-download-in-progress.resp
    :language: http
 ```
 
-Similarly a user can request all the finished downloads:
+Similarly, a user can request all the finished downloads:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-finished.req
 
 ```
 
-The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.), and also the date and time of the request.
+The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.) and also the date and time of the request.
 
 In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the address where the download will be available for the next _72 hours_.
 
@@ -365,7 +365,7 @@ Similarly, instead of using the search, the user can request the status of a spe
 
 ```
 
-The result will be similar to the previous ones but will contain only the information of the requested dataset.
+The result will be similar to the previous ones but will only contain the information of the requested dataset.
 
 ```{literalinclude} ./http-examples/download-request-download-status.resp
    :language: http
@@ -403,7 +403,7 @@ The result will include all the information regarding the prepackaged files in t
    :language: http
 ```
 
-To request the download of one or several files, one has to note their `@id` and request their download as follows. In this case trying to request a format and/or projection change will fail because all prepackaged files
+To request the download of one or several files, one has to note their `@id` and request their download as shown below. In this case, trying to request a format and/or projection change will fail because all prepackaged files
 are process as they are. CLMS Website can't handle their transformation:
 
 ```{http:example} curl wget python-requests
@@ -419,16 +419,16 @@ The response will contain the task id of the download request, like in earlier o
 
 ## Combined download of datasets and prepackaged files
 
-One can also request in a single request to download a prepackaged file and a full dataset. To do so, one only has to include the required information in the request:
+One can also request to download a prepackaged file and a full dataset in a single request. To do so, one only has to include the required information in the request:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-combined.req
 
 ```
 
-In this case the request will be splitted in two download packages, one will contain all the prepackaged files and the other one the rest of the downloads.
+In this case the request will be splitted into two download packages, one will contain all the prepackaged files and the other the rest of the downloads.
 
-This is done this way to speed up the preparing of the packages, because all the prepackaged files are already available and their download process is much faster.
+It is done this way to speed up the preparing of the packages because all the prepackaged files are already available and their download process is much faster.
 
 ```{literalinclude} ./http-examples/download-request-combined.resp
    :language: http
