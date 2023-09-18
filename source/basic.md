@@ -1,7 +1,7 @@
 # Basics about the CLMS API
 
-The CLMS Portal API is based on Plone's REST API. [Plone](https://plone.org) is the CMS on top of which
-the CLMS Portal is built on and its REST API provides a great number of features to access and interact
+The CLMS Website API is based on Plone's REST API. [Plone](https://plone.org) is the CMS on top of which
+the CLMS Website is built on and its REST API provides a great number of features to access and interact
 with the portal.
 
 The full documentation about Plone's REST API can be found online [at Read the Docs](https://plonerestapi.readthedocs.io/en/latest/)
