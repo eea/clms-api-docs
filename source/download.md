@@ -328,7 +328,7 @@ The response will include the task id assigned to the download process:
 
 ## Wait for the download to be ready
 
-As said, the download tool will inform the user by email when the download is ready. Tthe user can always request the status of all his requests using the `@datarequest_search` endpoint as follows:
+As said, the download tool will inform the user by email when the download is ready. The user can always request the status of all his requests using the `@datarequest_search` endpoint as follows:
 
 Request all in progress downloads:
 
