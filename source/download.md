@@ -128,7 +128,7 @@ The response will include the task id like in the responses of other requests
    :language: http
 ```
 
-Due to the way those dataset files are stored in the servers, sometimes the CLMS Website needs to go to the original source (such as Wekeo and Global Datasets) to download the files and provide them to the end-user.
+Due to the way those dataset files are stored in the servers, sometimes the CLMS Website needs to go to the original source (such as WEkEO and Global Datasets) to download the files and provide them to the end-user.
 
 This process is OK when the user requests to download the dataset with a time or spatial restriction (not mandatory) because the CLMS Website needs to transform and process the files.
 
@@ -154,11 +154,11 @@ And the response obtained from the server:
 
 To request the direct download links of full datasets for non-EEA datasets, the CLMS Website offers an auxiliary API.
 
-In the request to this auxiliary API the user needs to pass the dataset id and the collection name he wants to download, also a time period to download (in case of time-series datasets) and the API will return the direct download links for the requested dataset.
+In the request to this auxiliary API the user needs to pass the dataset id and the download information id he wants to download, also a time period to download (in case of time-series datasets) and the API will return the direct download links for the requested dataset.
 
 The available parameters when requesting this downloads are the following:
 
-- Wekeo datasets:
+- WEkEO datasets:
 
   - date_from: start date of the requested download in ISO format: YYYY-MM-DD
   - date_to: end date of the requested download in ISO format: YYYY-MM-DD
@@ -178,29 +178,33 @@ The available parameters when requesting this downloads are the following:
   - date_from: start date of the requested download in ISO format: YYYY-MM-DD
   - date_to: end date of the requested download in ISO format: YYYY-MM-DD
 
-If no coordinates are entered for Wekeo or Landcover datasets, the used bounding box will be the following:
+If no coordinates are entered for WEkEO or Landcover datasets, the used bounding box will be the following:
 
       x_max = 32.871094
       y_max = 70.289117
       x_min = -12.480469
       y_min = 35.603719
 
-If no start and and date are entered for Wekeo and Legacy datasets, the used ones will be the following:
+If no start and and date are entered for WEkEO and Legacy datasets, the used ones will be the following:
 
       start_date: request date
       end_date: request date - 30 days
 
-This is an example with a Wekeo dataset:
+This is an example with a WEkEO dataset:
 
 ```{http:example} curl wget python-requests
-    :request: ./http-examples/download-auxiliary_api_wekeo.req
+    :request: ./http-examples/download-auxiliary_api_WEkEO.req
 ```
 
-And the response obtained from the server:
+And the response obtained from the server. In this case, the API will not return the direct links to download the
+dataset, but the parameters you need to use in the WEkEO API to download the dataset files.
 
-```{literalinclude} ./http-examples/download-auxiliary_api_wekeo.resp
+Check The `WEkEO documentation`_ to get further information:
+
+```{literalinclude} ./http-examples/download-auxiliary_api_WEkEO.resp
    :language: http
 ```
+
 
 This is an example with a LEGACY dataset:
 
@@ -433,3 +437,5 @@ It is done this way to speed up the preparing of the packages because all the pr
 ```{literalinclude} ./http-examples/download-request-combined.resp
    :language: http
 ```
+
+.. _`WEkEO documentation`: https://help.WEkEO.eu/en/collections/3530725-WEkEO-harmonized-data-access

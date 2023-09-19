@@ -1,3 +1,3 @@
-GET /api/@get-download-file-urls?dataset_uid=8d14c6a2ba7946faaaf50e4e8241fe1c&dataset_collection=60m HTTP/1.1
+GET /api/@get-download-file-urls?dataset_uid=8d14c6a2ba7946faaaf50e4e8241fe1c&download_information_id=2c51dd60-0e70-4ff8-88c0-bd8cb6c58123 HTTP/1.1
 Accept: application/json
 Authorization: Bearer <REDACTED>
