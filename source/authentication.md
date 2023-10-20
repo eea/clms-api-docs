@@ -139,7 +139,7 @@ Two parameters are required:
 | grant_type | Must always be **urn:ietf:params:oauth:grant-type:jwt-bearer** |
 | assertion  | The JWT authorization grant                                    |
 
-```{http:example} curl wget python-requests
+```{http:example} curl wget
     :request: ./http-examples/authentication-access-token-request.req
 ```
 
