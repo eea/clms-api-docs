@@ -193,18 +193,17 @@ If no start and and date are entered for WEkEO and Legacy datasets, the used one
 This is an example with a WEkEO dataset:
 
 ```{http:example} curl wget python-requests
-    :request: ./http-examples/download-auxiliary_api_WEkEO.req
+    :request: ./http-examples/download-auxiliary_api_wekeo.req
 ```
 
 And the response obtained from the server. In this case, the API will not return the direct links to download the
 dataset, but the parameters you need to use in the WEkEO API to download the dataset files.
 
-Check The `WEkEO documentation`_ to get further information:
+Check The `WEkEO documentation`\_ to get further information:
 
-```{literalinclude} ./http-examples/download-auxiliary_api_WEkEO.resp
+```{literalinclude} ./http-examples/download-auxiliary_api_wekeo.resp
    :language: http
 ```
-
 
 This is an example with a LEGACY dataset:
 
@@ -438,4 +437,4 @@ It is done this way to speed up the preparing of the packages because all the pr
    :language: http
 ```
 
-.. _`WEkEO documentation`: https://help.WEkEO.eu/en/collections/3530725-WEkEO-harmonized-data-access
+.. \_`WEkEO documentation`: https://help.WEkEO.eu/en/collections/3530725-WEkEO-harmonized-data-access
