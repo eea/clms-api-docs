@@ -329,6 +329,8 @@ The response will include the task id assigned to the download process:
    :language: http
 ```
 
+If the user does not select any band, the system will select by default the 'ALL BANDS' layer, which means that all of them will be downloaded.
+
 ## Wait for the download to be ready
 
 As said, the download tool will inform the user by email when the download is ready. The user can always request the status of all his requests using the `@datarequest_search` endpoint as follows:
