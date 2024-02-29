@@ -175,8 +175,8 @@ The available parameters when requesting this downloads are the following:
   - y_min: requested bounding-box coordinates
 
 - Legacy datasets:
-  - date_from: start date of the requested download in ISO format: YYYY-MM-DD
-  - date_to: end date of the requested download in ISO format: YYYY-MM-DD
+  - date_from (required): start date of the requested download in ISO format: YYYY-MM-DD
+  - date_to (required): end date of the requested download in ISO format: YYYY-MM-DD
 
 If no coordinates are entered for WEkEO or Landcover datasets, the used bounding box will be the following:
 
@@ -205,7 +205,7 @@ Check The `WEkEO documentation`\_ to get further information:
    :language: http
 ```
 
-This is an example with a LEGACY dataset:
+This is an example with a LEGACY dataset. In this case the `date_from` and `date_to` parameters are mandatory:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-auxiliary_api_legacy.req

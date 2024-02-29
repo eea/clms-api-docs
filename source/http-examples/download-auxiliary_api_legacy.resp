@@ -1,4 +1,12 @@
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-[]
+[
+  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703010000_CEURO_MODIS_V1.0.1.nc",
+  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703020000_CEURO_MODIS_V1.0.1.nc",
+  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703030000_CEURO_MODIS_V1.0.1.nc",
+  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703040000_CEURO_MODIS_V1.0.1.nc",
+  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703050000_CEURO_MODIS_V1.0.1.nc",
+  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703060000_CEURO_MODIS_V1.0.1.nc",
+  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703070000_CEURO_MODIS_V1.0.1.nc"
+]
