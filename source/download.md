@@ -64,14 +64,14 @@ When requesting the download you are required to inform which format you want to
 
 ## Projections
 
-The output projection of the downloaded file can be selected the same way. This selection is open on all available projections. To get the list of the available ones, one needs to do the following request:
+The output projection of the downloaded file can be selected the same way. This selection is open on all available projections. To get the list of the available ones, one needs to pass as a parameter the UID of the dataset, like here:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-projections.req
 
 ```
 
-The response will be the list of available projections:
+The response will be the list of available projections for this specific dataset:
 
 ```{literalinclude} ./http-examples/download-available-projections.resp
    :language: http
