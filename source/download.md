@@ -112,11 +112,11 @@ Some available datasets offer time-series information and the user can choose to
 
 ## Full dataset downloads
 
-```{warning}
-These downloads will only work for datasets coming from EEA sources.
-```
+Due to the way those dataset files are stored in the servers, sometimes the CLMS Website needs to go to the original source (such as WEkEO and Global Datasets) to download the files and provide them to the end-user.
 
-The standard download API allows downloading the full dataset without any spatial or temporal restrictions. To do so, the user needs to do a request like this one:
+This process is OK when the user requests to download the dataset with a time or spatial restriction (not mandatory) because the CLMS Website needs to transform and process the files.
+
+Full dataset downloads of EEA datasets are available through the prepackaged files of each datasets. So when trying to download such dataset, the user will receive an error:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-full_dataset_ok.req
@@ -127,10 +127,6 @@ The response will include the task id like in the responses of other requests
 ```{literalinclude} ./http-examples/download-request-download-full_dataset_ok.resp
    :language: http
 ```
-
-Due to the way those dataset files are stored in the servers, sometimes the CLMS Website needs to go to the original source (such as WEkEO and Global Datasets) to download the files and provide them to the end-user.
-
-This process is OK when the user requests to download the dataset with a time or spatial restriction (not mandatory) because the CLMS Website needs to transform and process the files.
 
 However, when requesting the full dataset of a non-EEA dataset, it makes little sense to first download the whole dataset to the CLMS Website and offer it later to the user.
 

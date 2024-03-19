@@ -1,11 +1,7 @@
-HTTP/1.1 201 Created
+HTTP/1.1 400 Bad Request
 Content-Type: application/json
 
 {
-    "ErrorTaskIds": [],
-    "TaskIds": [
-        {
-            "TaskID": "43552819678"
-        }
-    ]
+    "msg": "To download the full dataset, please download it through the corresponding pre-packaged data collection",
+    "status": "error",
 }
