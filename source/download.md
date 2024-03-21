@@ -81,18 +81,7 @@ The response will be the list of available projections for this specific dataset
 
 When requesting a specific time range download the user needs to know the available time range and the period to request the proper download in advance.
 
-This endpoints provides the required information passing the dataset uid as a parameter:
-
-```{http:example} curl wget python-requests
-    :request: ./http-examples/download-available-time-series.req
-
-```
-
-The response will be the information about the start, end and the period of the time serie
-
-```{literalinclude} ./http-examples/download-available-time-series.resp
-   :language: http
-```
+To check which is the maximum period to download for the time series of a given dataset the user shoudl check the **download_limit_temporal_extent** property, where he will get the number of days he can request to download.
 
 ## Restrict the spatial extent of the files
 
