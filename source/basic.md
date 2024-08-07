@@ -16,7 +16,7 @@ If the base URL of the portal is `https://land.copernicus.eu/` then the API is a
 Plone provides the information about the objects under the object's itself's url. If we have an object at the following URL `https://land.copernicus.eu/en/datasets/dataset-1/` then its content will be available through the API at `https://land.copernicus.eu/api/en/datasets/dataset-1/`
 
 To search all those datasets, the API provides a full-featured `@search` endpoint that can be used to search not only DataSets but also
-any other content type that is available in the portal. The full documentation about the `@search` endpoint can be found on the [official documentation](https://plonerestapi.readthedocs.io/en/latest/searching.html) .
+any other content type that is available in the portal. The full documentation about the `@search` endpoint can be found on the [official documentation](https://plonerestapi.readthedocs.io/en/latest/endpoints/searching.html) .
 
 ## API Content-type
 
