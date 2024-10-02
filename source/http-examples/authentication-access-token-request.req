@@ -1,5 +1,5 @@
-POST /@@oauth2-token HTTP/1.1
+POST /api/@@oauth2-token HTTP/1.1
 Accept: application/json
 Content-type: application/x-www-form-urlencoded
 
-grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=REDACTED
+grant-type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=<REDACTED>

@@ -1,3 +1,3 @@
-GET /api/@projections?uid=0407d497d3c44bcd93ce8fd5bf78596a HTTP/1.1
+GET /api/@projections HTTP/1.1
 Accept: application/json
 Authorization: Bearer <REDACTED>
