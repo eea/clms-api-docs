@@ -6,18 +6,16 @@ Authorization: Bearer <REDACTED>
 {
   "Datasets":[
       {
-        "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-        "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
-        "OutputFormat": "Geotiff",
+        "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+        "OutputFormat": "Shapefile",
         "OutputGCS": "EPSG:4326",
-        "BoundingBox": [2.354736328128108, 46.852958688910306, 4.639892578127501, 45.88264619696234]
+        "BoundingBox": [741,163.36666870117188,851,234.36666870117188]
     },
     {
-        "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-        "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
-        "OutputFormat": "Geotiff",
+        "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+        "OutputFormat": "Shapefile",
         "OutputGCS": "EPSG:4326",
-        "BoundingBox": [2.354736328128108, 46.852958688910306, 4.639892578127501, 45.88264619696234]
+        "BoundingBox": [741,163.36666870117188,851,234.36666870117188]
     }
   ]
 }

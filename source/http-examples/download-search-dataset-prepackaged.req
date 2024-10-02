@@ -1,2 +1,0 @@
-GET /api/@search?portal_type=DataSet&metadata_fields=UID&metadata_fields=downloadable_files HTTP/1.1
-Accept: application/json

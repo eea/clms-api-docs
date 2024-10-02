@@ -2,154 +2,30 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-    "14909741217": {
-        "Datasets": [
-            {
-                "DatasetFormat": "Geotiff",
-                "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-                "DatasetPath": "djMuMC4xLzIwMTk=",
-                "DatasetSource": "LANDCOVER",
-                "DatasetTitle": "Land Cover 100m: collection 3: epoch 2019: Globe",
-                "Metadata": [
-                    "https://land.copernicus.vgt.vito.be/geonetwork/srv/api/records/urn:cgls:global:lcc100_v3_100m/formatters/xml?approved=true"
-                ],
-                "NUTSID": "ITC11",
-                "NUTSName": "Torino",
-                "OutputFormat": "Geotiff",
-                "OutputGCS": "EPSG:4326",
-                "WekeoChoices": ""
-            },
-            {
-                "DatasetFormat": "Geotiff",
-                "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-                "DatasetPath": "djMuMC4xLzIwMTk=",
-                "DatasetSource": "LANDCOVER",
-                "DatasetTitle": "Land Cover 100m: collection 3: epoch 2019: Globe",
-                "Metadata": [
-                    "https://land.copernicus.vgt.vito.be/geonetwork/srv/api/records/urn:cgls:global:lcc100_v3_100m/formatters/xml?approved=true"
-                ],
-                "NUTSID": "ITC1",
-                "NUTSName": "Piemonte",
-                "OutputFormat": "Geotiff",
-                "OutputGCS": "EPSG:4326",
-                "WekeoChoices": ""
-            }
-        ],
-        "DownloadURL": "https://copernicus-fme.eea.europa.eu/clmsdatadownload/results/4050.zip",
-        "FMETaskId": 4050,
-        "FileSize": 12874380,
-        "FinalizationDateTime": "2022-09-29T13:11:39.986121",
-        "Message": "Download process finished successfully",
-        "RegistrationDateTime": "2022-09-29T13:10:17.080461",
-        "Status": "Finished_ok",
-        "UserID": "admin"
-    },
-    "31833063043": {
+    "68814328927": {
         "Datasets": [
             {
                 "BoundingBox": [
-                    2.354736328128108,
-                    46.852958688910306,
-                    4.639892578127501,
-                    45.88264619696234
+                    636,
+                    218.36666870117188,
+                    834,
+                    389.3666687011719
                 ],
-                "DatasetFormat": "Geotiff",
-                "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-                "DatasetPath": "djMuMC4xLzIwMTk=",
-                "DatasetSource": "LANDCOVER",
-                "DatasetTitle": "Land Cover 100m: collection 3: epoch 2019: Globe",
-                "Metadata": [
-                    "https://land.copernicus.vgt.vito.be/geonetwork/srv/api/records/urn:cgls:global:lcc100_v3_100m/formatters/xml?approved=true"
-                ],
-                "OutputFormat": "Geotiff",
-                "OutputGCS": "EPSG:4326",
-                "TemporalFilter": {
-                    "EndDate": "2019-05-31 10:00:00",
-                    "StartDate": "2019-01-01 10:00:00"
-                },
-                "WekeoChoices": ""
-            },
-            {
-                "BoundingBox": [
-                    2.354736328128108,
-                    46.852958688910306,
-                    4.639892578127501,
-                    45.88264619696234
-                ],
-                "DatasetFormat": "Geotiff",
-                "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-                "DatasetPath": "djMuMC4xLzIwMTk=",
-                "DatasetSource": "LANDCOVER",
-                "DatasetTitle": "Land Cover 100m: collection 3: epoch 2019: Globe",
-                "Metadata": [
-                    "https://land.copernicus.vgt.vito.be/geonetwork/srv/api/records/urn:cgls:global:lcc100_v3_100m/formatters/xml?approved=true"
-                ],
-                "OutputFormat": "Geotiff",
-                "OutputGCS": "EPSG:4326",
-                "TemporalFilter": {
-                    "EndDate": "2019-05-31 10:00:00",
-                    "StartDate": "2019-01-01 10:00:00"
-                },
-                "WekeoChoices": ""
+                "DatasetFormat": "GDB",
+                "DatasetID": "008e882e9759409fa93157ae4687bef8",
+                "DatasetPath": "SDpcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJcQ29yaW5lX0xhbmRfQ292ZXJfQ2hhbmdlKENIQSlfMjAxMi0yMDE4XENMQ19DSEFfMjAxMi0yMDE4X1ZlcnNpb25fMjBcRGF0YVxkYXRhLW1hc3RlclxVMjAxOF9DSEExMjE4X1YyMDIwXzIwdTFfdmVjdG9yXFUyMDE4X0NIQTEyMThfVjIwMjBfMjB1MS5nZGI=",
+                "DatasetSource": "EEA",
+                "DatasetTitle": "CHA 2012-2018",
+                "Metadata": [],
+                "OutputFormat": "GDB",
+                "OutputGCS": "EPSG:4326"
             }
         ],
-        "DownloadURL": "https://copernicus-fme.eea.europa.eu/clmsdatadownload/results/4053.zip",
-        "FMETaskId": 4053,
-        "FileSize": 9266860,
-        "FinalizationDateTime": "2022-09-29T13:14:54.311515",
-        "Message": "Download process finished successfully",
-        "RegistrationDateTime": "2022-09-29T13:13:34.453677",
+        "DownloadURL": "https://copernicus-fme.eea.europa.eu/clmsdatadownload/results/933.zip",
+        "FileSize": 103380245,
+        "FinalizationDateTime": "2022-01-20T10:28:22.179435",
+        "RegistrationDateTime": "2022-01-20T10:08:18.145053",
         "Status": "Finished_ok",
-        "UserID": "admin"
-    },
-    "94519134409": {
-        "Datasets": [
-            {
-                "BoundingBox": [
-                    2.354736328128108,
-                    46.852958688910306,
-                    4.639892578127501,
-                    45.88264619696234
-                ],
-                "DatasetFormat": "Geotiff",
-                "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-                "DatasetPath": "djMuMC4xLzIwMTk=",
-                "DatasetSource": "LANDCOVER",
-                "DatasetTitle": "Land Cover 100m: collection 3: epoch 2019: Globe",
-                "Metadata": [
-                    "https://land.copernicus.vgt.vito.be/geonetwork/srv/api/records/urn:cgls:global:lcc100_v3_100m/formatters/xml?approved=true"
-                ],
-                "OutputFormat": "Geotiff",
-                "OutputGCS": "EPSG:4326",
-                "WekeoChoices": ""
-            },
-            {
-                "BoundingBox": [
-                    2.354736328128108,
-                    46.852958688910306,
-                    4.639892578127501,
-                    45.88264619696234
-                ],
-                "DatasetFormat": "Geotiff",
-                "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-                "DatasetPath": "djMuMC4xLzIwMTk=",
-                "DatasetSource": "LANDCOVER",
-                "DatasetTitle": "Land Cover 100m: collection 3: epoch 2019: Globe",
-                "Metadata": [
-                    "https://land.copernicus.vgt.vito.be/geonetwork/srv/api/records/urn:cgls:global:lcc100_v3_100m/formatters/xml?approved=true"
-                ],
-                "OutputFormat": "Geotiff",
-                "OutputGCS": "EPSG:4326",
-                "WekeoChoices": ""
-            }
-        ],
-        "DownloadURL": "https://copernicus-fme.eea.europa.eu/clmsdatadownload/results/4051.zip",
-        "FMETaskId": 4051,
-        "FileSize": 9266860,
-        "FinalizationDateTime": "2022-09-29T13:12:28.728251",
-        "Message": "Download process finished successfully",
-        "RegistrationDateTime": "2022-09-29T13:11:42.281793",
-        "Status": "Finished_ok",
-        "UserID": "admin"
+        "UserID": "n00015mf"
     }
 }
