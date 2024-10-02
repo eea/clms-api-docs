@@ -11,7 +11,7 @@ and here we will be summarizing the most important features that will de require
 
 If the base URL of the portal is `https://land.copernicus.eu/` then the API is available at `https://land.copernicus.eu/api/`.
 
-## Basic concepts
+## Basic concepts..
 
 Plone provides the information about the objects under the object's itself's url. If we have an object at the following URL `https://land.copernicus.eu/en/datasets/dataset-1/` then its content will be available through the API at `https://land.copernicus.eu/api/en/datasets/dataset-1/`
 
