@@ -5,4 +5,4 @@ portal users to access and download the data, but also allows unattended machine
 communication between external services and the portal.
 
 In this documentation you will find a list of all the main options explained with useful
-**examples**.
+examples.
