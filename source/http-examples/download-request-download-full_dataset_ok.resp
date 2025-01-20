@@ -1,0 +1,7 @@
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "msg": "To download the full dataset, please download it through the corresponding pre-packaged data collection",
+    "status": "error",
+}

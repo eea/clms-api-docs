@@ -2,8 +2,8 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 [
-    "EPSG:4326",
-    "EPSG:3035",
-    "EPSG:3857",
-    "EPSG:4258"
+  "EPSG:4326",
+  "EPSG:3035",
+  "EPSG:3857",
+  "EPSG:4258"
 ]

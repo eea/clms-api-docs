@@ -1,0 +1,7 @@
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "msg": "You are requesting to download the full dataset but this dataset is not an EEA dataset and thus you need to query an specific endpoint to request its download. Please check the API documentation to get more information about this specific endpoint.",
+    "status": "error"
+}
