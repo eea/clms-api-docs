@@ -6,19 +6,16 @@ Authorization: Bearer <REDACTED>
 {
   "Datasets":[
       {
-        "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-        "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
-        "OutputFormat": "Geotiff",
+        "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+        "OutputFormat": "Shapefile",
         "OutputGCS": "EPSG:4326",
         "NUTS": "ITC11"
     },
     {
-        "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-        "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
-        "OutputFormat": "Geotiff",
+        "DatasetID": "a5ee71470be04d66bcff498f94ceb5dc",
+        "OutputFormat": "Shapefile",
         "OutputGCS": "EPSG:4326",
         "NUTS": "ITC1"
     }
   ]
 }
-
