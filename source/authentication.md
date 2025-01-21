@@ -5,16 +5,16 @@ we are using this product under-the-hood to provide authentication services for 
 
 ```
 
-CLMS Portal Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user
-authentication service. This means that no user password is stored in the CLMS Portal, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login. Using EU Login the user only has to create one europe-wide account and will be able to access all European services that use EU Login without needing to create a new account for each service.
+CLMS Website Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user
+authentication service. This means that no user password is stored in the CLMS Website, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login. By using EU Login the user only has to create one europe-wide account and will be able to access all European services that use EU Login without needing to create a new account for each service.
 
-That's why all users wanting to use the API, need to create specific API tokens to communicate with the API.
+That is why all users wanting to use the API need to create specific API tokens to communicate with the API.
 
 Here we will explain all the steps needed to create and use such tokens.
 
 The use of API authentiation flow involves four steps:
 
-1. A logged in service user issues a service key in Plone, and stores the private key in a safe location accessible to the client application.
+1. A logged in service user issues a service key in Plone and stores the private key in a safe location accessible to the client application.
 2. The client application uses the private key to create and sign a JWT authorization grant.
 3. The client application exchanges the JWT authorization grant for a short-lived access token at the @@oauth2-token endpoint.
 4. The client then uses this access token to authenticate requests to protected resources.
@@ -25,16 +25,16 @@ Assuming the client is in possession of a service key, the flow looks like this:
     :alt: Register/Login link
 ```
 
-## Login in the CLMS portal
+## Login in the CLMS Website
 
-Using the `Register/Login` button in the top green bar of the portal, the user will be redirected to EU Login where he can login or register a new account.
+Using the `Register/Login` button in the top green bar of the portal, the user will be redirected to EU Login where he will be able to login or register a new account.
 
 ```{image} ./images/authentication-register-login-link.png
     :alt: Register/Login link
 ```
 
-When the user authorization is finished and the user is redirected back to the CLMS Portal, the name of the user will be shown in the top
-green bar and the user will be able to go his profile page and create the needed API tokens.
+When the user authorization is finished and the user is redirected back to the CLMS Website, the name of the user will be shown in the top
+green bar and the user will be able to access his profile page and create the needed API tokens.
 
 ```{image} ./images/authentication-register-login-user-name.png
     :alt: Register/Login with user name
@@ -42,21 +42,21 @@ green bar and the user will be able to go his profile page and create the needed
 
 ## Create API Tokens
 
-Clicking on this name in the top green bar, the user will be redirected to his profile page where he can fill the profile form and also can access to some other options reserved for logged-in users.
+Clicking on the name in the top green bar, the user will be redirected to his profile page where he can fill the profile form and can also access some other options reserved for logged-in users.
 
-Using the left menu present in the profile page, the user can access the `API Tokens` section-
+Using the left menu present in the profile page the user can access the `API Tokens` section.
 
 ```{image} ./images/authentication-tokens-access.png
     :alt: Access API Tokens section.
 ```
 
-In this section the user will see all the available API Tokens, can revoke them and can create a new one.
+In this section the user will see all the available API Tokens can revoke them and can create a new one.
 
 ```{image} ./images/authentication-tokens-page.png
     :alt: Access API Tokens section.
 ```
 
-When clicking the `Create new Token` button, a new form will be shown where the user can fill the name of the token:
+When clicking the `Create new Token` button a new form will be shown where the user can fill the name of the token:
 
 ```{image} ./images/authentication-tokens-create-new-token.png
     :alt: Access API Tokens section.
@@ -77,7 +77,7 @@ A service key looks like this (this specific token is revoked and no actions can
    :language: json
 ```
 
-After creating one or more tokens, the user will be able to delete them using the buttons in the token list view.
+After creating one or more tokens the user will be able to delete them using the buttons in the token list view.
 
 ```{image} ./images/authentication-token-token-list.png
     :alt: Access API Tokens section.
@@ -85,7 +85,7 @@ After creating one or more tokens, the user will be able to delete them using th
 
 ## Use the service token to sign the JWT authorization grant
 
-In order to request an access token, the client application will use the private service key created in the previous step to create and sign a JWT.
+In order to request an access token the client application will use the private service key created in the previous step to create and sign a JWT.
 
 The JWT needs to contain the following claims:
 
@@ -102,7 +102,7 @@ The JWT needs to contain the following claims:
 |      | 00:00:00 UTC, January 1, 1970. This value has a maximum of 1 hour after  |
 |      | the issued time.                                                         |
 
-The following is an example of how to build such a JWT token using python provided the service key
+The following is an example of how to build such a JWT token using python, provided the service key
 is stored in a file called `my_saved_key.json`:
 
 ```python
@@ -149,7 +149,7 @@ The response will be in `application/json` format and will contain the access to
    :language: http
 ```
 
-## Use the access token to authentication requests.
+## Use the access token to authenticate requests.
 
 The client can then use the access token to authenticate requests. The token needs to be sent in the HTTP `Authorization` header as a `Bearer` token, as follows:
 
@@ -159,10 +159,10 @@ The client can then use the access token to authenticate requests. The token nee
 
 ## Token expiration and renewal
 
-Once the token expires, the client must create a JWT authorization grant again, and request a new access token.
+Once the token expires the client must create a JWT authorization grant again and request a new access token.
 
-The client should, instead of trying to predict access token expiration, just anticipate the case that authentication using an existing token will fail (because the token expired), and then perform the necessary steps to obtain a new token.
+The client should, instead of trying to predict access token expiration, just anticipate the case that authentication using an existing token will fail (because the token expired) and then perform the necessary steps to obtain a new token.
 
-To accomplish this, it is recommended to delegate all the requests a client application wants to make to a class that expects an `Access token expired` response as described above, and obtains a new token if necessary. The failed request that lead to the error response then needs to be re-dispatched with its original parameters, but the new token in the `Authorization` header.
+To accomplish this it is recommended to delegate all the requests a client application wants to make to a class that expects an `Access token expired` response as described above and obtains a new token if necessary. The failed request that lead to the error response then needs to be re-dispatched with its original parameters but with the new token in the `Authorization` header.
 
 Care needs to be taken to not include an expired token (or any `Authorization` header for that matter) with the requests to the token endpoint when obtaining a new token.

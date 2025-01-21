@@ -1,0 +1,30 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "boundingBoxValues": [
+        {
+            "bbox": [
+                -12.480469,
+                35.603719,
+                32.871094,
+                70.289117
+            ],
+            "name": "bbox"
+        }
+    ],
+    "datasetId": "EO:CRYO:DAT:HRSI:GFSC",
+    "dateRangeSelectValues": [
+        {
+            "end": "2016-09-12T00:00:00.000Z",
+            "name": "Observed",
+            "start": "2016-09-02T00:00:00.000Z"
+        }
+    ],
+    "stringChoiceValues": [
+        {
+            "name": "productType",
+            "value": "GFSC"
+        }
+    ]
+}
