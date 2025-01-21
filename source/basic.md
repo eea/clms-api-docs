@@ -8,7 +8,7 @@ If the base URL of the portal is `https://land.copernicus.eu/` then the API is a
 
 For all basic operations, such as searching for content or obtaining information about a given DataSet, the API can be used without authentication.
 
-## Basic concepts..
+## Basic concepts.
 
 Plone provides the information about the objects under the object's url. If we have an object at the following URL
 
