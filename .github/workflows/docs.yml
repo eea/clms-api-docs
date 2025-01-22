@@ -2,13 +2,16 @@
 
 name: CI
 
+env:
+  DEFAULT_BRANCH: "develop"
+
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,13 +28,102 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a set of commands using the runners shell
-      - name: Build the docs
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
         run: |
-           pip install -r requirements.txt
-           make html
-           git config user.name github-actions
-           git config user.email github-actions@github.com
-           git add ../build
-           git diff --staged --quiet || git commit -m "Autobuild of sphinx docs"
-           git push
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Build
+      - uses: ammaraskar/sphinx-problem-matcher@master
+      - name: Build Sphinx docs
+        run: |
+          make html
+          # This fixes broken copy button icons, as explained in
+          #   https://github.com/coderefinery/sphinx-lesson/issues/50
+          #   https://github.com/executablebooks/sphinx-copybutton/issues/110
+          # This can be removed once these PRs are accepted (but the
+          # fixes also need to propagate to other themes):
+          #   https://github.com/sphinx-doc/sphinx/pull/8524
+          #   https://github.com/readthedocs/sphinx_rtd_theme/pull/1025
+          sed -i 's/url_root="#"/url_root=""/' build/dirhtml/index.html || true
+
+      # Clone and set up the old gh-pages branch
+      - name: Clone old gh-pages
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          set -x
+          git fetch
+          ( git branch gh-pages remotes/origin/gh-pages && git clone . --branch=gh-pages _gh-pages/ ) || mkdir _gh-pages
+          rm -rf _gh-pages/.git/
+          mkdir -p _gh-pages/branch/
+      # If a push and default branch, copy build to _gh-pages/ as the "main"
+      # deployment.
+      - name: Copy new build (default branch)
+        if: |
+          contains(github.event_name, 'push') &&
+          contains(github.ref, env.DEFAULT_BRANCH)
+        run: |
+          set -x
+          # Delete everything under _gh-pages/ that is from the
+          # primary branch deployment.  Eicludes the other branches
+          # _gh-pages/branch-* paths, and not including
+          # _gh-pages itself.
+          find _gh-pages/ -mindepth 1 ! -path '_gh-pages/branch*' -delete
+          rsync -a build/html/ _gh-pages/
+      # If a push and not on default branch, then copy the build to
+      # _gh-pages/branch/$brname (transforming '/' into '--')
+      - name: Copy new build (branch)
+        if: |
+          contains(github.event_name, 'push') &&
+          !contains(github.ref, env.DEFAULT_BRANCH)
+        run: |
+          set -x
+          #brname=$(git rev-parse --abbrev-ref HEAD)
+          brname="${{github.ref}}"
+          brname="${brname##refs/heads/}"
+          brdir=${brname//\//--}   # replace '/' with '--'
+          rm -rf   _gh-pages/branch/${brdir}
+          rsync -a build/html/ _gh-pages/branch/${brdir}
+      # Go through each branch in _gh-pages/branch/, if it's not a
+      # ref, then delete it.
+      - name: Delete old feature branches
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          set -x
+          for brdir in `ls _gh-pages/branch/` ; do
+              brname=${brdir//--/\/}   # replace '--' with '/'
+              if ! git show-ref remotes/origin/$brname ; then
+                  echo "Removing $brdir"
+                  rm -r _gh-pages/branch/$brdir/
+              fi
+          done
+      # Add the .nojekyll file
+      - name: nojekyll
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          touch _gh-pages/.nojekyll
+      # Deploy
+      # https://github.com/peaceiris/actions-gh-pages
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' }}
+        #if: ${{ success() && github.event_name == 'push' && github.ref == 'refs/heads/$defaultBranch' }}
+        with:
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _gh-pages/
+          force_orphan: true
