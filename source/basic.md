@@ -1,7 +1,6 @@
 ﻿# Basics about the CLMS API
 
-The CLMS Portal API is based on Plone's REST API. [Plone](https://plone.org) is the CMS on top of which the CLMS Portal is built on and its REST API provides great number of features to access and interact
-with the portal.
+The CLMS Website API is based on Plone’s REST API. Plone is the CMS on top of which the CLMS Website is built on and its REST API provides a great number of features to access and interact with the portal.
 
 ## URL of the API
 
@@ -16,21 +15,25 @@ Plone provides the information about the objects under the object's url. If we h
 To consult a product on the CLMS portal, this would be the link structure:
 
 •	`https://land.copernicus.eu/en/products/product/`
+
 •	`https://land.copernicus.eu/en/products/corine-land-cover`
 
 Then its content will be available through the API at:
 
 •	`https://land.copernicus.eu/api/en/products/product` 
+
 •	`https://land.copernicus.eu/api/en/products/corine-land-cover`
 
 To consult a dataset on the CLMS portal, this would be the link structure:
-1
+
 •	`https://land.copernicus.eu/en/products/product/dataset`
+
 •	`https://land.copernicus.eu/en/products/corine-land-cover/clc2018`
 
 Then its content will be available through the API at:
 
-•	`https://land.copernicus.eu/api/en/products/product/dataset` 
+•	`https://land.copernicus.eu/api/en/products/product/dataset`
+
 •	`https://land.copernicus.eu/api/en/products/corine-land-cover/clc2018`
 
 To search all those datasets, the API provides a full-featured `@search` endpoint that can be used to search not only DataSets but also
