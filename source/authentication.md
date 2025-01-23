@@ -5,16 +5,15 @@ we are using this product under-the-hood to provide authentication services for 
 
 ```
 
-CLMS Website Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user
-authentication service. This means that no user password is stored in the CLMS Website, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login. By using EU Login the user only has to create one europe-wide account and will be able to access all European services that use EU Login without needing to create a new account for each service.
+CLMS Website Authentication is handled using [EU Login](https://ecas.ec.europa.eu/cas/help.html), European Commission's user authentication service. This means that no user password is stored in the CLMS Website, but the portal uses [Openid-connect](<https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)>) to handle the user authorization with EU Login. By using EU Login the user only has to create one Europe-wide account and will be able to access all European services that use EU Login without needing to create a new account for each service.
 
 That is why all users wanting to use the API need to create specific API tokens to communicate with the API.
 
 Here we will explain all the steps needed to create and use such tokens.
 
-The use of API authentiation flow involves four steps:
+The use of API authentication flow involves four steps:
 
-1. A logged in service user issues a service key in Plone and stores the private key in a safe location accessible to the client application.
+1. A logged-in service user issues a service key in Plone and stores the private key in a safe location accessible to the client application.
 2. The client application uses the private key to create and sign a JWT authorization grant.
 3. The client application exchanges the JWT authorization grant for a short-lived access token at the @@oauth2-token endpoint.
 4. The client then uses this access token to authenticate requests to protected resources.
@@ -50,7 +49,7 @@ Using the left menu present in the profile page the user can access the `API Tok
     :alt: Access API Tokens section.
 ```
 
-In this section the user will see all the available API Tokens can revoke them and can create a new one.
+In this section the user will see all the available API Tokens, that can be revoked or where a new one can be created.
 
 ```{image} ./images/authentication-tokens-page.png
     :alt: Access API Tokens section.
@@ -62,7 +61,7 @@ When clicking the `Create new Token` button a new form will be shown where the u
     :alt: Access API Tokens section.
 ```
 
-After filling the form the token will be created inmediately and the token details will be presented in the form.
+After filling the form the token will be created immediately and the token details will be presented in the form.
 
 ```{image} ./images/authentication-tokens-create-new-token-created.png
     :alt: Access API Tokens section.
@@ -82,6 +81,8 @@ After creating one or more tokens the user will be able to delete them using the
 ```{image} ./images/authentication-token-token-list.png
     :alt: Access API Tokens section.
 ```
+
+After deleting the token you can create a new one. 
 
 ## Use the service token to sign the JWT authorization grant
 
@@ -163,6 +164,6 @@ Once the token expires the client must create a JWT authorization grant again an
 
 The client should, instead of trying to predict access token expiration, just anticipate the case that authentication using an existing token will fail (because the token expired) and then perform the necessary steps to obtain a new token.
 
-To accomplish this it is recommended to delegate all the requests a client application wants to make to a class that expects an `Access token expired` response as described above and obtains a new token if necessary. The failed request that lead to the error response then needs to be re-dispatched with its original parameters but with the new token in the `Authorization` header.
+To accomplish this it is recommended to delegate all the requests a client application wants to make to a class that expects an `Access token expired` response as described above and obtains a new token if necessary. The failed request that leads to the error response then needs to be re-dispatched with its original parameters but with the new token in the `Authorization` header.
 
 Care needs to be taken to not include an expired token (or any `Authorization` header for that matter) with the requests to the token endpoint when obtaining a new token.
