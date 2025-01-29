@@ -20,8 +20,8 @@ As explained in the introduction, the CLMS Website API is based on Plone so the 
 If you don’t know the parameters of the desired dataset, or if you want to obtain the list of available datasets to look for the desired dataset, a simple search off all datasets available in the portal would be as follows:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-search-datasets.req
 
-:request: ./http-examples/download-search-datasets.req
 ```
 
 By means of this `@search` endpoint, the user is requesting to retrieve the dataset `UID`, the `dataset\_full\_format` and the `dataset\_download\_information`, for all the available datasets. This information is needed in advance of the download itself. 
@@ -39,8 +39,7 @@ An alternative way to this is to do the HTTP request with an additional paramete
 The results will be like the following:
 
 ```{literalinclude} ./http-examples/download-search-datasets.resp
-
-:language: http
+   :language: http
 ```
 When the user finds the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download), its `dataset\_full\_format` (to know which format conversions the user can request) and the desired `@id` inside the `dataset\_download\_information` (to know which file should be processed for download).
 
@@ -57,15 +56,14 @@ Each collection has its own identifier `af69e45f-646c-43f4-b062-b2855b5d6b5f` an
 The CLMS API provides an endpoint where the user can check which conversions are available for the available formats. To get the list of available conversions the user needs to do the following request:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-available-conversions.req
 
-:request: ./http-examples/download-available-conversions.req
 ```
 
 The response will be a JSON object where each of the format has a `true/false` value indicating if the conversion is available or not.
 
 ```{literalinclude} ./http-examples/download-available-conversions.resp
-
-:language: http
+   :language: http
 ```
 
 ```{warning}
@@ -80,15 +78,14 @@ This means that “vector” datasets can be only ordered only in any of these f
 The output projection of the downloaded file can be selected the same way. To get the list of the available ones, one needs to pass as a parameter the UID of the dataset, like here:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-available-projections.req
 
-:request: ./http-examples/download-available-projections.req
 ```
 
 The response will be the list of available projections for this specific dataset:
 
 ```{literalinclude} ./http-examples/download-available-projections.resp
-
-:language: http
+   :language: http
 ```
 
 ## Temporal extent
@@ -192,15 +189,13 @@ The response will include the task id assigned to the download process:
 Full dataset downloads of EEA datasets are available through the prepackaged files of each datasets. In case of requesting the full dataset without definition of the corresponding prepackage, you´ll receive an error:
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-request-download-full\_dataset\_ok.req
+    :request: ./http-examples/download-request-download-full_dataset_ok.req
 ```
 
 The response will include the task id like in the responses of other requests
 
-```{literalinclude} ./http-examples/download-request-download-full\_dataset\_ok.resp
-
-:language: http
+```{literalinclude} ./http-examples/download-request-download-full_dataset_ok.resp
+   :language: http
 ```
 Check from the list of available prepackages, which corresponds to the full dataset (pan-European dataset). See Download prepackaged files section to know how to see the list of available prepackages
 
@@ -213,15 +208,13 @@ In such endpoint the user will be offered direct download links for the datasets
 This is an example request requesting a full download of an external dataset:
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-request-download-full\_dataset\_nok.req
+    :request: ./http-examples/download-request-download-full_dataset_nok.req
 ```
 
 And the response obtained from the server:
 
-```{literalinclude} ./http-examples/download-request-download-full\_dataset\_nok.resp
-
-:language: http
+```{literalinclude} ./http-examples/download-request-download-full_dataset_nok.resp
+   :language: http
 ```
 
 ### Auxiliary API to get direct download links for non-EEA datasets
@@ -260,8 +253,7 @@ end\_date: request date - 30 days
 This is an example with a WEkEO dataset:
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-auxiliary\_api\_wekeo.req
+    :request: ./http-examples/download-auxiliary_api_wekeo.req
 ```
 
 And the response obtained from the server. In this case, the API will not return the direct links to download the
@@ -277,29 +269,25 @@ Check The `WEkEO documentation`\\_ to get further information:
 This is an example with a LEGACY dataset. In this case the `date\_from` and `date\_to` parameters are mandatory:
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-auxiliary\_api\_legacy.req
+    :request: ./http-examples/download-auxiliary_api_legacy.req
 ```
 
 And the response obtained from the server:
 
-```{literalinclude} ./http-examples/download-auxiliary\_api\_legacy.resp
-
-:language: http
+```{literalinclude} ./http-examples/download-auxiliary_api_legacy.resp
+   :language: http
 ```
 
 This is an example for a Global Dynamic Land Cover dataset:
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-auxiliary\_api\_landcover.req
+    :request: ./http-examples/download-auxiliary_api_landcover.req
 ```
 
 And the response obtained from the server:
 
-```{literalinclude} ./http-examples/download-auxiliary\_api\_landcover.resp
-
-:language: http
+```{literalinclude} ./http-examples/download-auxiliary_api_landcover.resp
+   :language: http
 ```
 
 ## Request the download
@@ -311,15 +299,14 @@ When the user has all the data he needs to download the DataSet, he can request 
 The request must include a correct NUTS code in it:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-nuts.req
 
-:request: ./http-examples/download-request-download-nuts.req
 ```
 
 The response will include the task id assigned to the download process:
 
 ```{literalinclude} ./http-examples/download-request-download-nuts.resp
-
-:language: http
+   :language: http
 ```
 
 ### Restrict using a bounding box
@@ -329,15 +316,14 @@ The bounding box must be specified passing four coordinates that represent
 the 4 points of the rectangle to be downloaded:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-bbox.req
 
-:request: ./http-examples/download-request-download-bbox.req
 ```
 
 The response will include the task id assigned to the download process:
 
 ```{literalinclude} ./http-examples/download-request-download-bbox.resp
-
-:language: http
+   :language: http
 ```
 
 ### Restrict using a temporal range
@@ -349,17 +335,15 @@ The format is in milliseconds since the epoch (1970-01-01 00:00:00).
 The endpoint will do several validations, such as checking that both values are provided, that the start date is before the end date and the dates are valid.
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-timeseries.req
 
-:request: ./http-examples/download-request-download-timeseries.req
 ```
 
 The response will include the task id assigned to the download process:
 
 ```{literalinclude} ./http-examples/download-request-download-timeseries.resp
-
-:language: http
+   :language: http
 ```
-
 ## Layer/band selection
 
 Although the Net CDF files are composed by bands, the user can´t request to download specific bands. 
@@ -367,15 +351,14 @@ This parameter has to be left blank and the system will use by default the value
 :
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-layers.req
 
-:request: ./http-examples/download-request-download-layers.req
 ```
 
 The response will include the task id assigned to the download process:
 
 ```{literalinclude} ./http-examples/download-request-download-layers.resp
-
-:language: http
+   :language: http
 ```
 
 ## Wait for the download to be ready
@@ -385,22 +368,21 @@ The download tool will inform the user by email when the download is ready. The 
 Request all in progress downloads:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-in-progress.req
 
-:request: ./http-examples/download-request-download-in-progress.req
 ```
 
 The response contains a JSON object where each of the keys represents a download task. It also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range. etc
 
 ```{literalinclude} ./http-examples/download-request-download-in-progress.resp
-
-:language: http
+   :language: http
 ```
 
 Similarly, a user can request all the finished downloads:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-finished.req
 
-:request: ./http-examples/download-request-download-finished.req
 ```
 
 The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range. etc.
@@ -408,22 +390,20 @@ The response contains a JSON object where each of the keys represent a download 
 In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the address where the download will be available for the next \_72 hours\_.
 
 ```{literalinclude} ./http-examples/download-request-download-finished.resp
-
-:language: http
+   :language: http
 ```
 
 Similarly, instead of using the search, the user can request the status of a specific download by using the `@datarequest\_status\_get` endpoint as follows:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-status.req
 
-:request: ./http-examples/download-request-download-status.req
 ```
 
 The result will be similar to the previous ones but will only contain the information of the requested dataset.
 
 ```{literalinclude} ./http-examples/download-request-download-status.resp
-
-:language: http
+   :language: http
 ```
 
 ## Cancelling a download
@@ -431,15 +411,14 @@ The result will be similar to the previous ones but will only contain the inform
 A download can also be cancelled by using the `@datarequest\_delete` endpoint as follows:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-delete.req
 
-:request: ./http-examples/download-request-delete.req
 ```
 
 The result will have no content if the request is deleted correctly
 
 ```{literalinclude} ./http-examples/download-request-delete.resp
-
-:language: http
+   :language: http
 ```
 
 ## Download prepackaged files
@@ -449,30 +428,28 @@ CLMS Website also provides a way to download some prepackaged files. Those prepa
 To inspect which prepackaged files are available for download, one can request that information to the dataset search endpoint:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-search-dataset-prepackaged.req
 
-:request: ./http-examples/download-search-dataset-prepackaged.req
 ```
 
 The result will include all the information regarding the prepackaged files in the `downloadable\_files` attribute:
 
 ```{literalinclude} ./http-examples/download-search-dataset-prepackaged.resp
-
-:language: http
+   :language: http
 ```
 
 When ordering a prepackage it is not possible to define custom parameters as the format and the projection as the file is already prepared. To rder a prepackage it is only needed to request the `@id`, if not, the download will fail.
 See the below example
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-prepackaged.req
 
-:request: ./http-examples/download-request-download-prepackaged.req
 ```
 
 The response will contain the task id of the download request, like in earlier options:
 
 ```{literalinclude} ./http-examples/download-request-download-prepackaged.resp
-
-:language: http
+   :language: http
 ```
 
 ## Combined download of datasets and prepackaged files
@@ -480,8 +457,8 @@ The response will contain the task id of the download request, like in earlier o
 One can also request to download a prepackaged file and a custom download in a single request. To do so, one only has to include the required information in the request:
 
 ```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-combined.req
 
-:request: ./http-examples/download-request-combined.req
 ```
 
 In this case the request will be splitted into two download packages, one will contain all the prepackaged files and the other the rest of the downloads.
@@ -489,8 +466,7 @@ In this case the request will be splitted into two download packages, one will c
 It is done this way to speed up the preparing of the packages because all the prepackaged files are already available and their download process is much faster.
 
 ```{literalinclude} ./http-examples/download-request-combined.resp
-
-:language: http
+   :language: http
 ```
 
 .. \\_`WEkEO documentation`: https://help.WEkEO.eu/en/collections/3530725-WEkEO-harmonized-data-access ELIMINAR??
