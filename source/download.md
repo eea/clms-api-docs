@@ -8,8 +8,8 @@ The download process takes the following steps:
 
 1. Find the items to be downloaded
 2. Decide in which format the items should be downloaded
-   3.a. Restrict the spatial extent of the files (optional)
-   3.b. Restrict the temporal range of the files (optional)
+   - Restrict the spatial extent of the files. 
+   - Restrict the temporal range of the files.
 3. Request the download
 4. Wait for the download to be ready
 
