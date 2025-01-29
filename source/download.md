@@ -21,7 +21,6 @@ If you don’t know the parameters of the desired dataset, or if you want to obt
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-search-datasets.req
-
 ```
 
 By means of this `@search` endpoint, the user is requesting to retrieve the dataset `UID`, the `dataset_full_format` and the `dataset_download_information`, for all the available datasets. This information is needed in advance of the download itself.
@@ -61,7 +60,6 @@ The CLMS API provides an endpoint where the user can check which conversions are
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-conversions.req
-
 ```
 
 The response will be a JSON object where each of the format has a `true/false` value indicating if the conversion is available or not.
@@ -82,7 +80,6 @@ The output projection of the downloaded file can be selected the same way. To ge
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-projections.req
-
 ```
 
 The response will be the list of available projections for this specific dataset:
@@ -101,7 +98,6 @@ To check which is the maximum period to download for the time series of a given 
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-projections.req
-
 ```
 
 The temporal range must be specified with the Start and End dates of the range. The format is in milliseconds since the epoch (1970-01-01 00:00:00).
