@@ -1,0 +1,31 @@
+{
+    "@id": "https://clms-prod.eea.europa.eu/api/en/products/high-resolution-layer-imperviousness/high-resolution-layer-imperviousness-change-2015-2018",
+    "@type": "DataSet",
+    "UID": "4062d6a3814c426b84218d91ecc733ca",
+    "dataset_download_information": {
+        "items": [
+            {
+                "@id": "af69e45f-646c-43f4-b062-b2855b5d6b5f",
+                "collection": "20m",
+                "full_format": "Geotiff",
+                "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Imperviousness\\HRL_Imperviousness_Change(IMC)_2015-2018\\Data\\data-master\\IMC_2015-2018_020m\\IMC_1518_020m_eu_03035_V1_0.tif",
+                "full_source": "EEA",
+                "name": "RASTER ",
+                "wekeo_choices": ""
+            },
+            {
+                "@id": "43f68ebb-e498-416d-9bcd-216aa4580c3a",
+                "collection": "100m",
+                "full_format": "Geotiff",
+                "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Imperviousness\\HRL_Imperviousness_Change(IMC)_2015-2018\\Data\\data-master\\IMC_2015-2018_100m\\IMC_1518_100m_eu_03035_V1_0.tif",
+                "full_source": "EEA",
+                "name": "RASTER "
+            }
+        ]
+    },
+    "dataset_full_format": null,
+    "description": "Provides at pan-European level the degree of imperviousness change (-100% -- +100%) between the 2015 and 2018 High Resolution Imperviousness Density status layers.",
+    "image_field": "image",
+    "review_state": "published",
+    "title": "High Resolution Layer Imperviousness Change 2015-2018"
+}
