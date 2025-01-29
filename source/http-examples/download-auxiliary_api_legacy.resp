@@ -2,11 +2,11 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 [
-  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703010000_CEURO_MODIS_V1.0.1.nc",
-  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703020000_CEURO_MODIS_V1.0.1.nc",
-  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703030000_CEURO_MODIS_V1.0.1.nc",
-  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703040000_CEURO_MODIS_V1.0.1.nc",
-  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703050000_CEURO_MODIS_V1.0.1.nc",
-  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703060000_CEURO_MODIS_V1.0.1.nc",
-  "ftp://ftp.globalland.cls.fr/Core/CRYOSPHERE/dataset-fmi-sce-paneu-500m/c_gls_SCE500_201703070000_CEURO_MODIS_V1.0.1.nc"
+    "https://globalland.cgls.dev/webResources/catalogTree/netcdf/snow_cover_extent/sce_500m_v1_daily/2017/20170301/c_gls_SCE500_201703010000_CEURO_MODIS_V1.0.1.nc",
+    "https://globalland.cgls.dev/webResources/catalogTree/netcdf/snow_cover_extent/sce_500m_v1_daily/2017/20170302/c_gls_SCE500_201703020000_CEURO_MODIS_V1.0.1.nc",
+    "https://globalland.cgls.dev/webResources/catalogTree/netcdf/snow_cover_extent/sce_500m_v1_daily/2017/20170303/c_gls_SCE500_201703030000_CEURO_MODIS_V1.0.1.nc",
+    "https://globalland.cgls.dev/webResources/catalogTree/netcdf/snow_cover_extent/sce_500m_v1_daily/2017/20170304/c_gls_SCE500_201703040000_CEURO_MODIS_V1.0.1.nc",
+    "https://globalland.cgls.dev/webResources/catalogTree/netcdf/snow_cover_extent/sce_500m_v1_daily/2017/20170305/c_gls_SCE500_201703050000_CEURO_MODIS_V1.0.1.nc",
+    "https://globalland.cgls.dev/webResources/catalogTree/netcdf/snow_cover_extent/sce_500m_v1_daily/2017/20170306/c_gls_SCE500_201703060000_CEURO_MODIS_V1.0.1.nc",
+    "https://globalland.cgls.dev/webResources/catalogTree/netcdf/snow_cover_extent/sce_500m_v1_daily/2017/20170307/c_gls_SCE500_201703070000_CEURO_MODIS_V1.0.1.nc"
 ]
