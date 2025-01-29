@@ -67,8 +67,7 @@ The response will be a JSON object where each of the format has a `true/false` v
 ```
 
 ```{warning}
-
-When requesting the download you are required to inform which format you want to download it. We suggest you download the files in the original format (the one set in the `full\_format` parameter in the `dataset\_download\_information`), otherwise, the file organisation (naming convention and band number/organisation) may differ considerably from the Product user manual.
+When requesting the download you are required to inform which format you want to download it. We suggest you download the files in the original format (the one set in the `full_format` parameter in the `dataset_download_information`), otherwise, the file organisation (naming convention and band number/organisation) may differ considerably from the Product user manual.
 ```
 
 This means that “vector” datasets can be only ordered only in any of these formats: GDB, GML, GPKG, SHP and Geojson, and the “raster” datasets can be ordered in any of these formats:  Geotiff and NetCDF. No conversions are available from vector to raster or from raster to vector.
@@ -111,8 +110,7 @@ If you want to crop the dataset to a given world country, you need to know the l
 If you´d like to download the following dataset for Ecuador country, specify the country code in the NUTS parameter.
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-request-download-country.req
+    :request: ./http-examples/download-request-download-country.req
 ```
 
 ### Restriction by Nomenclature of Territorial Units for Statistics
@@ -124,8 +122,7 @@ If you want to crop the Dataset to a given NUTS region, you need to know that th
 To know which is the NUTS name you can consult this list of ISO NUTS codes. Note that the NUTS codes that the portal accepts are the 2021 codes: `https://ec.europa.eu/eurostat/web/nuts/maps`
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-request-download-nuts-restriction.req
+    :request: ./http-examples/download-request-download-nuts-restriction.req
 ```
 
 ### Restriction by bounding box
@@ -137,8 +134,7 @@ The order of the 4 coordinates is as follows:
 **BoundingBox**: [`max.lat`,`max.lon`,`min.lat`,`min.lon`] which is the same as [`N`,`E`,`S`,`W`]
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-request-download-bbox-restriction.req
+    :request: ./http-examples/download-request-download-bbox-restriction.req
 ```
 
 ## Restrict the temporal extent of the files
@@ -146,8 +142,7 @@ The order of the 4 coordinates is as follows:
 Some available datasets offer time-series information and the user can choose to download only a subset of the available time-series.
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-request-download-temporal-extent-restriction.req
+    :request: ./http-examples/download-request-download-temporal-extent-restriction.req
 ```
 
 ### Combining restrictions
@@ -159,29 +154,25 @@ To do so, the user needs to add the required restrictions in the request.
 This is the example with a bounding-box and a temporal range:
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-request-download-bbox-timeseries.req
+    :request: ./http-examples/download-request-download-bbox-timeseries.req
 ```
 
 The response will include the task id assigned to the download process:
 
 ```{literalinclude} ./http-examples/download-request-download-bbox-timeseries.resp
-
-:language: http
+    :language: http
 ```
 
 This is the example with a NUTS code and a temporal range:
 
 ```{http:example} curl wget python-requests
-
-:request: ./http-examples/download-request-download-layers.req
+    :request: ./http-examples/download-request-download-layers.req
 ```
 
 The response will include the task id assigned to the download process:
 
 ```{literalinclude} ./http-examples/download-request-download-nuts-timeseries.resp
-
-:language: http
+    :language: http
 ```
 
 ## Full dataset downloads
@@ -262,8 +253,7 @@ dataset, but the parameters you need to use in the WEkEO API to download the dat
 Check The `WEkEO documentation`\\_ to get further information:
 
 ```{literalinclude} ./http-examples/download-auxiliary\_api\_wekeo.resp
-
-:language: http
+    :language: http
 ```
 
 This is an example with a LEGACY dataset. In this case the `date\_from` and `date\_to` parameters are mandatory:
@@ -469,4 +459,3 @@ It is done this way to speed up the preparing of the packages because all the pr
    :language: http
 ```
 
-.. \\_`WEkEO documentation`: https://help.WEkEO.eu/en/collections/3530725-WEkEO-harmonized-data-access ELIMINAR??
