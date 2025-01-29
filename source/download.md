@@ -20,7 +20,6 @@ As explained in the introduction, the CLMS Website API is based on Plone so the 
 If you don’t know the parameters of the desired dataset, or if you want to obtain the list of available datasets to look for the desired dataset, a simple search off all datasets available in the portal would be as follows:
 
 ```{http:example} curl wget python-requests
-
     :request: ./http-examples/download-search-datasets.req
 
 ```
