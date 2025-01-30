@@ -63,10 +63,11 @@ The response will be a JSON object where each of the format has a `true/false` v
 ```{warning}
 When requesting the download you are required to inform which format you want to download it. We suggest you download the files in the original format (the one set in the `full_format` parameter in the `dataset_download_information`), otherwise, the file organisation (naming convention and band number/organisation) may differ considerably from the Product user manual.
 ```
+This means that “vector” datasets can be only ordered only in any of these formats: _GDB_, _GML_, _GPKG_, _SHP_ and _Geojson_, and the “raster” datasets can be ordered in any of these formats:  _Geotiff_ and _NetCDF_. No conversions are available from vector to raster or from raster to vector.
 
 ## Projections
 
-The output projection of the downloaded file can be selected the same way. This selection is open on all available projections. To get the list of the available ones, one needs to pass as a parameter the UID of the dataset, like here:
+The output projection of the downloaded file can be selected the same way. To get the list of the available ones, one needs to pass as a parameter the UID of the dataset, like here:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-projections.req
