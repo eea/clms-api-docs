@@ -24,11 +24,13 @@ If you don’t know the parameters of the desired dataset, or if you want to obt
 
 ```
 
-The important bits here are in the parameters passed to the `@search` endpoint where the user is requesting to include the `UID`, the `dataset_full_format` and the `dataset_download_information` of each DataSet. If the user doesn't request the `UID` he will only obtain the `@id` of each datasets, which corresponds to its address, and then he will have to do an additional request to that address to get the `UID` of the DataSet.
+By means of this `@search` endpoint, the user is requesting to retrieve the dataset `UID`, the `dataset_full_format` and the `dataset_download_information`, for all the available datasets. This information is needed in advance of the download itself.
 
-Some dataset offer the option to download several bands or layers. To do so, the user can check the value of the `layers` property of the `dataset_download_information` and if that property exists, the user can request to download one of the available bands or layers.
+**Note** that if you don´t request the `UID` , you only will be provided with the `@id`, but this parameter corresponds to the dataset address, and is not the dataset Identifier, which is mandatory to proceed with the download itself. If you don’t include in the `@search` endpoint, the `UID` parameter, you will have to do an additional request to the dataset address to get the `UID`. 
 
-The results will be similar to the following:
+The instruction will show all the available datasets downloadable through the portal. 
+
+The results will be like the following:
 
 ```{literalinclude} ./http-examples/download-search-datasets.resp
    :language: http
