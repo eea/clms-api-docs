@@ -2,7 +2,7 @@
 
 The CLMS Website provides several endpoints to handle the downloads of the files provided by the portal.
 
-Due to the nature of the files present in the portal, the download is handled by a background process which informs the user by email when the download is ready. Moreover, it also signals the API with the download address so that the application using the API can handle the download by itself.
+The download is handled by a background process which informs the user by email when the download is ready. Moreover, it also signals the API with the download address so that the application using the API can handle the download by itself.
 
 The download process takes the following steps:
 
@@ -17,7 +17,7 @@ The download process takes the following steps:
 
 As explained in the introduction, the CLMS Website API is based on Plone so the user needs to use the `@search` endpoint to look for the items he wants to download.
 
-A simple search off all datasets available in the portal would be as follows:
+If you don’t know the parameters of the desired dataset, or if you want to obtain the list of available datasets to look for the desired dataset, a simple search off all datasets available in the portal would be as follows:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-search-datasets.req
