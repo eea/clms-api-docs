@@ -30,6 +30,13 @@ By means of this `@search` endpoint, the user is requesting to retrieve the data
 
 The instruction will show all the available datasets downloadable through the portal. 
 
+```{warning}
+Be aware that the `@search` endpoint returns the results in batches of 25 items. You need to check the `batching` key of the resulting JSON in order to go to the `next` batch of items.
+
+An alternative way to this is to do the HTTP request with an additional parameter `b_size` indicating the number of items you want to have in the batch. This may make the API process slower though.
+
+```
+
 The results will be like the following:
 
 ```{literalinclude} ./http-examples/download-search-datasets.resp
@@ -37,13 +44,6 @@ The results will be like the following:
 ```
 
 When the user finds the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download), its `dataset_full_format` (to know which format conversions the user can request) and the desired `@id` inside the `dataset_download_information` (to know which file should be processed for download).
-
-```{warning}
-Be aware that the `@search` endpoint returns the results in batches of 25 items. You need to check the `batching` key of the resulting JSON in order to go to the `next` batch of items.
-
-An alternative way to this is to do the HTTP request with an additional parameter `b_size` indicating the number of items you want to have in the batch. This may make the API process slower though.
-
-```
 
 ## File formats
 
