@@ -112,7 +112,14 @@ If you´d like to download the following dataset for Ecuador country, specify th
 
 The _Nomenclature of Territorial Units for Statistics_ (NUTS) is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
 
-If you want to crop the DataSet to a given NUTS region, you need to know that the CLMS Website allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.
+If you want to crop the dataset to a given NUTS region, you need to know that the CLMS Website allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.
+
+To know which is the NUTS name you can consult this list of ISO NUTS codes. Note that the NUTS codes that the portal accepts are the 2021 codes: `https://ec.europa.eu/eurostat/web/nuts/maps`
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-nuts-restriction.req
+
+```
 
 ### Restriction by bounding box
 
