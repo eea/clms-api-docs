@@ -80,20 +80,11 @@ The response will be the list of available projections for this specific dataset
    :language: http
 ```
 
-## Temporal extent
+## Time series
 
-A time series dataset is a dataset which observations are provided along a period.  An approximation of the available time range is defined in the dataset name and in the dataset characteristics available in the dataset page. There are daily, 10-daily, monthly and yearly datasets available in the website.
+When requesting a specific time range download the user needs to know the available time range and the period to request the proper download in advance.
 
-The time series datasets have time restrictions to not overload the download process. This means that the user must order a limited time range for the data to be downloaded.
-
-To check which is the maximum period to download for the time series of a given dataset the user should check the **download_limit_temporal_extent** property, where he will get the number of days he can request to download.
-
-```{http:example} curl wget python-requests
-    :request: ./http-examples/download-search-dataset-temporal-extent.req
-
-```
-
-The temporal range must be specified with the Start and End dates of the range. The format is in milliseconds since the epoch (1970-01-01 00:00:00).
+To check which is the maximum period to download for the time series of a given dataset the user shoudl check the **download_limit_temporal_extent** property, where he will get the number of days he can request to download.
 
 ## Restrict the spatial extent of the files
 
