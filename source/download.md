@@ -80,19 +80,28 @@ The response will be the list of available projections for this specific dataset
    :language: http
 ```
 
-## Time series
+## Temporal extent
 
-When requesting a specific time range download the user needs to know the available time range and the period to request the proper download in advance.
+A time series dataset is a dataset which observations are provided along a period.  An approximation of the available time range is defined in the dataset name and in the dataset characteristics available in the dataset page. There are daily, 10-daily, monthly and yearly datasets available in the website.
 
-To check which is the maximum period to download for the time series of a given dataset the user shoudl check the **download_limit_temporal_extent** property, where he will get the number of days he can request to download.
+The time series datasets have time restrictions to not overload the download process. This means that the user must order a limited time range for the data to be downloaded.
+
+To check which is the maximum period to download for the time series of a given dataset the user should check the **download_limit_temporal_extent** property, where he will get the number of days he can request to download.
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-search-dataset-temporal-extent.req
+
+```
+
+The temporal range must be specified with the Start and End dates of the range. The format is in milliseconds since the epoch (1970-01-01 00:00:00).
 
 ## Restrict the spatial extent of the files
 
 ### Restriction by Country
 
-If you want to crop the dataset to a given world country, you need to know the list of ISO codes that the portal admits: `https://www.iso.org/obp/ui/#search`
+If you want to crop the dataset to a given world country, you need to know the list of ISO codes that the portal admits: https://www.iso.org/obp/ui/#search
 
-If you´d like to download the following dataset for Ecuador country, specify the country code in the _NUTS_ parameter.
+If you´d like to download the following dataset for Ecuador country, specify the country code in the NUTS parameter.
 
 ### Restriction by Nomenclature of Territorial Units for Statistics
 
