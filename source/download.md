@@ -97,6 +97,8 @@ The temporal range must be specified with the Start and End dates of the range. 
 
 ## Restrict the spatial extent of the files
 
+### Restriction by Country
+
 ### Restriction by Nomenclature of Territorial Units for Statistics
 
 The _Nomenclature of Territorial Units for Statistics_ (NUTS) is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
