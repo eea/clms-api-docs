@@ -99,6 +99,10 @@ The temporal range must be specified with the Start and End dates of the range. 
 
 ### Restriction by Country
 
+If you want to crop the dataset to a given world country, you need to know the list of ISO codes that the portal admits: `https://www.iso.org/obp/ui/#search`
+
+If you´d like to download the following dataset for Ecuador country, specify the country code in the NUTS parameter.
+
 ### Restriction by Nomenclature of Territorial Units for Statistics
 
 The _Nomenclature of Territorial Units for Statistics_ (NUTS) is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
