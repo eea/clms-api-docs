@@ -97,11 +97,29 @@ The temporal range must be specified with the Start and End dates of the range. 
 
 ## Restrict the spatial extent of the files
 
+### Restriction by Country
+
+If you want to crop the dataset to a given world country, you need to know the list of ISO codes that the portal admits: `https://www.iso.org/obp/ui/#search`
+
+If you´d like to download the following dataset for Ecuador country, specify the country code in the _NUTS_ parameter.
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-nuts-country.req
+
+```
+
 ### Restriction by Nomenclature of Territorial Units for Statistics
 
 The _Nomenclature of Territorial Units for Statistics_ (NUTS) is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
 
-If you want to crop the DataSet to a given NUTS region, you need to know that the CLMS Website allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.
+If you want to crop the dataset to a given NUTS region, you need to know that the CLMS Website allows the use of NUTS 0, NUTS 1, NUTS 2 and NUTS 3 codes, which you need to pass when requesting the download.
+
+To know which is the NUTS name you can consult this list of ISO NUTS codes. Note that the NUTS codes that the portal accepts are the 2021 codes: `https://ec.europa.eu/eurostat/web/nuts/maps`
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-nuts-restriction.req
+
+```
 
 ### Restriction by bounding box
 
