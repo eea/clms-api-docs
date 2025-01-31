@@ -11,7 +11,7 @@ Authorization: Bearer <REDACTED>
         "NUTS": "ES522",
         "OutputFormat": "Geotiff",
         "OutputGCS": "EPSG:4326"
-    },
+    }
   ]
 }
 
