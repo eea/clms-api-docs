@@ -45,6 +45,16 @@ The results will be like the following:
 
 When the user finds the DataSet that he wants to download, the user will have to take note of its `UID` (to know what to download), its `dataset_full_format` (to know which format conversions the user can request) and the desired `@id` inside the `dataset_download_information` (to know which file should be processed for download).
 
+For example, this would be the information for the “_Imperviousness Change 2015-2018 (raster 20 m and 100 m), Europe, 3-yearly_” dataset, available in the portal here:`https://land.copernicus.eu/en/products/high-resolution-layer-imperviousness/imperviousness-change-2015-2018`
+
+This means that the dataset has `UID`: "_4062d6a3814c426b84218d91ecc733ca_", with two different collections available, at 20 m and 100 m. The data can be requested in Geotiff format because the type of data is Raster. 
+
+Each collection has its own identifier _af69e45f-646c-43f4-b062-b2855b5d6b5f_ and _43f68ebb-e498-416d-9bcd-216aa4580c3a_ respectively. 
+
+```{literalinclude} ./http-examples/download-search-datasets_colletion.resp
+   :language: http
+```
+
 ## File formats
 
 The CLMS API provides an endpoint where the user can check which conversions are available for the available formats. To get the list of available conversions the user needs to do the following request:
