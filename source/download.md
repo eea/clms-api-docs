@@ -77,7 +77,7 @@ This means that “vector” datasets can be only ordered only in any of these f
 
 ## Projections
 
-The output projection of the downloaded file can be selected the same way. To get the list of the available ones, one needs to pass as a parameter the UID of the dataset, like here:
+The output projection of the downloaded file can be selected the same way. To get the list of the available ones, one needs to pass as a parameter the`UID` of the dataset, like here:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-projections.req
@@ -118,6 +118,12 @@ If you´d like to download the following dataset for Ecuador country, specify th
 
 ```
 
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-country.rep
+   :language: http
+```
+
 ### Restriction by Nomenclature of Territorial Units for Statistics
 
 The _Nomenclature of Territorial Units for Statistics_ (NUTS) is a standard used to define the boundaries of the countries and sub-country divisions in the European Union.
@@ -126,26 +132,63 @@ If you want to crop the dataset to a given NUTS region, you need to know that th
 
 To know which is the NUTS name you can consult this list of ISO NUTS codes. Note that the NUTS codes that the portal accepts are the 2021 codes: `https://ec.europa.eu/eurostat/web/nuts/maps`
 
+The request must include a correct NUTS code in it:
+
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-nuts-restriction.req
 
 ```
 
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-nuts.resp
+   :language: http
+```
+
 ### Restriction by bounding box
 
-In addition to the NUTS way, you can also restrict the download to a given bounding box. This is done by passing an array of 4 values in the signaling the 4 points that parameter. The values of the bounding box must be the coordinates of a rectangle in the `EPSG:4326` projection.
+You can also restrict the download to a given bounding box. This is done by passing an array of 4 coordinates. The bounding box must be specified passing four coordinates that represent the 4 points of the rectangle to be downloaded in the `EPSG:4326` projection.
+
+The order of the 4 coordinates is as follows: 
+BoundingBox": [max.lat,max.lon,min.lat,min.lon] which is the same as [N,E,S,W]
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-bbox.req
+
+```
+
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-bbox.resp
+   :language: http
+```
 
 ## Restrict the temporal extent of the files
 
 Some available datasets offer time-series information and the user can choose to download only a subset of the available time-series.
 
+The user must select, obligatorily, an area of ​​interest (Bounding Box or NUTS).
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-timeseries.req
+
+```
+
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-timeseries.resp
+   :language: http
+```
+
+In case of requesting the dataset without the definition of the area of ​​interest, you will receive an error.
+
+```{literalinclude} ./http-examples/download-request-download-timeseries_nok.resp
+   :language: http
+```
+
 ## Full dataset downloads
 
-Due to the way those dataset files are stored in the servers, sometimes the CLMS Website needs to go to the original source (such as WEkEO and Global Datasets) to download the files and provide them to the end-user.
-
-This process is OK when the user requests to download the dataset with a time or spatial restriction (not mandatory) because the CLMS Website needs to transform and process the files.
-
-Full dataset downloads of EEA datasets are available through the prepackaged files of each datasets. So when trying to download such dataset, the user will receive an error:
+Full dataset downloads of EEA datasets are available through the prepackaged files of each datasets. In case of requesting the full dataset without definition of the corresponding prepackage, you´ll receive an error:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-full_dataset_ok.req
