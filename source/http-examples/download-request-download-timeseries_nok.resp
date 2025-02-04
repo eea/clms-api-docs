@@ -1,0 +1,7 @@
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "msg": "You have to select a specific area of interest. In case you want to download the full dataset, please use the Auxiliary API.",
+    "status": "error"
+}
