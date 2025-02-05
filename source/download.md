@@ -105,7 +105,7 @@ To check which is the maximum period to download for the time series of a given 
 
 The temporal range must be specified with the Start and End dates of the range. The format is in milliseconds since the epoch (1970-01-01 00:00:00).
 
-## Restrict the spatial extent of the files
+## Request the download
 
 ### Restriction by Country
 
@@ -301,61 +301,6 @@ And the response obtained from the server:
    :language: http
 ```
 
-## Request the download
-
-When the user has all the data he needs to download the DataSet, he can request the download by making the following request.
-
-### Restrict using a Nomenclature of Territorial Units for Statistics code
-
-The request must include a correct NUTS code in it:
-
-```{http:example} curl wget python-requests
-    :request: ./http-examples/download-request-download-nuts.req
-
-```
-
-The response will include the task id assigned to the download process:
-
-```{literalinclude} ./http-examples/download-request-download-nuts.resp
-   :language: http
-```
-
-### Restrict using a bounding box
-
-The bounding box must be specified passing four coordinates that represent
-the 4 points of the rectangle to be downloaded:
-
-```{http:example} curl wget python-requests
-    :request: ./http-examples/download-request-download-bbox.req
-
-```
-
-The response will include the task id assigned to the download process:
-
-```{literalinclude} ./http-examples/download-request-download-bbox.resp
-   :language: http
-```
-
-### Restrict using a temporal range
-
-The temporal range must be specified with the Start and End dates of the range.
-The format is in milliseconds since the epoch (1970-01-01 00:00:00).
-
-The endpoint will do several validations, such as checking that both values are provided, that the start date is before the end date and the dates are valid.
-
-```{http:example} curl wget python-requests
-    :request: ./http-examples/download-request-download-timeseries.req
-
-```
-
-The response will include the task id assigned to the download process:
-
-```{literalinclude} ./http-examples/download-request-download-timeseries.resp
-   :language: http
-```
-
-
-
 ## Layer/band selection
 
 Although the Net CDF files are composed by bands, the user can´t request to download specific bands.
@@ -384,7 +329,7 @@ Request all in progress downloads:
 
 ```
 
-The response contains a JSON object where each of the keys represents a download task. It also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range. etc
+The response contains a JSON object where each of the keys represents a download task. It also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range, etc.
 
 ```{literalinclude} ./http-examples/download-request-download-in-progress.resp
    :language: http
@@ -397,7 +342,7 @@ Similarly, a user can request all the finished downloads:
 
 ```
 
-The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range. etc.
+The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range, etc.
 
 In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the address where the download will be available for the next _72 hours_.
 
