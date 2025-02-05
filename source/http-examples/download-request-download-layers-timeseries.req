@@ -1,0 +1,24 @@
+POST /api/@datarequest_post HTTP/1.1
+Accept: application/json
+Content-type: application/json
+Authorization: Bearer <REDACTED>
+
+{
+  "Datasets":[
+      {
+        "DatasetID": "bdaa99b9878c4eb4a8cf481f4a414ba0",
+        "DatasetDownloadInformationID": "b9b52e62-29aa-4608-b869-6509d3ee088a",
+        "OutputFormat": "Geotiff",
+        "OutputGCS": "EPSG:4326",
+        "NUTS": "ITC11",
+        "Layer": "ALL BANDS",
+        "TemporalFilter":{
+            "StartDate":1693216800000,
+            "EndDate":1693476000000
+                 
+        }
+    }
+  ]
+}
+
+

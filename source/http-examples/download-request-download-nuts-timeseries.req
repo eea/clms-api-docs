@@ -6,19 +6,8 @@ Authorization: Bearer <REDACTED>
 {
     "Datasets": [
         {
-            "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-            "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
-            "OutputFormat": "Geotiff",
-            "OutputGCS": "EPSG:4326",
-            "NUTS": "ITC11",
-            "TemporalFilter": {
-                "StartDate": 1546333200000,
-                "EndDate": 1559289600000
-            }
-        },
-        {
-            "DatasetID": "a8d945f0edd143a0a5240c28bafa23da",
-            "DatasetDownloadInformationID": "f328dbcc-9069-4240-b8bb-6d5df918671a",
+            "DatasetID": "7caf242841a34d44a2818f683b111ea9",
+            "DatasetDownloadInformationID": "e5bd1ea3-0873-4abf-99ca-3a487aba0fc0",
             "OutputFormat": "Geotiff",
             "OutputGCS": "EPSG:4326",
             "NUTS": "ITC11",
