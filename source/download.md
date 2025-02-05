@@ -163,7 +163,7 @@ The response will include the task id assigned to the download process:
    :language: http
 ```
 
-## Restrict the temporal extent of the files
+### Restrict the temporal extent of the files
 
 Some available datasets offer time-series information and the user can choose to download only a subset of the available time-series.
 
@@ -186,6 +186,38 @@ In case of requesting the dataset without the definition of the area of ​​in
    :language: http
 ```
 
+### Combining restrictions
+
+Those temporal and spatial restrictions can be combined to produce an output file that is restricted to a given NUTS code and a given temporal range or to a given bounding box and a given temporal range.
+
+To do so, the user needs to add the required restrictions in the request.
+
+This is the example with a bounding-box and a temporal range:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-timeseries.req
+
+```
+
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-bbox-timeseries.resp
+   :language: http
+```
+
+This is the example with a NUTS code and a temporal range:
+
+```{http:example} curl wget python-requests
+    :request: ./http-examples/download-request-download-nuts-timeseries.req
+
+```
+
+The response will include the task id assigned to the download process:
+
+```{literalinclude} ./http-examples/download-request-download-nuts-timeseries.resp
+   :language: http
+```
+
 ## Full dataset downloads
 
 Full dataset downloads of EEA datasets are available through the prepackaged files of each datasets. In case of requesting the full dataset without definition of the corresponding prepackage, you´ll receive an error:
@@ -199,64 +231,36 @@ The response will include the task id like in the responses of other requests
 ```{literalinclude} ./http-examples/download-request-download-full_dataset_ok.resp
    :language: http
 ```
-
-However, when requesting the full dataset of a non-EEA dataset, it makes little sense to first download the whole dataset to the CLMS Website and offer it later to the user.
-
-That's why, in such a case, the download API will issue an error informing the user to use some other API endpoint.
-
-In such endpoint the user will be offered direct download links for the datasets he is requesting.
-
-This is an example request requesting a full download of an external dataset:
-
-```{http:example} curl wget python-requests
-    :request: ./http-examples/download-request-download-full_dataset_nok.req
-```
-
-And the response obtained from the server:
-
-```{literalinclude} ./http-examples/download-request-download-full_dataset_nok.resp
-   :language: http
-```
+Check from the list of available prepackages, which corresponds to the full dataset (pan-European dataset). See Download prepackaged files section to know how to see the list of available prepackages.
 
 ### Auxiliary API to get direct download links for non-EEA datasets
 
-To request the direct download links of full datasets for non-EEA datasets, the CLMS Website offers an auxiliary API.
+To request the direct download links of full datasets, the CLMS Website offers an auxiliary API.
 
-In the request to this auxiliary API the user needs to pass the dataset id and the download information id he wants to download, also a time period to download (in case of time-series datasets) and the API will return the direct download links for the requested dataset.
+In the request to this auxiliary API the user needs to pass the dataset id and the download information id he wants to download, also a time range to download (in case of time-series datasets) and the API will return the direct download links for the requested dataset.
 
 The available parameters when requesting this downloads are the following:
 
-- WEkEO datasets:
++ _date_from_: start date of the requested download in ISO format: _YYYY-MM-DD_
++ _date_to_: end date of the requested download in ISO format: _YYYY-MM-DD_
++ _x_max_: requested bounding-box coordinates
++ _y_max_: requested bounding-box coordinates
++ _x_min_: requested bounding-box coordinates
++ _y_min_: requested bounding-box coordinates
 
-  - date_from: start date of the requested download in ISO format: YYYY-MM-DD
-  - date_to: end date of the requested download in ISO format: YYYY-MM-DD
-  - x_max: requested bounding-box coordinates
-  - y_max: requested bounding-box coordinates
-  - x_min: requested bounding-box coordinates
-  - y_min: requested bounding-box coordinates
+_date_from_ and _date_to_ only for time series datasets.
 
-- Landcover datasets:
+If no coordinates are entered, for **WEkEO** or **Global Dynamic Land Cover** the used bounding box will be the following:
 
-  - x_max: requested bounding-box coordinates
-  - y_max: requested bounding-box coordinates
-  - x_min: requested bounding-box coordinates
-  - y_min: requested bounding-box coordinates
++ _x_max_ = **32.871094**
++ _y_max_ = **70.289117**
++ _x_min_ = **-12.480469**
++ _y_min_ = **35.603719**
 
-- Legacy datasets:
-  - date_from (required): start date of the requested download in ISO format: YYYY-MM-DD
-  - date_to (required): end date of the requested download in ISO format: YYYY-MM-DD
+If no _start_ and _end_ date are entered for **WEkEO** datasets, the used ones will be the following:
+  _start_date_: request date
+  _end_date_: request date - 30 days
 
-If no coordinates are entered for WEkEO or Landcover datasets, the used bounding box will be the following:
-
-      x_max = 32.871094
-      y_max = 70.289117
-      x_min = -12.480469
-      y_min = 35.603719
-
-If no start and and date are entered for WEkEO and Legacy datasets, the used ones will be the following:
-
-      start_date: request date
-      end_date: request date - 30 days
 
 This is an example with a WEkEO dataset:
 
@@ -285,7 +289,7 @@ And the response obtained from the server:
    :language: http
 ```
 
-This is an example with a LandCover dataset:
+This is an example with a  Global Dynamic Land Cover dataset:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-auxiliary_api_landcover.req
@@ -350,44 +354,16 @@ The response will include the task id assigned to the download process:
    :language: http
 ```
 
-### Combining restrictions
 
-Those temporal and spatial restrictions can be combined to produce an output file that is restricted to a given NUTS code and a given temporal range or to a given bounding box and a given temporal range.
-
-To do so, the user needs to add the required restrictions in the request.
-
-This is the example with a bounding-box and a temporal range:
-
-```{http:example} curl wget python-requests
-    :request: ./http-examples/download-request-download-bbox-timeseries.req
-
-```
-
-The response will include the task id assigned to the download process:
-
-```{literalinclude} ./http-examples/download-request-download-bbox-timeseries.resp
-   :language: http
-```
-
-This is the example with a NUTS code and a temporal range:
-
-```{http:example} curl wget python-requests
-    :request: ./http-examples/download-request-download-layers.req
-
-```
-
-The response will include the task id assigned to the download process:
-
-```{literalinclude} ./http-examples/download-request-download-nuts-timeseries.resp
-   :language: http
-```
 
 ## Layer/band selection
 
-When a dataset has multiple bands/layers, the user can request to download one given layer as follows:
+Although the Net CDF files are composed by bands, the user can´t request to download specific bands.
+
+This parameter has to be left blank and the system will use by default the value ‘ALL BANDS’, which means that all of them will be downloaded.
 
 ```{http:example} curl wget python-requests
-    :request: ./http-examples/download-request-download-layers.req
+    :request: ./http-examples/download-request-download-layers-timeseries.req
 
 ```
 
@@ -397,11 +373,9 @@ The response will include the task id assigned to the download process:
    :language: http
 ```
 
-If the user does not select any band, the system will select by default the 'ALL BANDS' layer, which means that all of them will be downloaded.
+## Wait for the download to be ready 
 
-## Wait for the download to be ready
-
-As said, the download tool will inform the user by email when the download is ready. The user can always request the status of all his requests using the `@datarequest_search` endpoint as follows:
+The download tool will inform the user by email when the download is ready. The user can always request the status of all his requests using the `@datarequest_search` endpoint as follows:
 
 Request all in progress downloads:
 
@@ -410,7 +384,7 @@ Request all in progress downloads:
 
 ```
 
-The response contains a JSON object where each of the keys represents a download task. It also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.) and also the date and time of the request.
+The response contains a JSON object where each of the keys represents a download task. It also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range. etc
 
 ```{literalinclude} ./http-examples/download-request-download-in-progress.resp
    :language: http
@@ -423,7 +397,7 @@ Similarly, a user can request all the finished downloads:
 
 ```
 
-The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the download metadata (NUTS, Bounding Box, etc.) and also the date and time of the request.
+The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range. etc.
 
 In this case, it will include 2 additional parameters: the date and time of the finalization of the download process and the address where the download will be available for the next _72 hours_.
 
@@ -476,8 +450,9 @@ The result will include all the information regarding the prepackaged files in t
    :language: http
 ```
 
-To request the download of one or several files, one has to note their `@id` and request their download as shown below. In this case, trying to request a format and/or projection change will fail because all prepackaged files
-are process as they are. CLMS Website can't handle their transformation:
+When ordering a prepackage it is not possible to define custom parameters as the format and the projection as the file is already prepared. To rder a prepackage it is only needed to request the @id , if not, the download will fail.
+
+See the below example:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-prepackaged.req
@@ -492,7 +467,7 @@ The response will contain the task id of the download request, like in earlier o
 
 ## Combined download of datasets and prepackaged files
 
-One can also request to download a prepackaged file and a full dataset in a single request. To do so, one only has to include the required information in the request:
+One can also request to download a prepackaged file and a a custom download in a single request. To do so, one only has to include the required information in the request:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-combined.req
@@ -506,5 +481,3 @@ It is done this way to speed up the preparing of the packages because all the pr
 ```{literalinclude} ./http-examples/download-request-combined.resp
    :language: http
 ```
-
-.. \_`WEkEO documentation`: https://help.WEkEO.eu/en/collections/3530725-WEkEO-harmonized-data-access
