@@ -233,7 +233,7 @@ The response will include the task id like in the responses of other requests
 ```
 Check from the list of available prepackages, which corresponds to the full dataset (pan-European dataset). See Download prepackaged files section to know how to see the list of available prepackages.
 
-### Auxiliary API to get direct download links for non-EEA datasets
+### Auxiliary API to get direct download links for non-EEA hosted datasets
 
 To request the direct download links of full datasets, the CLMS Website offers an auxiliary API.
 
