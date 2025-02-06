@@ -14,27 +14,23 @@ Plone provides the information about the objects under the object's url. If we h
 
 To consult a product on the CLMS portal, this would be the link structure:
 
-•	`https://land.copernicus.eu/en/products/product/`
-
-•	`https://land.copernicus.eu/en/products/corine-land-cover`
++	`https://land.copernicus.eu/en/products/product/`
++	`https://land.copernicus.eu/en/products/corine-land-cover`
 
 Then its content will be available through the API at:
 
-•	`https://land.copernicus.eu/api/en/products/product` 
-
-•	`https://land.copernicus.eu/api/en/products/corine-land-cover`
++	`https://land.copernicus.eu/api/en/products/product` 
++	`https://land.copernicus.eu/api/en/products/corine-land-cover`
 
 To consult a dataset on the CLMS portal, this would be the link structure:
 
-•	`https://land.copernicus.eu/en/products/product/dataset`
-
-•	`https://land.copernicus.eu/en/products/corine-land-cover/clc2018`
++	`https://land.copernicus.eu/en/products/product/dataset`
++	`https://land.copernicus.eu/en/products/corine-land-cover/clc2018`
 
 Then its content will be available through the API at:
 
-•	`https://land.copernicus.eu/api/en/products/product/dataset`
-
-•	`https://land.copernicus.eu/api/en/products/corine-land-cover/clc2018`
++	`https://land.copernicus.eu/api/en/products/product/dataset`
++	`https://land.copernicus.eu/api/en/products/corine-land-cover/clc2018`
 
 To search all those datasets, the API provides a full-featured `@search` endpoint that can be used to search not only DataSets but also
 any other content type that is available in the portal. The full documentation about the `@search` endpoint can be found on the [official documentation](https://plonerestapi.readthedocs.io/en/latest/searching.html) .
