@@ -16,9 +16,9 @@ Content-Type: application/json
     "datasetId": "EO:CRYO:DAT:HRSI:GFSC",
     "dateRangeSelectValues": [
         {
-            "end": "2016-09-12T00:00:00.000Z",
+            "end": "2025-02-06T10:02:54.000Z",
             "name": "Observed",
-            "start": "2016-09-02T00:00:00.000Z"
+            "start": "2016-09-01T00:00:00.000Z"
         }
     ],
     "stringChoiceValues": [
