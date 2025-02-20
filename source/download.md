@@ -1,7 +1,5 @@
 # Download API
 
-{{http_host}}
-
 The CLMS Website provides several endpoints to handle the downloads of the files provided by the portal.
 
 The download is handled by a background process which informs the user by email when the download is ready. Moreover, it also signals the API with the download address so that the application using the API can handle the download by itself.
@@ -23,7 +21,7 @@ If you don’t know the parameters of the desired dataset, or if you want to obt
 
 ```{http:example} curl wget python-requests
    :request: ./http-examples/download-search-datasets.req
-   :host: {{http_host}}
+   :host: {http_host}
 ```
 
 By means of this `@search` endpoint, the user is requesting to retrieve the dataset `UID`, the `dataset_full_format` and the `dataset_download_information`, for all the available datasets. This information is needed in advance of the download itself.
