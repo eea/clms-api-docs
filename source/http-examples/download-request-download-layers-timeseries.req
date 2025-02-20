@@ -1,4 +1,5 @@
 POST /api/@datarequest_post HTTP/1.1
+Host: land.copernicus.eu/
 Accept: application/json
 Content-type: application/json
 Authorization: Bearer <REDACTED>

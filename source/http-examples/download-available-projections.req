@@ -1,3 +1,4 @@
 GET /api/@projections?uid=0407d497d3c44bcd93ce8fd5bf78596a HTTP/1.1
+Host: land.copernicus.eu/
 Accept: application/json
 Authorization: Bearer <REDACTED>
