@@ -1,4 +1,5 @@
 POST /@@oauth2-token HTTP/1.1
+Host: land.copernicus.eu/
 Accept: application/json
 Content-type: application/x-www-form-urlencoded
 

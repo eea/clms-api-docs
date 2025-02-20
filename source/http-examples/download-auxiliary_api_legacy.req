@@ -1,3 +1,4 @@
 GET /api/@get-download-file-urls?dataset_uid=58b4d790fc6b435d9e61c48d14bc06bb&download_information_id=27062663-bba6-43c1-8c73-c7ed82814956&date_from=2017-01-01&date_to=2017-03-07 HTTP/1.1
+Host: land.copernicus.eu/
 Accept: application/json
 Authorization: Bearer <REDACTED>
