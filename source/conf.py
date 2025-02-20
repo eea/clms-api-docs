@@ -22,7 +22,7 @@ copyright = '2022, EEA, Copernicus Team'
 author = 'Bilbomática & CodeSyntax Consortium'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = '2.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -44,6 +44,12 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# -- Define Global Variables --------------------------------------------------
+
+# This variable is used to set the host value and not use the default value nohost
+rst_prolog = """
+.. |http_host| replace:: https://land.copernicus.eu/
+"""
 
 # -- Options for HTML output -------------------------------------------------
 
