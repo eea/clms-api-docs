@@ -1,7 +1,5 @@
 # Download API
 
-{{http_host}}
-
 ```yaml
 api_url: { http_host }/api/data
 ```
