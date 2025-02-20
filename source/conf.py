@@ -39,11 +39,6 @@ myst_enable_extensions = [
     "substitution",  # Permite sustituciones en MyST
     "html_admonition",
     "html_image",
-    "dollarmath",
-    "amsmath",
-    "deflist",
-    "fieldlist",
-    "attrs_inline",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
