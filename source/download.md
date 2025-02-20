@@ -61,7 +61,6 @@ The CLMS API provides an endpoint where the user can check which conversions are
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-conversions.req
-    :host: |http_host|
 
 ```
 
@@ -82,7 +81,6 @@ The output projection of the downloaded file can be selected the same way. To ge
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-available-projections.req
-    :host: |http_host|
 
 ```
 
@@ -102,7 +100,6 @@ To check which is the maximum period to download for the time series of a given 
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-search-dataset-temporal-extent.req
-    :host: |http_host|
 
 ```
 
@@ -118,7 +115,6 @@ If you´d like to download the following dataset for Ecuador country, specify th
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-country.req
-    :host: |http_host|
 
 ```
 
@@ -140,7 +136,6 @@ The request must include a correct NUTS code in it:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-nuts-restriction.req
-    :host: |http_host|
 
 ```
 
@@ -159,7 +154,6 @@ BoundingBox": [max.lat,max.lon,min.lat,min.lon] which is the same as [N,E,S,W]
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-bbox.req
-    :host: |http_host|
 
 ```
 
@@ -177,7 +171,6 @@ The user must select, obligatorily, an area of ​​interest (Bounding Box or N
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-timeseries.req
-    :host: |http_host|
 
 ```
 
@@ -203,7 +196,6 @@ This is the example with a bounding-box and a temporal range:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-timeseries.req
-    :host: |http_host|
 
 ```
 
@@ -217,7 +209,6 @@ This is the example with a NUTS code and a temporal range:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-nuts-timeseries.req
-    :host: |http_host|
 
 ```
 
@@ -233,7 +224,6 @@ Full dataset downloads of EEA datasets are available through the prepackaged fil
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-full_dataset_ok.req
-    :host: |http_host|
 ```
 
 The response will include the task id like in the responses of other requests
@@ -276,7 +266,6 @@ This is an example with a WEkEO dataset:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-auxiliary_api_wekeo.req
-    :host: |http_host|
 ```
 
 And the response obtained from the server. In this case, the API will not return the direct links to download the
@@ -292,7 +281,6 @@ This is an example with a LEGACY dataset. In this case the `date_from` and `date
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-auxiliary_api_legacy.req
-    :host: |http_host|
 ```
 
 And the response obtained from the server:
@@ -305,7 +293,6 @@ This is an example with a  Global Dynamic Land Cover dataset:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-auxiliary_api_landcover.req
-    :host: |http_host|
 ```
 
 And the response obtained from the server:
@@ -322,7 +309,6 @@ This parameter has to be left blank and the system will use by default the value
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-layers-timeseries.req
-    :host: |http_host|
 ```
 
 The response will include the task id assigned to the download process:
@@ -339,7 +325,6 @@ Request all in progress downloads:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-in-progress.req
-    :host: |http_host|
 ```
 
 The response contains a JSON object where each of the keys represents a download task. It also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range, etc.
@@ -352,7 +337,6 @@ Similarly, a user can request all the finished downloads:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-finished.req
-    :host: |http_host|
 ```
 
 The response contains a JSON object where each of the keys represent a download task. Like in the previous case, it also includes the UIDs of the datasets that are being prepared, the link to the dataset metadata and the parameters of the custom download such as: NUTS, Boundinbox, time range, etc.
@@ -367,7 +351,6 @@ Similarly, instead of using the search, the user can request the status of a spe
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-status.req
-    :host: |http_host|
 ```
 
 The result will be similar to the previous ones but will only contain the information of the requested dataset.
@@ -382,7 +365,6 @@ A download can also be cancelled by using the `@datarequest_delete` endpoint as 
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-delete.req
-    :host: |http_host|
 ```
 
 The result will have no content if the request is deleted correctly
@@ -399,7 +381,6 @@ To inspect which prepackaged files are available for download, one can request t
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-search-dataset-prepackaged.req
-    :host: |http_host|
 ```
 
 The result will include all the information regarding the prepackaged files in the `downloadable_files` attribute:
@@ -414,7 +395,6 @@ See the below example:
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-download-prepackaged.req
-    :host: |http_host|
 ```
 
 The response will contain the task id of the download request, like in earlier options:
@@ -429,7 +409,6 @@ One can also request to download a prepackaged file and a a custom download in a
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-request-combined.req
-    :host: |http_host|
 ```
 
 In this case the request will be splitted into two download packages, one will contain all the prepackaged files and the other the rest of the downloads.
