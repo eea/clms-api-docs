@@ -21,8 +21,7 @@ If you don’t know the parameters of the desired dataset, or if you want to obt
 
 ```{http:example} curl wget python-requests
    :request: ./http-examples/download-search-datasets.req
-   :host: {http_host}
-
+   :host: https://api.example.com
 ```
 
 By means of this `@search` endpoint, the user is requesting to retrieve the dataset `UID`, the `dataset_full_format` and the `dataset_download_information`, for all the available datasets. This information is needed in advance of the download itself.
