@@ -1,2 +1,2 @@
-GET {http_host}/api/@search?portal_type=DataSet&metadata_fields=UID&metadata_fields=dataset_full_format&&metadata_fields=dataset_download_information HTTP/1.1
+GET /api/@search?portal_type=DataSet&metadata_fields=UID&metadata_fields=dataset_full_format&&metadata_fields=dataset_download_information HTTP/1.1
 Accept: application/json
