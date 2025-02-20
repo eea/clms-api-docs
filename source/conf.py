@@ -35,7 +35,7 @@ extensions = [
     "sphinxcontrib.httpexample",
     "myst_parser",
 ]
-myst_enable_extensions = ["replacements"]
+myst_enable_extensions = ["substitution"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -48,12 +48,10 @@ exclude_patterns = []
 # -- Substitutions Variables --------------------------------------------------
 
 # Replace the nohost value with the indicated value
-#myst_substitutions = {
-#    "http_host": "https://land.copernicus.eu/"
-#}
 myst_substitutions = {
-    "http_host": "https://api.example.com"
+    "http_host": "https://land.copernicus.eu/"
 }
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
