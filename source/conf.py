@@ -47,9 +47,9 @@ exclude_patterns = []
 # -- Define Global Variables --------------------------------------------------
 
 # This variable is used to set the host value and not use the default value nohost
-rst_prolog = """
-.. |http_host| replace:: "https://land.copernicus.eu/"
-"""
+#rst_prolog = """
+#.. |http_host| replace:: "https://land.copernicus.eu/"
+#"""
 
 # -- Options for HTML output -------------------------------------------------
 
