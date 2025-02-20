@@ -44,12 +44,12 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-# -- Define Global Variables --------------------------------------------------
+# -- Substitutions Variables --------------------------------------------------
 
-# This variable is used to set the host value and not use the default value nohost
-#rst_prolog = """
-#.. |http_host| replace:: "https://land.copernicus.eu/"
-#"""
+# Replace the nohost value with the indicated value
+myst_substitutions = {
+    "http_host": "https://land.copernicus.eu/"
+}
 
 # -- Options for HTML output -------------------------------------------------
 
