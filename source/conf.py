@@ -50,11 +50,14 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 # -- Substitutions Variables --------------------------------------------------
+rst_epilog = """
+.. |http_host| replace:: https://land.copernicus.eu/
+"""
 
 # Replace the nohost value with the indicated value
-myst_substitutions = {
-    "http_host": "https://land.copernicus.eu/"
-}
+#myst_substitutions = {
+#    "http_host": "https://land.copernicus.eu/"
+#}
 
 # -- Options for HTML output -------------------------------------------------
 

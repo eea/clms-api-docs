@@ -1,8 +1,6 @@
 # Download API
 
-```yaml
-api_url: { http_host }/api/data
-```
+El host es: |http_host|
 
 The CLMS Website provides several endpoints to handle the downloads of the files provided by the portal.
 
