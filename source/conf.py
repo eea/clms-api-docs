@@ -50,12 +50,21 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 # -- Substitutions Variables --------------------------------------------------
+http_host = "https://land.copernicus.eu/"
+
+def replace_http_host(app, docname, source):
+    """ Reemplaza {http_host} por su valor real en cada documento """
+    source[0] = source[0].replace("{http_host}", http_host)
+
+def setup(app):
+    app.connect("source-read", replace_http_host)
+
 myst_all_links_external = True
 
 # Replace the nohost value with the indicated value
-myst_substitutions = {
-    "http_host": "https://land.copernicus.eu/"
-}
+#myst_substitutions = {
+#    "http_host": "https://land.copernicus.eu/"
+#}
 
 # -- Options for HTML output -------------------------------------------------
 
