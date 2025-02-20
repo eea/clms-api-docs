@@ -1,9 +1,9 @@
 # Download API
 
-{http_host}
+{{http_host}}
 
 ```yaml
-api_url: {{ http_host }}/api/data
+api_url: { http_host }/api/data
 ```
 
 The CLMS Website provides several endpoints to handle the downloads of the files provided by the portal.
