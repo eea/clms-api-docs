@@ -1,5 +1,7 @@
 # Download API
 
+El host es: {http_host}
+
 The CLMS Website provides several endpoints to handle the downloads of the files provided by the portal.
 
 The download is handled by a background process which informs the user by email when the download is ready. Moreover, it also signals the API with the download address so that the application using the API can handle the download by itself.
