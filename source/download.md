@@ -19,9 +19,11 @@ As explained in the introduction, the CLMS Website API is based on Plone so the 
 
 If you don’t know the parameters of the desired dataset, or if you want to obtain the list of available datasets to look for the desired dataset, a simple search off all datasets available in the portal would be as follows:
 
-```{http:example} curl wget python-requests
-   :request: ./http-examples/download-search-datasets.req
-   :host: {http_host}
+```{eval-rst}
+.. http:example:: curl wget python-requests
+    :request: ./http-examples/download-search-datasets.req
+    :host: |http_host|
+
 ```
 
 By means of this `@search` endpoint, the user is requesting to retrieve the dataset `UID`, the `dataset_full_format` and the `dataset_download_information`, for all the available datasets. This information is needed in advance of the download itself.
