@@ -21,7 +21,6 @@ If you don’t know the parameters of the desired dataset, or if you want to obt
 
 ```{http:example} curl wget python-requests
     :request: ./http-examples/download-search-datasets.req
-    :host: {{ http_host }}
 
 ```
 
