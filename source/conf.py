@@ -58,7 +58,7 @@ myst_all_links_external = True
 
 # Replace the nohost value with the indicated value
 myst_substitutions = {
-    "http_host": "https://land.copernicus.eu/"
+    #"http_host": "https://land.copernicus.eu/"
 }
 
 # -- Options for HTML output -------------------------------------------------
