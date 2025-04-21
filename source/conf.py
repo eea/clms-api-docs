@@ -49,6 +49,9 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# It sets this host to be used.
+http_host = "https://land.copernicus.eu"
+
 # -- Substitutions Variables --------------------------------------------------
 myst_all_links_external = True
 
