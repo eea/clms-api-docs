@@ -49,7 +49,8 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-# It sets this host to be used.
+# Adjusted the host and schema to be used in the examples.
+http_scheme = "https"
 http_host = "https://land.copernicus.eu"
 
 # -- Substitutions Variables --------------------------------------------------
