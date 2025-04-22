@@ -39,9 +39,4 @@ a given dataset the user should check the
 number of days he can request to download.
 
 .. http:example:: curl wget python-requests
-   :host: land.copernicus.eu
-
-   :request:
-
-     GET /api/@search?portal_type=DataSet&metadata_fields=UID&metadata_fields=download_limit_temporal_extent&b_size=300
-     Accept: application/json
+   :request: ./http-examples/download-search-dataset-temporal-extent.req
