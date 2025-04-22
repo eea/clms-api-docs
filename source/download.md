@@ -98,8 +98,9 @@ The time series datasets have time restrictions to not overload the download pro
 
 To check which is the maximum period to download for the time series of a given dataset the user should check the **download_limit_temporal_extent** property, where he will get the number of days he can request to download.
 
-.. http:example:: curl wget python-requests
-   :request: ./http-examples/download-search-dataset-temporal-extent.req
+```{http:example} curl wget python-requests 
+   :request: ./http-examples/download-search-dataset-temporal-extent.req 
+```
 
 The temporal range must be specified with the Start and End dates of the range. The format is in milliseconds since the epoch (1970-01-01 00:00:00).
 
