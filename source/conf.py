@@ -39,6 +39,7 @@ myst_enable_extensions = [
     "substitution",  # Permite sustituciones en MyST
     "html_admonition",
     "html_image",
+    "colon_fence", 
 ]
 
 # Add any paths that contain templates here, relative to this directory.
