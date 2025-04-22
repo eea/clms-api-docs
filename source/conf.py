@@ -52,7 +52,6 @@ exclude_patterns = []
 
 # Adjusted the host and schema to be used in the examples.
 httpexample_scheme = 'https'
-#http_scheme = "https"
 http_host = "land.copernicus.eu"
 
 # -- Substitutions Variables --------------------------------------------------
