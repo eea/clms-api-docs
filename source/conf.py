@@ -51,7 +51,7 @@ exclude_patterns = []
 
 # Adjusted the host and schema to be used in the examples.
 http_scheme = "https"
-#http_host = "land.copernicus.eu"
+http_host = "land.copernicus.eu"
 
 # -- Substitutions Variables --------------------------------------------------
 myst_all_links_external = True
