@@ -101,11 +101,7 @@ To check which is the maximum period to download for the time series of a given 
 .. http:example:: curl wget python-requests
    :host: land.copernicus.eu
 
-   :request:
-
-     GET /api/@search?portal_type=DataSet&metadata_fields=UID&metadata_fields=download_limit_temporal_extent&b_size=300
-     Accept: application/json
-
+   :request: ./http-examples/download-search-dataset-temporal-extent.req
 
 The temporal range must be specified with the Start and End dates of the range. The format is in milliseconds since the epoch (1970-01-01 00:00:00).
 
